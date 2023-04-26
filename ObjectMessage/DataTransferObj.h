@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 #include <vector> 
+#include <tuple>
+#include <map>
 
 
 enum DataType
@@ -12,7 +14,7 @@ enum DataType
 	REQUEST
 };
 
-enum FunctionType
+enum FuncType
 {
 	IAP, // Installed Apps
 	RPC, // Running proceesses
@@ -21,7 +23,7 @@ enum FunctionType
 	DIR, // Directory tree
 };
 
-enum CommandType
+enum CmdType
 {
 	RUN, // Running a specific process / program
 	KILL, // Kill process
@@ -31,15 +33,41 @@ enum CommandType
 	DATA, // Indicates that this show response data
 };
 
+struct EnumMaps {
+	static const std::map<DataType, std::string> DataTypeMap;
+	static const std::map<FuncType, std::string> FunctionTypeMap;
+	static const std::map<CmdType, std::string> CmdTypeMap;
+};
 
+const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
+	{ RESPONSE, "RESPONSE" },
+	{ REQUEST, "REQUEST" }
+};
+
+const std::map<FuncType, std::string> EnumMaps::FunctionTypeMap = {
+	{ IAP, "IAP" },
+	{ RPC, "RPC" },
+	{ SCR, "SCR" },
+	{ KLG, "KLG" },
+	{ DIR, "DIR" }
+};
+
+const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
+	{ RUN, "RUN" },
+	{ KILL, "KILL" },
+	{ START, "START" },
+	{ STOP, "STOP" },
+	{ SHOW, "SHOW" },
+	{ DATA, "DATA" }
+};
 
 class DataTransferObj
 {
 protected:
 	std::string _ID;
 	DataType _data_type;
-	FunctionType _func_type;
-	CommandType _cmd_type;
+	FuncType _func_type;
+	CmdType _cmd_type;
 	std::vector<char> _data;
 public:
 	// Convert data object to string type
@@ -50,21 +78,15 @@ public:
 
 	//
 	std::string getID();
-	std::string getDataType();
-	std::string getFunctionType();
-	std::string getCommandType();
+	DataType getDataType();
+	FuncType getFuncType();
+	CmdType getCmdType();
 	std::vector<char> getData();
 
 	// return: announcement about the result of the procedure
 	std::string setID(std::string new_ID);
 	std::string setDataType(DataType new_data_type);
-	std::string setFunctionType(FunctionType new_function_type);
-	std::string setCommandType(CommandType new_command_type);
+	std::string setFuncType(FuncType new_func_type);
+	std::string setCmdType(CmdType new_cmd_type);
 	std::string setData(std::vector<char> new_data);
 };
-
-class FAther...
-	class Son: public Father
-
-
-	Father* John = new Son()
