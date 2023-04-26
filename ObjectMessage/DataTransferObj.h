@@ -61,6 +61,23 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 	{ DATA, "DATA" }
 };
 
+
+// Instruction on how to use EnumMaps 
+/*
+DataType dt = RESPONSE;
+std::cout << EnumMaps::DataTypeMap.at(dt) << std::endl; // Output: RESPONSE
+
+FuncType ft = IAP;
+std::cout << EnumMaps::FuncTypeMap.at(ft) << std::endl; // Output: IAP
+
+CmdType ct = RUN;
+std::cout << EnumMaps::CmdTypeMap.at(ct) << std::endl; // Output: RUN
+*/
+
+
+
+
+
 class DataTransferObj
 {
 protected:
