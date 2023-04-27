@@ -1,4 +1,4 @@
-#include "IAP_TransferObj.h"
+#include "AppListObject.h"
 #include <tchar.h>
 #include <iostream>
 #include <string>
