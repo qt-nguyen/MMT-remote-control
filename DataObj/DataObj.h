@@ -39,29 +39,6 @@ struct EnumMaps {
 	static const std::map<CmdType, std::string> CmdTypeMap;
 };
 
-const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
-	{ RESPONSE, "RESPONSE" },
-	{ REQUEST, "REQUEST" }
-};
-
-const std::map<FuncType, std::string> EnumMaps::FunctionTypeMap = {
-	{ IAP, "IAP" },
-	{ RPC, "RPC" },
-	{ SCR, "SCR" },
-	{ KLG, "KLG" },
-	{ DIR, "DIR" }
-};
-
-const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
-	{ RUN, "RUN" },
-	{ KILL, "KILL" },
-	{ START, "START" },
-	{ STOP, "STOP" },
-	{ SHOW, "SHOW" },
-	{ DATA, "DATA" }
-};
-
-
 // Instruction on how to use EnumMaps 
 /*
 DataType dt = RESPONSE;
@@ -78,7 +55,7 @@ std::cout << EnumMaps::CmdTypeMap.at(ct) << std::endl; // Output: RUN
 
 
 
-class DataTransferObj
+class DataObj
 {
 protected:
 	std::string _ID;

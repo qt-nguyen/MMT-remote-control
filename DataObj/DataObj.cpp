@@ -1,34 +1,60 @@
-#include "DataTransferObj.h"
+#include "DataObj.h"
 #include <string>
 #include <tuple>
 #include <sstream>
 
-std::string DataTransferObj::getID()
+// Defintion of the EnupMaps
+const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
+	{ RESPONSE, "RESPONSE" },
+	{ REQUEST, "REQUEST" }
+};
+
+const std::map<FuncType, std::string> EnumMaps::FunctionTypeMap = {
+	{ IAP, "IAP" },
+	{ RPC, "RPC" },
+	{ SCR, "SCR" },
+	{ KLG, "KLG" },
+	{ DIR, "DIR" }
+};
+
+const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
+	{ RUN, "RUN" },
+	{ KILL, "KILL" },
+	{ START, "START" },
+	{ STOP, "STOP" },
+	{ SHOW, "SHOW" },
+	{ DATA, "DATA" }
+};
+
+
+// Data Object methods and functions
+
+std::string DataObj::getID()
 {
 	return this->_ID;
 }
 
-DataType DataTransferObj::getDataType()
+DataType DataObj::getDataType()
 {
 	return this->_data_type;
 }
 
-FuncType DataTransferObj::getFuncType()
+FuncType DataObj::getFuncType()
 {
 	return this->_func_type;
 }
 
-CmdType DataTransferObj::getCmdType()
+CmdType DataObj::getCmdType()
 {
 	return this->_cmd_type;
 }
 
-std::vector<char> DataTransferObj::getData()
+std::vector<char> DataObj::getData()
 {
 	return this->_data;
 }
 
-std::string DataTransferObj::setID(std::string new_ID)
+std::string DataObj::setID(std::string new_ID)
 {
 	std::stringstream res_msg;
 	res_msg << "MESSAGE: setID: ";
@@ -44,7 +70,7 @@ std::string DataTransferObj::setID(std::string new_ID)
 	return res_msg.str();
 }
 
-std::string DataTransferObj::setDataType(DataType new_data_type)
+std::string DataObj::setDataType(DataType new_data_type)
 {
 	std::stringstream res_msg;
 	res_msg << "MESSAGE: setDataType: ";
@@ -55,7 +81,7 @@ std::string DataTransferObj::setDataType(DataType new_data_type)
 	return res_msg.str();
 }
 
-std::string DataTransferObj::setFuncType(FuncType new_func_type)
+std::string DataObj::setFuncType(FuncType new_func_type)
 {
 	std::stringstream res_msg;
 	res_msg << "MESSAGE: setFuncType: ";
@@ -67,7 +93,7 @@ std::string DataTransferObj::setFuncType(FuncType new_func_type)
 	return res_msg.str();
 }
 
-std::string DataTransferObj::setCmdType(CmdType new_cmd_type)
+std::string DataObj::setCmdType(CmdType new_cmd_type)
 {
 	std::stringstream res_msg;
 	res_msg << "MESSAGE: setCmdType: ";
@@ -79,7 +105,7 @@ std::string DataTransferObj::setCmdType(CmdType new_cmd_type)
 	return  res_msg.str();
 }
 
-std::string DataTransferObj::setData(std::vector<char> new_data)
+std::string DataObj::setData(std::vector<char> new_data)
 {
 	std::stringstream res_msg;
 	res_msg << "MESSAGE: setCmdType: ";

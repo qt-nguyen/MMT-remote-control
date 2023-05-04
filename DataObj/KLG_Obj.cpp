@@ -1,4 +1,5 @@
 ﻿#include "KLG_Obj.h"
+#include "DataObj.h"
 /*
 std::string KLG_Obj::keylogger()
 {
@@ -83,9 +84,9 @@ std::string KLG_Obj::keylogger()
 
 bool KLG_Obj::checkStopSignal()
 {
-	DataTransferObj stopSignal;
+	DataObj stopSignal;
 
-	// thao tác nhận tín hiệu từ client là đối tượng DataTransferObj stopSignal
+	// thao tác nhận tín hiệu từ client là đối tượng DataObj stopSignal
 	// ...
 
 

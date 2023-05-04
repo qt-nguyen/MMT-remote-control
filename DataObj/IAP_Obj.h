@@ -1,20 +1,20 @@
 #pragma once
 
-#include "DataTransferObj.h"
+#include "DataObj.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <sstream>
 #include <fstream>
 
-class RPC_Obj: public DataTransferObj
+class IAP_Obj: public DataObj
 {
 
 public:
-    RPC_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data)
+    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data)
     {
         setID(ID);
-        _func_type = FuncType::RPC;
+        _func_type = FuncType::IAP;
         setDataType(dataType);
         setCmdType(CMD);
         setData(data);
@@ -28,11 +28,11 @@ public:
     std::string toFile(std::string filename);
 
     // List installed apps
-    std::string listPrcs();
+    std::string listApps();
 
     // Start an app
-    std::string runPrc(std::string prcName);
+    std::string startApp(std::string appName);
 
     // Stop an app
-    std::string killPrc(std::string prcName);
+    std::string stopApp(std::string appName);
 };

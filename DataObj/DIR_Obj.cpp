@@ -1,4 +1,5 @@
 #include "DIR_Obj.h"
+#include "DataObj.h"
 #include <string>
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -39,7 +40,7 @@ void DIR_Obj::buildTree(const fs::path& path, int max_depth, DirectoryTreeNode& 
 
 std::string DIR_Obj::toString()
 {
-	return 
+    return "trung";
 }
 
 std::string DIR_Obj::toFile(std::string filename)

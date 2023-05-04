@@ -1,5 +1,5 @@
 #pragma once
-#include "DataTransferObj.h"
+#include "DataObj.h"
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -14,7 +14,7 @@ public:
 };
 
 
-class DIR_Obj: public DataTransferObj
+class DIR_Obj: public DataObj
 {
 public:
 	void buildTree(const fs::path& path, int max_depth, DirectoryTreeNode& node, int current_depth = 0);

