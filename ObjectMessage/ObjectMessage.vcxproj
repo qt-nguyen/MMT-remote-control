@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataTransferObj.cpp" />
+    <ClCompile Include="KeyloggerObject.cpp" />
     <ClCompile Include="KeyloggerObject.h" />
   </ItemGroup>
   <ItemGroup>
