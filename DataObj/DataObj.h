@@ -65,10 +65,10 @@ protected:
 	std::vector<char> _data;
 public:
 	// Convert data object to string type
-	virtual std::string toString();
+	std::string toString();
 
 	// Convert data object to a file
-	virtual std::string toFile(std::string filename);
+	std::string toFile(std::string filename);
 
 	//
 	std::string getID();

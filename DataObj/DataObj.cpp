@@ -29,6 +29,16 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 
 // Data Object methods and functions
 
+std::string DataObj::toString()
+{
+	return std::string();
+}
+
+std::string DataObj::toFile(std::string filename)
+{
+	return std::string();
+}
+
 std::string DataObj::getID()
 {
 	return this->_ID;
