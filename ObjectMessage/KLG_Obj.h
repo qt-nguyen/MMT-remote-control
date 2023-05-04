@@ -9,7 +9,7 @@
 
 std::vector<int> keylog;
 
-class KLG_TransferObj : public DataTransferObj
+class KLG_Obj: public DataTransferObj
 {
 
 public:

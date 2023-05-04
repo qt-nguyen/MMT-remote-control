@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,12 +129,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IAP_Obj.cpp" />
     <ClCompile Include="DataTransferObj.cpp" />
-    <ClCompile Include="KeyloggerObject.cpp" />
-    <ClCompile Include="KeyloggerObject.h" />
+    <ClCompile Include="DIR_Obj.cpp" />
+    <ClCompile Include="KLG_Obj.cpp" />
+    <ClCompile Include="KLG_Obj.h" />
+    <ClCompile Include="RPC_Obj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IAP_Obj.h" />
     <ClInclude Include="DataTransferObj.h" />
+    <ClInclude Include="DIR_Obj.h" />
+    <ClInclude Include="RPC_Obj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

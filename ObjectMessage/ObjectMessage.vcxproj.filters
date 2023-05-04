@@ -18,15 +18,33 @@
     <ClCompile Include="DataTransferObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyloggerObject.h">
+    <ClCompile Include="KLG_Obj.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyloggerObject.cpp">
+    <ClCompile Include="KLG_Obj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IAP_Obj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DIR_Obj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RPC_Obj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataTransferObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IAP_Obj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIR_Obj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RPC_Obj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
