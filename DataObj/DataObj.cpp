@@ -126,3 +126,16 @@ std::string DataObj::setData(std::vector<char> new_data)
 
 	return res_msg.str();
 }
+
+std::string DataTransferObj::setData(std::string new_data)
+{
+	std::vector<char> pre_data(new_data.begin(), new_data.end());
+	std::stringstream res_msg;
+	res_msg << "MESSAGE: setCmdType: ";
+	res_msg << "Object ID = " << this->_ID << " :\n";
+	res_msg << "\t_data changed" << "\n";
+
+	this->_data = pre_data;
+
+	return res_msg.str();
+}
