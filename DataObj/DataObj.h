@@ -83,4 +83,5 @@ public:
 	std::string setFuncType(FuncType new_func_type);
 	std::string setCmdType(CmdType new_cmd_type);
 	std::string setData(std::vector<char> new_data);
+	std::string setData(std::string new_data);
 };
