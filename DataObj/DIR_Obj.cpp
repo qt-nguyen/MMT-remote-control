@@ -40,7 +40,7 @@ void DIR_Obj::buildTree(const fs::path& path, int max_depth, DirectoryTreeNode& 
 
 std::string DIR_Obj::toString()
 {
-    return "trung";
+    return "";
 }
 
 std::string DIR_Obj::toFile(std::string filename)
