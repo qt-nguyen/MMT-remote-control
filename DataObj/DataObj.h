@@ -64,6 +64,10 @@ protected:
 	CmdType _cmd_type;
 	std::vector<char> _data;
 public:
+	// Initializer
+	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data);
+
+
 	// Convert data object to string type
 	std::string toString();
 

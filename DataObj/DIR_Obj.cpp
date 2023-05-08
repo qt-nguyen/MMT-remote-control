@@ -6,10 +6,6 @@ namespace fs = std::filesystem;
 
 
 
-
-
-
-
 void DIR_Obj::buildTree(const fs::path& path, int max_depth, DirectoryTreeNode& node, int current_depth)
 {
     // If current depth exceeds max depth, exits program

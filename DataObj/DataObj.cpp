@@ -2,6 +2,8 @@
 #include <string>
 #include <tuple>
 #include <sstream>
+#include <fstream>
+#include <iostream>
 
 // Defintion of the EnupMaps
 const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
@@ -29,14 +31,33 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 
 // Data Object methods and functions
 
+DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data)
+{
+	this->_ID = ID;
+	this->_data_type = data_type;
+	this->_func_type = func_type;
+	this->_cmd_type = cmd_type;
+	this->_data = data;
+}
+
 std::string DataObj::toString()
 {
-	return std::string();
+	std::stringstream ss;
+	ss << "{" << "\n";
+	ss << "\t\"ID\":" << _ID << "\n";
+	ss << "\t\"data_type\":" << EnumMaps::DataTypeMap.at(_data_type) << "\n";
+	ss << "\t\"func_type\":" << EnumMaps::FunctionTypeMap.at(_func_type) << "\n";
+	ss << "\t\"cmd_type\":" << EnumMaps::CmdTypeMap.at(_cmd_type) << "\n";
+	ss << "\tdata of " << _data.size() << "bytes" << "\n";
+	ss << "}";
+	std::string res = ss.str();
+	return res;
 }
 
 std::string DataObj::toFile(std::string filename)
 {
-	return std::string();
+	std::ofstream out_file;
+	out_file.open(filename, std::ios::out | std::ios::app);
 }
 
 std::string DataObj::getID()
