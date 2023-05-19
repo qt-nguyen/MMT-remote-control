@@ -1,5 +1,4 @@
 #pragma once
-
 #include "DataObj/KLG_Obj.h"
 #include <memory>
 #include <conio.h>
