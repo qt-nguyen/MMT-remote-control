@@ -11,7 +11,7 @@ class IAP_Obj: public DataObj
 {
 
 public:
-    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data)
+    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data) : DataObj()
     {
         setID(ID);
         _func_type = FuncType::IAP;
