@@ -1,31 +1,15 @@
 #include "IAP_Func.h"
 
-#include <Shlwapi.h>
-#pragma comment(lib, "Shlwapi.lib")
+
 #include <windows.h>
 #include <Psapi.h>
 #include <tchar.h>
 #include <iostream>
 #include <string>
+#include "DataObj/StringConversion.h"
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
 
-//function to convert a wstring to a string
-std::string ws2s(const std::wstring& wstr)
-{
-    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
-    std::string strTo(size_needed, 0);
-    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
-    return strTo;
-}
-
-
-//function to convert a string to a wstring
-std::wstring s2ws(const std::string& str)
-{
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-    std::wstring wstrTo(size_needed, 0);
-    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
-    return wstrTo;
-}
 
 
 DataObj* IAP_Func::listApps() {
@@ -59,7 +43,7 @@ DataObj* IAP_Func::listApps() {
             //Get the display name value from the application's sub key.
             dwBufferSize = sizeof(sDisplayName);
             if (RegQueryValueEx(hAppKey, L"DisplayName", NULL, &dwType, (unsigned char*)sDisplayName, &dwBufferSize) == ERROR_SUCCESS) {
-                result += ws2s(sDisplayName); // Append the display name to the result string
+                result += StringConversion::ws2s(sDisplayName); // Append the display name to the result string
                 result += "\n"; // Add a newline character to separate each display name
             }
             else {
@@ -78,7 +62,7 @@ DataObj* IAP_Func::listApps() {
 DataObj* IAP_Func::startApp(std::string Name)
 {
     std::string res = "";
-    std::wstring appName = s2ws(Name);
+    std::wstring appName = StringConversion::s2ws(Name);
     DWORD bufferSize = MAX_PATH;
     WCHAR appPath[MAX_PATH];
     HRESULT result = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN, ASSOCSTR_EXECUTABLE, appName.c_str(), NULL, appPath, &bufferSize);
@@ -92,8 +76,7 @@ DataObj* IAP_Func::startApp(std::string Name)
         res = "Error getting application path. Error code: " + result;
         res += "\n";
     }
-    
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::START, result);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::START, res);
     return MES;
 }
 
@@ -101,7 +84,7 @@ DataObj* IAP_Func::startApp(std::string Name)
 DataObj* IAP_Func::stopApp(std::string Name)
 {
     std::string result = "";
-    std::wstring appName = s2ws(Name);
+    std::wstring appName = StringConversion::s2ws(Name);
     // Get the list of process identifiers
     DWORD aProcesses[1024], cbNeeded, cProcesses;
     if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))

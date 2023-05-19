@@ -40,6 +40,16 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 	this->_data = data;
 }
 
+DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::string data)
+{
+	this->_ID = ID;
+	this->_data_type = data_type;
+	this->_func_type = func_type;
+	this->_cmd_type = cmd_type;
+	std::vector<char> vec_data(data.begin(), data.end());
+	this->_data = vec_data;
+}
+
 std::string DataObj::toString()
 {
 	std::stringstream ss;

@@ -1,21 +1,21 @@
 #pragma once
 
-#include "DataTransferObj.h"
+#include "DataObj.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <sstream>
 #include <fstream>
 
-// a transfer object support Processes Manipulate Functions
+// a  object support Processes Manipulate Functions
 
-class RPC_TransferObj : public DataTransferObj
+class RPC_Obj : public DataObj
 {
 
 public:
-    RPC_TransferObj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataTransferObj(ID, dataType, FuncType::RPC, CMD, data) {}
+    RPC_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::RPC, CMD, data) {}
 
-    RPC_TransferObj(DataType dataType, CmdType CMD, std::string data)
+    RPC_Obj(DataType dataType, CmdType CMD, std::string data)
     {
         setID("");
         _func_type = FuncType::RPC;
@@ -31,7 +31,7 @@ public:
     // Convert data object to a file
     std::string toFile(std::string filename);
 
-    ~RPC_TransferObj()
+    ~RPC_Obj()
     {
 
     }

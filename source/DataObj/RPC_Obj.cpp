@@ -1,4 +1,4 @@
-#include "RPC_TransferObj.h"
+#include "RPC_Obj.h"
 
 #include <iostream>
 #include <string>
@@ -6,7 +6,7 @@
 
 
 
-std::string RPC_TransferObj::toString()
+std::string RPC_Obj::toString()
 {
     std::stringstream ss;
 
@@ -19,7 +19,7 @@ std::string RPC_TransferObj::toString()
     return ss.str();
 }
 
-std::string RPC_TransferObj::toFile(std::string filename)
+std::string RPC_Obj::toFile(std::string filename)
 {
     std::string result = "";
 
