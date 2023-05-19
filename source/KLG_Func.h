@@ -1,9 +1,10 @@
 #pragma once
 
-#include "KLG_TransferObj.h"
+#include "DataObj/KLG_Obj.h"
 #include <memory>
 #include <conio.h>
 #include <windows.h>
+#include <vector>
 
 std::vector<int> keylog;
 
