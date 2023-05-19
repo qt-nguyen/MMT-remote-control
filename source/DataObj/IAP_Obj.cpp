@@ -1,6 +1,6 @@
-#include "IAP_TransferObj.h"
+#include "IAP_Obj.h"
 
-std::string IAP_TransferObj::toString()
+std::string IAP_Obj::toString()
 {
     std::stringstream ss;
 
@@ -13,7 +13,7 @@ std::string IAP_TransferObj::toString()
     return ss.str();
 }
 
-std::string IAP_TransferObj::toFile(std::string filename)
+std::string IAP_Obj::toFile(std::string filename)
 {
     std::string result = "";
 

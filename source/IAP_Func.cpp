@@ -71,7 +71,7 @@ DataObj* IAP_Func::listApps() {
     RegCloseKey(hUninstKey);
 
     // Return the list of installed applications
-    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::SHOW, result);
     return MES;
 }
 
@@ -93,7 +93,7 @@ DataObj* IAP_Func::startApp(std::string Name)
         res += "\n";
     }
     
-    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::START, result);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::START, result);
     return MES;
 }
 
@@ -147,6 +147,6 @@ DataObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::STOP, result);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::STOP, result);
     return MES;
 }
