@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json>
 
 // Defintion of the EnupMaps
 const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
@@ -58,7 +59,26 @@ std::string DataObj::toFile(std::string filename)
 {
 	std::ofstream out_file;
 	out_file.open(filename, std::ios::out | std::ios::app);
+
+	if (out_file.is_open())
+	{
+		out_file << "{" << "\n";
+		out_file << "\t\"ID\":" << _ID << "\n";
+		out_file << "\t\"data_type\":" << EnumMaps::DataTypeMap.at(_data_type) << "\n";
+		out_file << "\t\"func_type\":" << EnumMaps::FunctionTypeMap.at(_func_type) << "\n";
+		out_file << "\t\"cmd_type\":" << EnumMaps::CmdTypeMap.at(_cmd_type) << "\n";
+		out_file << "\t\"data\": " << _data << "\n";
+		out_file << "}" << "\n";
+
+		out_file.close();
+		return "Data written to file successfully.";
+	}
+	else
+	{
+		return "Unable to open the file.";
+	}
 }
+
 
 std::string DataObj::getID()
 {
