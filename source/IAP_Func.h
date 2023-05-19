@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DataTransferObj.h"
-#include "IAP_TransferObj.h"
+#include "DataObj/DataObj.h"
+#include "DataObj/IAP_Obj.h"
 
 // containing functions for Installed AaP
 
@@ -11,12 +11,12 @@ private:
 
 public:
 
-	DataTransferObj* listApps();
+	DataObj* listApps();
 
     // Start an app
-	DataTransferObj* startApp(std::string appName);
+	DataObj* startApp(std::string appName);
 
     // Stop an app
-	DataTransferObj* stopApp(std::string appName);
+	DataObj* stopApp(std::string appName);
 
 };
