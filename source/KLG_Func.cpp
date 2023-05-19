@@ -69,13 +69,13 @@ DataObj* KLG_Func::keylogger()
 
 bool KLG_Func::checkStopSignal()
 {
-	DataObj stopSignal;
+	DataObj* stopSignal;
 
 	// thao tác nhận tín hiệu từ client là đối tượng DataObj stopSignal
 	// ...
 
 
-	if (stopSignal.getFuncType() == KLG && stopSignal.getCmdType() == STOP)
+	if (stopSignal->getFuncType() == KLG && stopSignal->getCmdType() == STOP)
 	{
 		// gửi thông điệp đã nhận được tín hiệu cho client 
 		// ...
