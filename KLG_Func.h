@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KLG_TransferObj.h"
+#include "KLG_Obj.h"
 #include <memory>
 #include <conio.h>
 #include <windows.h>
