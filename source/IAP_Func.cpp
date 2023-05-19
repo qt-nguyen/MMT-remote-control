@@ -28,7 +28,7 @@ std::wstring s2ws(const std::string& str)
 }
 
 
-DataTransferObj* IAP_Func::listApps() {
+DataObj* IAP_Func::listApps() {
     std::string result = "";
     HKEY hUninstKey = NULL;
     HKEY hAppKey = NULL;
@@ -71,11 +71,11 @@ DataTransferObj* IAP_Func::listApps() {
     RegCloseKey(hUninstKey);
 
     // Return the list of installed applications
-    DataTransferObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
+    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
     return MES;
 }
 
-DataTransferObj* IAP_Func::startApp(std::string Name)
+DataObj* IAP_Func::startApp(std::string Name)
 {
     std::string res = "";
     std::wstring appName = s2ws(Name);
@@ -93,12 +93,12 @@ DataTransferObj* IAP_Func::startApp(std::string Name)
         res += "\n";
     }
     
-    DataTransferObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::START, result);
+    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::START, result);
     return MES;
 }
 
 
-DataTransferObj* IAP_Func::stopApp(std::string Name)
+DataObj* IAP_Func::stopApp(std::string Name)
 {
     std::string result = "";
     std::wstring appName = s2ws(Name);
@@ -147,6 +147,6 @@ DataTransferObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataTransferObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::STOP, result);
+    DataObj* MES = new IAP_TransferObj(DataType::RESPONSE, CmdType::STOP, result);
     return MES;
 }

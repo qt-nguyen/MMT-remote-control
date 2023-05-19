@@ -25,9 +25,9 @@ std::wstring s2ws(const std::string& str)
 }
 
 
-DataTransferObj* RPC_Func::listPrcs() {
+DataObj* RPC_Func::listPrcs() {
     std::string result = "";
-    DataTransferObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
+    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
     DWORD aProcesses[1024], cbNeeded, cProcesses;
     if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)) return MES;
 
@@ -114,10 +114,10 @@ HANDLE OpenProcessByName(const std::wstring& name)
     return NULL;
 }
 
-DataTransferObj* RPC_Func::runPrc(std::string Name)
+DataObj* RPC_Func::runPrc(std::string Name)
 {
     std::string res = "";
-    DataTransferObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::RUN, res);
+    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::RUN, res);
     WCHAR szPath[MAX_PATH];
     std::wstring name = s2ws(Name);
     if (SearchPath(NULL, name.c_str(), L".exe", MAX_PATH, szPath, NULL) == 0)
@@ -146,10 +146,10 @@ DataTransferObj* RPC_Func::runPrc(std::string Name)
 }
 
 
-DataTransferObj* RPC_Func::killPrc(std::string Name)
+DataObj* RPC_Func::killPrc(std::string Name)
 {
     std::string result = "";
-    DataTransferObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::KILL, result);
+    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::KILL, result);
     std::wstring name = s2ws(Name);
     HANDLE hProcess = OpenProcessByName(name);
     if (hProcess == NULL)
