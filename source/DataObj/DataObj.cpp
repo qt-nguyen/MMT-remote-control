@@ -5,10 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json>
-#include  <bullshit>
-
-
-
 
 // Defintion of the EnupMaps
 const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
