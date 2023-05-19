@@ -100,7 +100,7 @@ HANDLE OpenProcessByName(const std::wstring& name)
 DataObj* RPC_Func::runPrc(std::string Name)
 {
     std::string res = "";
-    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::RUN, res);
+    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::DATA, res);
     WCHAR szPath[MAX_PATH];
     std::wstring name = StringConversion::s2ws(Name);
     if (SearchPath(NULL, name.c_str(), L".exe", MAX_PATH, szPath, NULL) == 0)
@@ -132,7 +132,7 @@ DataObj* RPC_Func::runPrc(std::string Name)
 DataObj* RPC_Func::killPrc(std::string Name)
 {
     std::string result = "";
-    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::KILL, result);
+    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::DATA, result);
     std::wstring name = StringConversion::s2ws(Name);
     HANDLE hProcess = OpenProcessByName(name);
     if (hProcess == NULL)

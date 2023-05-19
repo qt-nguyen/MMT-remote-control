@@ -76,7 +76,7 @@ DataObj* IAP_Func::startApp(std::string Name)
         res = "Error getting application path. Error code: " + result;
         res += "\n";
     }
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::START, res);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::DATA, res);
     return MES;
 }
 
@@ -130,6 +130,6 @@ DataObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::STOP, result);
+    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::DATA, result);
     return MES;
 }

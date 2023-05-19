@@ -31,6 +31,15 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 
 // Data Object methods and functions
 
+DataObj::DataObj()
+{
+	this->_ID = "";
+	this->_data_type;
+	this->_func_type;
+	this->_cmd_type;
+	this->setData("");
+}
+
 DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data)
 {
 	this->_ID = ID;
