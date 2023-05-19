@@ -4,7 +4,14 @@
 #include <string>
 
 
-
+RPC_Obj::RPC_Obj(DataType dataType, CmdType CMD, std::string data)
+{
+    setID("");
+    _func_type = FuncType::RPC;
+    setDataType(dataType);
+    setCmdType(CMD);
+    setData(data);
+}
 
 std::string RPC_Obj::toString()
 {

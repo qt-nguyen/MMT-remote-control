@@ -15,14 +15,7 @@ class RPC_Obj : public DataObj
 public:
     RPC_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::RPC, CMD, data) {}
 
-    RPC_Obj(DataType dataType, CmdType CMD, std::string data)
-    {
-        setID("");
-        _func_type = FuncType::RPC;
-        setDataType(dataType);
-        setCmdType(CMD);
-        setData(data);
-    }
+    RPC_Obj(DataType dataType, CmdType CMD, std::string data);
 
 public:
     // Convert data object to string type
