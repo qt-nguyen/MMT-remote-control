@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DataObj.h"
+#include "DataTransferObj.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -9,11 +9,11 @@
 
 // a transfer object support Processes Manipulate Functions
 
-class RPC_TransferObj : public DataObj
+class RPC_TransferObj : public DataTransferObj
 {
 
 public:
-    RPC_TransferObj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::RPC, CMD, data) {}
+    RPC_TransferObj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataTransferObj(ID, dataType, FuncType::RPC, CMD, data) {}
 
     RPC_TransferObj(DataType dataType, CmdType CMD, std::string data)
     {

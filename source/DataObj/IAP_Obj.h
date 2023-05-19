@@ -1,4 +1,5 @@
 #pragma once
+
 #include "DataObj.h"
 #include <string>
 #include <vector>
@@ -12,7 +13,7 @@ class IAP_Obj : public DataObj
 {
 
 public:
-    IAP_Obj(std::string ID, DataType dataType, FuncType func_type, CmdType cmd_type, std::string data) : DataObj(ID, dataType, FuncType::IAP, cmd_type, data) {}
+    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::IAP, CMD, data) {}
 
     IAP_Obj(DataType dataType, CmdType CMD, std::string data)
     {

@@ -1,5 +1,14 @@
 #include "KLG_Obj.h"
 
+KLG_Obj::KLG_Obj(DataType dataType, FuncType func_type, CmdType cmd_type, std::string data)
+{
+    setID("");
+    setFuncType(func_type);
+    setDataType(dataType);
+    setCmdType(cmd_type);
+    setData(data);
+}
+
 std::string KLG_Obj::toString()
 {
     std::stringstream ss;
