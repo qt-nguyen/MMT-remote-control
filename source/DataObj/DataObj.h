@@ -65,6 +65,7 @@ protected:
 	std::vector<char> _data;
 public:
 	// Initializer
+	DataObj();
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data);
 
 
