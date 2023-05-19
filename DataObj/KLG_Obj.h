@@ -11,10 +11,15 @@
 class KLG_Obj : public DataObj
 {
 public:
-	// initializer
-	KLG_Obj()
+	KLG_Obj(DataType dataType, FuncType func_type, std::string data) 
+    {
+        setFuncType(func_type);
+        setDataType(dataType);
+        setData(data);
+    }
 
-
+	std::string toString();
+    std::string toFile(std::string filename);
 
 
 };

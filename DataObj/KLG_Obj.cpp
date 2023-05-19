@@ -1,6 +1,6 @@
-#include "KLG_TransferObj.h"
+#include "KLG_Obj.h"
 
-std::string KLG_TransferObj::toString()
+std::string KLG_Obj::toString()
 {
     std::stringstream ss;
 
@@ -13,7 +13,7 @@ std::string KLG_TransferObj::toString()
     return ss.str();
 }
 
-std::string KLG_TransferObj::toFile(std::string filename)
+std::string KLG_Obj::toFile(std::string filename)
 {
     std::string result = "";
 
