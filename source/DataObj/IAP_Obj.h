@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DataTransferObj.h"
+#include "DataObj.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -9,11 +9,11 @@
 
 //a transfer object support for function dealing with installed app
 
-class IAP_Obj : public DataTransferObj
+class IAP_Obj : public DataObj
 {
 
 public:
-    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataTransferObj(ID, dataType, FuncType::IAP, CMD, data) {}
+    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::IAP, CMD, data) {}
 
     IAP_Obj(DataType dataType, CmdType CMD, std::string data)
     {
