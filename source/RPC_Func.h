@@ -1,7 +1,8 @@
 #pragma once
 
-#include "DataTransferObj.h"
-#include "RPC_TransferObj.h"
+#include "DataObj/DataObj.h"
+#include "DataObj/RPC_Obj.h"
+#include <string>
 
 class RPC_Func
 {
@@ -9,12 +10,12 @@ private:
 
 public:
     //list processes
-    DataTransferObj* listPrcs();
+    DataObj* listPrcs();
 
     //start a process
-    DataTransferObj* runPrc(std::string prcName);
+    DataObj* runPrc(std::string prcName);
 
     //delete a process
-    DataTransferObj* killPrc(std::string prcName);
+    DataObj* killPrc(std::string prcName);
 
 };

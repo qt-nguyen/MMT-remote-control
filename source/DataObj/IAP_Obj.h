@@ -7,13 +7,17 @@
 #include <sstream>
 #include <fstream>
 
-class IAP_Obj: public DataObj
+//a transfer object support for function dealing with installed app
+
+class IAP_Obj : public DataObj
 {
 
 public:
-    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data) : DataObj()
+    IAP_Obj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataObj(ID, dataType, FuncType::IAP, CMD, data) {}
+
+    IAP_Obj(DataType dataType, CmdType CMD, std::string data)
     {
-        setID(ID);
+        setID("");
         _func_type = FuncType::IAP;
         setDataType(dataType);
         setCmdType(CMD);
@@ -27,12 +31,8 @@ public:
     // Convert data object to a file
     std::string toFile(std::string filename);
 
-    // List installed apps
-    std::string listApps();
+    ~IAP_Obj()
+    {
 
-    // Start an app
-    std::string startApp(std::string appName);
-
-    // Stop an app
-    std::string stopApp(std::string appName);
+    }
 };

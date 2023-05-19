@@ -1,19 +1,23 @@
 #pragma once
 
-#include "DataObj.h"
+#include "DataTransferObj.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <sstream>
 #include <fstream>
 
-class RPC_Obj: public DataObj
+// a transfer object support Processes Manipulate Functions
+
+class RPC_TransferObj : public DataTransferObj
 {
 
 public:
-    RPC_Obj(std::string ID, DataType dataType, CmdType CMD, std::vector<char> data)
+    RPC_TransferObj(std::string ID, DataType dataType, CmdType CMD, std::string data) : DataTransferObj(ID, dataType, FuncType::RPC, CMD, data) {}
+
+    RPC_TransferObj(DataType dataType, CmdType CMD, std::string data)
     {
-        setID(ID);
+        setID("");
         _func_type = FuncType::RPC;
         setDataType(dataType);
         setCmdType(CMD);
@@ -27,12 +31,8 @@ public:
     // Convert data object to a file
     std::string toFile(std::string filename);
 
-    // List installed apps
-    std::string listPrcs();
+    ~RPC_TransferObj()
+    {
 
-    // Start an app
-    std::string runPrc(std::string prcName);
-
-    // Stop an app
-    std::string killPrc(std::string prcName);
+    }
 };
