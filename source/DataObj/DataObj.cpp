@@ -66,7 +66,6 @@ std::string DataObj::toFile(std::string filename)
 		out_file << "\t\"data_type\":" << EnumMaps::DataTypeMap.at(_data_type) << "\n";
 		out_file << "\t\"func_type\":" << EnumMaps::FunctionTypeMap.at(_func_type) << "\n";
 		out_file << "\t\"cmd_type\":" << EnumMaps::CmdTypeMap.at(_cmd_type) << "\n";
-		out_file << "\t\"data\": " << _data << "\n";
 		out_file << "}" << "\n";
 
 		out_file.close();

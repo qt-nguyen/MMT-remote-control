@@ -1,4 +1,5 @@
-#include "RPC_TransferObj.h"
+#include "RPC_Obj.h"
+#include "DataObj.h"
 
 #include <iostream>
 #include <string>
