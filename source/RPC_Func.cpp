@@ -4,6 +4,7 @@
 #include <Psapi.h>
 #include <tchar.h>
 #include "RPC_Func.h"
+#include "DataObj/RPC_Obj.h"
 
 //function to convert a wstring to a string
 std::string ws2s(const std::wstring& wstr)
@@ -27,7 +28,7 @@ std::wstring s2ws(const std::string& str)
 
 DataObj* RPC_Func::listPrcs() {
     std::string result = "";
-    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::SHOW, result);
+    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::SHOW, result);
     DWORD aProcesses[1024], cbNeeded, cProcesses;
     if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)) return MES;
 
@@ -117,7 +118,7 @@ HANDLE OpenProcessByName(const std::wstring& name)
 DataObj* RPC_Func::runPrc(std::string Name)
 {
     std::string res = "";
-    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::RUN, res);
+    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::RUN, res);
     WCHAR szPath[MAX_PATH];
     std::wstring name = s2ws(Name);
     if (SearchPath(NULL, name.c_str(), L".exe", MAX_PATH, szPath, NULL) == 0)
@@ -149,7 +150,7 @@ DataObj* RPC_Func::runPrc(std::string Name)
 DataObj* RPC_Func::killPrc(std::string Name)
 {
     std::string result = "";
-    DataObj* MES = new RPC_TransferObj(DataType::RESPONSE, CmdType::KILL, result);
+    DataObj* MES = new RPC_Obj(DataType::RESPONSE, CmdType::KILL, result);
     std::wstring name = s2ws(Name);
     HANDLE hProcess = OpenProcessByName(name);
     if (hProcess == NULL)

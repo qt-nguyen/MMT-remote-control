@@ -117,7 +117,6 @@ D:\GitHub\MMT-remote-contro\source\dataobj\IAP_Obj.cpp(117,17): message : while 
           [
               _Elem=wchar_t
           ]
-  KLG_Obj.cpp
   RPC_Obj.cpp
 D:\GitHub\MMT-remote-contro\source\dataobj\RPC_Obj.cpp(30,21): error C2664: 'BOOL QueryFullProcessImageNameA(HANDLE,DWORD,LPSTR,PDWORD)': cannot convert argument 3 from 'WCHAR [260]' to 'LPSTR'
 D:\GitHub\MMT-remote-contro\source\dataobj\RPC_Obj.cpp(30,60): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
@@ -195,7 +194,35 @@ D:\GitHub\MMT-remote-contro\source\IAP_Func.cpp(138,17): message : while trying 
               _Elem=wchar_t
           ]
 D:\GitHub\MMT-remote-contro\source\IAP_Func.cpp(150,24): error C2061: syntax error: identifier 'IAP_TransferObj'
-  KLG_Func.cpp
   RPC_Func.cpp
-D:\GitHub\MMT-remote-contro\source\RPC_Func.h(3,10): fatal  error C1083: Cannot open include file: 'DataTransferObj.h': No such file or directory
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(31,31): error C2661: 'RPC_Obj::RPC_Obj': no overloaded function takes 3 arguments
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(31,31): message : while trying to match the argument list '(DataType, CmdType, std::string)'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(47,21): error C2664: 'BOOL QueryFullProcessImageNameA(HANDLE,DWORD,LPSTR,PDWORD)': cannot convert argument 3 from 'WCHAR [260]' to 'LPSTR'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(47,60): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\winbase.h(3415,1): message : see declaration of 'QueryFullProcessImageNameA'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(47,21): message : while trying to match the argument list '(HANDLE, int, WCHAR [260], DWORD *)'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(88,21): error C2664: 'BOOL QueryFullProcessImageNameA(HANDLE,DWORD,LPSTR,PDWORD)': cannot convert argument 3 from 'WCHAR [260]' to 'LPSTR'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(88,60): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\winbase.h(3415,1): message : see declaration of 'QueryFullProcessImageNameA'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(88,21): message : while trying to match the argument list '(HANDLE, int, WCHAR [260], DWORD *)'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(121,31): error C2661: 'RPC_Obj::RPC_Obj': no overloaded function takes 3 arguments
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(121,31): message : while trying to match the argument list '(DataType, CmdType, std::string)'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(124,9): error C2664: 'DWORD SearchPathA(LPCSTR,LPCSTR,LPCSTR,DWORD,LPSTR,LPSTR *)': cannot convert argument 2 from 'const _Elem *' to 'LPCSTR'
+          with
+          [
+              _Elem=wchar_t
+          ]
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(124,36): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\processenv.h(278,1): message : see declaration of 'SearchPathA'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(124,9): message : while trying to match the argument list '(int, const _Elem *, const wchar_t [5], int, WCHAR [260], int)'
+          with
+          [
+              _Elem=wchar_t
+          ]
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(134,10): error C2664: 'BOOL CreateProcessW(LPCWSTR,LPWSTR,LPSECURITY_ATTRIBUTES,LPSECURITY_ATTRIBUTES,BOOL,DWORD,LPVOID,LPCWSTR,LPSTARTUPINFOW,LPPROCESS_INFORMATION)': cannot convert argument 9 from 'STARTUPINFO *' to 'LPSTARTUPINFOW'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(134,73): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\processthreadsapi.h(372,1): message : see declaration of 'CreateProcessW'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(134,10): message : while trying to match the argument list '(WCHAR [260], int, int, int, int, int, int, int, STARTUPINFO *, PROCESS_INFORMATION *)'
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(153,31): error C2661: 'RPC_Obj::RPC_Obj': no overloaded function takes 3 arguments
+D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp(153,31): message : while trying to match the argument list '(DataType, CmdType, std::string)'
   Generating Code...
