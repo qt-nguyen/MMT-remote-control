@@ -1,9 +1,9 @@
 ﻿#include "ServerBackend.h"
 
-DataObj ServerBackend::handleClientRequest(std::string buffer)
+void ServerBackend::handleClientRequest(DataObj& request, int& number_continue)
 {
     // Chuyển đổi dữ liệu thành DataObj
-    DataObj request = deserialize(buffer);
+    //DataObj request = deserialize(buffer);
     // Xử lý yêu cầu từ client dựa trên thông tin trong DataObj
     // Gọi các phương thức tương ứng trong lớp con để thực hiện chức năng
 
@@ -16,7 +16,7 @@ DataObj ServerBackend::handleClientRequest(std::string buffer)
 
     }
     // Xử lý các chức năng và lệnh khác...
-    return request;
+
 }
 
 DataObj ServerBackend::deserialize(std::string& data)

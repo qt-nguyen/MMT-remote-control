@@ -1,7 +1,34 @@
 ﻿#include "Server.h"
+#include "stdafx.h"
+#include "afxsock.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
 
 Server::Server()
 {
+    HMODULE hModule = ::GetModuleHandle(NULL);
+    if (hModule != NULL)
+    {
+        if (!AfxWinInit(hModule, NULL, ::GetCommandLine(), 0))
+        {
+            // TODO: change error code to suit your needs
+            _tprintf(_T("Fatal Error: MFC initialization failed\n"));
+        }
+        else
+        {
+            AfxSocketInit(NULL);
+            _clientID = 0;
+            _server.Create(4567);
+        }
+    }
+    else
+    {
+        // TODO: change error code to suit your needs
+        _tprintf(_T("Fatal Error: GetModuleHandle failed\n"));
+    }
+    /*
     // Khởi tạo Winsock
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
@@ -44,17 +71,38 @@ Server::Server()
     }
 
     std::cout << "Dang cho ket noi tu client..." << std::endl;
+    */
 }
 
 Server::~Server()
 {
-    // Đóng kết nối và giải phóng Winsock
-    closesocket(_serverSocket);
-    WSACleanup();
+    _server.close();
 }
 
 void Server::start()
 {
+    do {
+        printf("Server lang nghe ket noi tu client\n");
+        _server.Listen();
+        _server.Accept(_s);
+
+        ++_clientID;
+        // Get the IP address and port number of the connected client
+        CString ipAddress;
+        UINT port;
+        _s.GetPeerName(ipAddress, port);
+        wprintf(L"Client %d connected from IP address %s\n", _clientID, (LPCTSTR)ipAddress);
+
+        //Chuyển đỏi CSocket thanh Socket
+        auto args = new std::pair<int, SOCKET>(_clientID, _s.Detach());
+        //Khoi tao thread tuong ung voi moi client Connect vao server.
+
+        //Nhu vay moi client se doc lap nhau, khong phai cho doi tung client xu ly rieng
+        _threadStatus = CreateThread(NULL, 0, function_cal, args, 0, &_threadID);
+
+    } while (1);
+
+    /*
     while (true)
     {
         // Chấp nhận kết nối từ client
@@ -83,39 +131,49 @@ void Server::start()
         // Đóng kết nối với client
         closesocket(clientSocket);
     }
+    */
 }
 
-std::string Server::receiveData(SOCKET clientSocket)
-{
-    char buffer[1024];
-    memset(buffer, 0, sizeof(buffer));
-
-    // Nhận dữ liệu từ client
-    int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-    if (bytesRead == SOCKET_ERROR)
-    {
-        std::cerr << "Loi khi nhan du lieu tu client." << std::endl;
-        closesocket(clientSocket);
-        WSACleanup();
-        exit(1);
-    }
-
-    std::string data(buffer);
-    return data;
-}
-
-void Server::sendData(SOCKET clientSocket, std::string response)
+DWORD WINAPI function_cal(LPVOID arg)
 {
 
-    // Gửi dữ liệu từ server tới client
-    int bytesSent = send(clientSocket, response.c_str(), response.length(), 0);
-    if (bytesSent == SOCKET_ERROR)
-    {
-        std::cerr << "Loi khi gui du lieu tu server toi client." << std::endl;
-        closesocket(clientSocket);
-        WSACleanup();
-        exit(1);
-    }
+    auto args = (std::pair<int, SOCKET>*)arg;
+    int clientID = args->first;
+    SOCKET* hConnected = &args->second;
+    CSocket mysock;
+    mysock.Attach(*hConnected);
+
+    // Get the IP address and port number of the connected client
+    CString ipAddress;
+    UINT port;
+    mysock.GetPeerName(ipAddress, port);
+
+    int number_continue = 0;
+    ServerBackend backend;
+
+    do {
+        DataObj data;
+
+        mysock.Receive(&data, sizeof(data), 0);
+        
+        backend.handleClientRequest(data, number_continue);
+
+        //Gui ket qua tinh toan cho client
+        mysock.Send(&data, sizeof(data), 0);
+
+        
+
+        if (number_continue == 0)
+        {
+            wprintf(L"Client %d from %s disconnected from server\n", clientID, (LPCTSTR)ipAddress);
+            mysock.Close();
+            break;
+        }
+
+    } while (number_continue);
+    delete args;
+    return 0;
+    //return 0;
 }
 
 

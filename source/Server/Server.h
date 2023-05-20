@@ -1,4 +1,6 @@
+#pragma once
 #include "ServerBackend.h"
+#include "Resource.h"
 
 #include <iostream>
 #include <Winsock2.h>
@@ -9,19 +11,17 @@ class Server
 {
 private:
     ServerBackend _backend;
-    SOCKET _serverSocket;
+    CSocket _server, _s;
+    DWORD _threadID;
+    HANDLE _threadStatus;
+    int _clientID;
 
 public:
     Server();
     ~Server();
 
     void start();
-    
-
-private:
-    std::string receiveData(SOCKET clientSocket);
-
-    void sendData(SOCKET clientSocket, std::string response);
+    friend DWORD WINAPI function_cal(LPVOID arg);
 
 
 };

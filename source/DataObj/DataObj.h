@@ -10,14 +10,12 @@
 
 enum DataType
 {
-	DATA_TYPE, // default value, for testing
 	RESPONSE,
 	REQUEST
 };
 
 enum FuncType
 {
-	FUNC_TYPE, // Default value, for testing
 	IAP, // Installed Apps
 	RPC, // Running proceesses
 	SCR, // Screen capture
@@ -64,9 +62,8 @@ protected:
 	CmdType _cmd_type;
 	std::vector<char> _data;
 public:
-	// Initializers
+	// Initializer
 	DataObj();
-
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data);
 
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::string data);
@@ -90,7 +87,6 @@ public:
 	std::string setDataType(DataType new_data_type);
 	std::string setFuncType(FuncType new_func_type);
 	std::string setCmdType(CmdType new_cmd_type);
-
 	std::string setData(std::vector<char> new_data);
 	std::string setData(std::string new_data);
 };
