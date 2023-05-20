@@ -69,9 +69,6 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 // JSON format
 // enum will be shown as integers
 std::string DataObj::toJsonString()
-
-std::string DataObj::toString();
-
 {
 	nlohmann::ordered_json res_json;
 	res_json["ID"] = _ID;
@@ -83,16 +80,37 @@ std::string DataObj::toString();
 	return res;
 }
 
+// Pseudo connsole format, like this:
+// ID123 REQUEST DIR SHOW 233
+std::string DataObj::toString()
+{
+	std::string delim = " ";
+	std::stringstream ss;
+	ss << _ID << delim;
+	ss << EnumMaps::DataTypeMap.at(_data_type) << delim;
+	ss << EnumMaps::FunctionTypeMap.at(_func_type) << delim;
+	ss << EnumMaps::CmdTypeMap.at(_cmd_type) << delim;
+	ss << _data.size() << "\n";
+	auto res = ss.str();
+	return res;
+}
+
 std::string DataObj::toFile(std::string filename)
 {
 	std::ofstream out_file;
+	std::string delim = "\n";
 	out_file.open(filename, std::ios::out | std::ios::app);
 
 	if (out_file.is_open())
 	{
-		out_file << toString();
+		out_file << _ID << delim;
+		out_file << _data_type << delim;
+		out_file << _func_type << delim;
+		out_file << _cmd_type << delim;
+		
+
+		for (const auto& e : _data) out_file << e;
 		out_file.close();
-		return "Data written to file successfully.";
 	}
 	else
 	{
