@@ -1,7 +1,0 @@
-{
-    "ID": "",
-    "data_type": 0,
-    "func_type": 0,
-    "cmd_type": 0,
-    "data_size": ""
-}

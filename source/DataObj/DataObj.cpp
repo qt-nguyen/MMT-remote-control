@@ -75,7 +75,7 @@ std::string DataObj::toJsonString()
 	res_json["_data_type"] = EnumMaps::DataTypeMap.at(_data_type);
 	res_json["_func_type"] = EnumMaps::FunctionTypeMap.at(_func_type);
 	res_json["_cmd_type"] = EnumMaps::CmdTypeMap.at(_cmd_type);
-	res_json["_data_size"] = _data.size();
+	res_json["_data.size()"] = _data.size();
 	std::string res = res_json.dump(4) + "\n";
 	return res;
 }
@@ -109,7 +109,7 @@ std::string DataObj::toFile(std::string filename)
 		res_json["_func_type"] = _func_type;
 		res_json["_cmd_type"] = _cmd_type;
 		res_json["_data"] = std::string(_data.begin(), _data.end());
-		out_file << res_json.dump(4);
+		out_file << res_json.dump(4) << delim;
 		out_file.close();
 	}
 	else
