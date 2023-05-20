@@ -66,9 +66,14 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 	this->_data = vec_data;
 }
 
-std::string DataObj::toString()
+// JSON format
+// enum will be shown as integers
+std::string DataObj::toJsonString()
+
+std::string DataObj::toString();
+
 {
-	json res_json;
+	nlohmann::ordered_json res_json;
 	res_json["ID"] = _ID;
 	res_json["data_type"] = EnumMaps::DataTypeMap.at(_data_type);
 	res_json["func_type"] = EnumMaps::FunctionTypeMap.at(_func_type);

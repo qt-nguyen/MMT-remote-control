@@ -31,13 +31,9 @@ public:
 int  main() {
 	DataObj object;
 
-
-	//object.setID("ID123");
-	//object.setDataType(RESPONSE);
-	//object.setFuncType(DIR);
-	//object.setCmdType(SHOW);
-	//object.setData("trung nguyen quoc trung nguyen quoc tran trong nghia tran ky thanh");
+	
 	std::cout << object.toString();
+
 
 
 	system("pause");

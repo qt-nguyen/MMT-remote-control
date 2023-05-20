@@ -73,6 +73,7 @@ public:
 
 
 	// Convert data object to string type
+	std::string toJsonString();
 	std::string toString();
 
 	// Convert data object to a file

@@ -1,0 +1,7 @@
+{
+    "ID": "ID123",
+    "cmd_type": "SHOW",
+    "data_size": 66,
+    "data_type": "RESPONSE",
+    "func_type": "DIR"
+}
