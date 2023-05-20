@@ -143,6 +143,9 @@
     <ClInclude Include="..\source\KLG_Func.h" />
     <ClInclude Include="..\source\RPC_Func.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="output.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

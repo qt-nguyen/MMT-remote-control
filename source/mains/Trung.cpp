@@ -32,7 +32,7 @@ int  main() {
 	DataObj object;
 
 	
-	std::cout << object.toString();
+	std::cout << object.toFile("output.txt");
 
 
 

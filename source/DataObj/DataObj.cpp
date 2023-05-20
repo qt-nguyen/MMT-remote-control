@@ -71,11 +71,11 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 std::string DataObj::toJsonString()
 {
 	nlohmann::ordered_json res_json;
-	res_json["ID"] = _ID;
-	res_json["data_type"] = EnumMaps::DataTypeMap.at(_data_type);
-	res_json["func_type"] = EnumMaps::FunctionTypeMap.at(_func_type);
-	res_json["cmd_type"] = EnumMaps::CmdTypeMap.at(_cmd_type);
-	res_json["data_size"] = _data.size();
+	res_json["_ID"] = _ID;
+	res_json["_data_type"] = EnumMaps::DataTypeMap.at(_data_type);
+	res_json["_func_type"] = EnumMaps::FunctionTypeMap.at(_func_type);
+	res_json["_cmd_type"] = EnumMaps::CmdTypeMap.at(_cmd_type);
+	res_json["_data_size"] = _data.size();
 	std::string res = res_json.dump(4) + "\n";
 	return res;
 }
@@ -103,13 +103,13 @@ std::string DataObj::toFile(std::string filename)
 
 	if (out_file.is_open())
 	{
-		out_file << _ID << delim;
-		out_file << _data_type << delim;
-		out_file << _func_type << delim;
-		out_file << _cmd_type << delim;
-		
-
-		for (const auto& e : _data) out_file << e;
+		nlohmann::ordered_json res_json;
+		res_json["_ID"] = _ID;
+		res_json["_data_type"] = _data_type;
+		res_json["_func_type"] = _func_type;
+		res_json["_cmd_type"] = _cmd_type;
+		res_json["_data"] = std::string(_data.begin(), _data.end());
+		out_file << res_json.dump(4);
 		out_file.close();
 	}
 	else

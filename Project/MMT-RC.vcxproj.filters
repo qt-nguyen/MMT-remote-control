@@ -90,4 +90,7 @@
       <Filter>Source Files\Func</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="output.txt" />
+  </ItemGroup>
 </Project>
