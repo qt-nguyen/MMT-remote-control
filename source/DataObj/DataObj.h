@@ -16,6 +16,7 @@ enum DataType
 
 enum FuncType
 {
+	FUNC_TYPE, // Default value, for testing
 	IAP, // Installed Apps
 	RPC, // Running proceesses
 	SCR, // Screen capture
@@ -62,31 +63,35 @@ protected:
 	CmdType _cmd_type;
 	std::vector<char> _data;
 public:
-	// Initializer
+	// Initializers
 	DataObj();
+
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data);
 
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::string data);
 
 
 	// Convert data object to string type
+	std::string toJsonString();
 	std::string toString();
 
 	// Convert data object to a file
 	std::string toFile(std::string filename);
 
-	//
+	// Getters
 	std::string getID();
 	DataType getDataType();
 	FuncType getFuncType();
 	CmdType getCmdType();
 	std::vector<char> getData();
+	std::string getData_String();
 
 	// return: announcement about the result of the procedure
 	std::string setID(std::string new_ID);
 	std::string setDataType(DataType new_data_type);
 	std::string setFuncType(FuncType new_func_type);
 	std::string setCmdType(CmdType new_cmd_type);
+
 	std::string setData(std::vector<char> new_data);
 	std::string setData(std::string new_data);
 };
