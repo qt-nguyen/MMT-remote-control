@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
@@ -36,8 +37,9 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 };
 
 
-// Data Object methods and functions
-
+// Data Object methods and functions ------------------------
+// Constructors
+// Default constructor
 DataObj::DataObj()
 {
 	this->_ID = "";
@@ -47,6 +49,7 @@ DataObj::DataObj()
 	this->setData("");
 }
 
+// Full constructor with std::vector<char> data
 DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data)
 {
 	this->_ID = ID;
@@ -56,6 +59,7 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 	this->_data = data;
 }
 
+// Full constructor with string data
 DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::string data)
 {
 	this->_ID = ID;
@@ -66,8 +70,7 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 	this->_data = vec_data;
 }
 
-// JSON format
-// enum will be shown as integers
+// Output Json String
 std::string DataObj::toJsonString()
 {
 	nlohmann::ordered_json res_json;
@@ -95,6 +98,7 @@ std::string DataObj::toString()
 	return res;
 }
 
+// Json format to file, appending mode
 std::string DataObj::toFile(std::string filename)
 {
 	std::ofstream out_file;
@@ -118,7 +122,7 @@ std::string DataObj::toFile(std::string filename)
 	}
 }
 
-
+// Getters
 std::string DataObj::getID()
 {
 	return this->_ID;
@@ -144,14 +148,21 @@ std::vector<char> DataObj::getData()
 	return this->_data;
 }
 
+std::string DataObj::getData_String()
+{
+	auto res = std::string(_data.begin(), _data.end());
+	return res;
+}
+
+
+// Setters
 std::string DataObj::setID(std::string new_ID)
 {
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setID: ";
 	if (!new_ID.empty())
 	{
-		res_msg << "Object ID = " << this->_ID << " :\n";
-		res_msg << "\tID: " << this->_ID << " -> " << new_ID << "\n";
+		res_msg << "Object with ID \"" << this->_ID << "\":\n";
+		res_msg << "\t_ID: \"" << this->_ID << "\" ---> \"" << new_ID << "\"\n";
 		this->_ID = new_ID;
 	}
 	else
@@ -163,9 +174,8 @@ std::string DataObj::setID(std::string new_ID)
 std::string DataObj::setDataType(DataType new_data_type)
 {
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setDataType: ";
-	res_msg << "Object ID = " << this->_ID << " :\n";
-	res_msg << "\t_data_type: " << EnumMaps::DataTypeMap.at(this->_data_type) << " -> " << EnumMaps::DataTypeMap.at(new_data_type) << "\n";
+	res_msg << "Object with ID \"" << this->_ID << "\":\n";
+	res_msg << "\t_data_type: \"" << EnumMaps::DataTypeMap.at(this->_data_type) << "\"--->\"" << EnumMaps::DataTypeMap.at(new_data_type) << "\"\n";
 	
 	this->_data_type = new_data_type;
 	return res_msg.str();
@@ -174,9 +184,8 @@ std::string DataObj::setDataType(DataType new_data_type)
 std::string DataObj::setFuncType(FuncType new_func_type)
 {
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setFuncType: ";
-	res_msg << "Object ID = " << this->_ID << " :\n";
-	res_msg << "\t_func_type: " << EnumMaps::FunctionTypeMap.at(this->_func_type) << " -> " << EnumMaps::FunctionTypeMap.at(new_func_type) << "\n";
+	res_msg << "Object with ID \"" << this->_ID << "\":\n";
+	res_msg << "\t_func_type: \"" << EnumMaps::FunctionTypeMap.at(this->_func_type) << "\" ---> \"" << EnumMaps::FunctionTypeMap.at(new_func_type) << "\"\n";
 
 	this->_func_type = new_func_type;
 
@@ -186,9 +195,8 @@ std::string DataObj::setFuncType(FuncType new_func_type)
 std::string DataObj::setCmdType(CmdType new_cmd_type)
 {
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setCmdType: ";
-	res_msg << "Object ID = " << this->_ID << " :\n";
-	res_msg << "\t_cmd_type: " << EnumMaps::CmdTypeMap.at(this->_cmd_type) << " -> " << EnumMaps::CmdTypeMap.at(new_cmd_type) << "\n";
+	res_msg << "Object with ID \"" << this->_ID << "\":\n";
+	res_msg << "\t_cmd_type: \"" << EnumMaps::CmdTypeMap.at(this->_cmd_type) << " ---> \"" << EnumMaps::CmdTypeMap.at(new_cmd_type) << "\"\n";
 
 	this->_cmd_type = new_cmd_type;
 
@@ -198,8 +206,7 @@ std::string DataObj::setCmdType(CmdType new_cmd_type)
 std::string DataObj::setData(std::vector<char> new_data)
 {
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setCmdType: ";
-	res_msg << "Object ID = " << this->_ID << " :\n";
+	res_msg << "Object with ID \"" << this->_ID << "\":\n";
 	res_msg << "\t_data changed" << "\n";
 
 	this->_data = new_data;
@@ -211,11 +218,8 @@ std::string DataObj::setData(std::string new_data)
 {
 	std::vector<char> pre_data(new_data.begin(), new_data.end());
 	std::stringstream res_msg;
-	res_msg << "MESSAGE: setCmdType: ";
-	res_msg << "Object ID = " << this->_ID << " :\n";
+	res_msg << "Object with ID \"" << this->_ID << "\":\n";
 	res_msg << "\t_data changed" << "\n";
-
 	this->_data = pre_data;
-
 	return res_msg.str();
 }

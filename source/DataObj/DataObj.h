@@ -79,12 +79,13 @@ public:
 	// Convert data object to a file
 	std::string toFile(std::string filename);
 
-	//
+	// Getters
 	std::string getID();
 	DataType getDataType();
 	FuncType getFuncType();
 	CmdType getCmdType();
 	std::vector<char> getData();
+	std::string getData_String();
 
 	// return: announcement about the result of the procedure
 	std::string setID(std::string new_ID);

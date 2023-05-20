@@ -29,10 +29,17 @@ public:
 
 
 int  main() {
-	DataObj object;
+	DataObj object("ID01", RESPONSE, DIR, SHOW, "nguyen  quoc trung");
 
-	
-	std::cout << object.toFile("output.txt");
+	std::cout << object.setID("ID02");
+	std::cout << object.setDataType(REQUEST);
+	std::cout << object.setFuncType(KLG);
+	std::cout << object.setCmdType(STOP);
+	std::cout << object.setData("gia tue");
+
+
+
+
 
 
 
