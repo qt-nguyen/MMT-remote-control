@@ -3,26 +3,5 @@
 ################################################################################
 
 /.vs
+
 /Project/.vs/MMT-RC
-/Project/MMT-RC.vcxproj
-/Project/x64/Debug/MMT-RC.tlog
-/Project/x64/Debug/DataObj.obj
-/Project/x64/Debug/DIR_Func.obj
-/Project/x64/Debug/DIR_Obj.obj
-/Project/x64/Debug/IAP_Func.obj
-/Project/x64/Debug/IAP_Obj.obj
-/Project/x64/Debug/KLG_Func.obj
-/Project/x64/Debug/KLG_Obj.obj
-/Project/x64/Debug/MMT-RC.exe
-/Project/x64/Debug/MMT-RC.exe.recipe
-/Project/x64/Debug/MMT-RC.ilk
-/Project/x64/Debug/MMT-RC.log
-/Project/x64/Debug/MMT-RC.pdb
-/Project/x64/Debug/MMT-RC.vcxproj.FileListAbsolute.txt
-/Project/x64/Debug/RPC_Func.obj
-/Project/x64/Debug/RPC_Obj.obj
-/Project/x64/Debug/StringConversion.obj
-/Project/x64/Debug/Trung.obj
-/Project/x64/Debug/vc143.idb
-/Project/x64/Debug/vc143.pdb
-/Project/x64/Debug

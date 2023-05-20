@@ -1,7 +1,6 @@
 #pragma once
 
 #include "DataObj/DataObj.h"
-#include "DataObj/IAP_Obj.h"
 
 // containing functions for Installed AaP
 
@@ -11,12 +10,12 @@ private:
 
 public:
 
-	DataObj* listApps();
+	std::shared_ptr<DataObj> listApps();
 
     // Start an app
-	DataObj* startApp(std::string appName);
+	std::shared_ptr<DataObj> startApp(std::string appName);
 
     // Stop an app
-	DataObj* stopApp(std::string appName);
+	std::shared_ptr<DataObj> stopApp(std::string appName);
 
 };
