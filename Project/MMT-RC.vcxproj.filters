@@ -22,6 +22,9 @@
     <Filter Include="Source Files\main">
       <UniqueIdentifier>{e1d63f0a-09d3-4701-b6db-0a7be1258a76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{3623a90c-70b0-4819-ae49-7ba14659a1fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\dataobj\DataObj.cpp">
@@ -39,9 +42,6 @@
     <ClCompile Include="..\source\dataobj\RPC_Obj.cpp">
       <Filter>Source Files\DataObj</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\dataobj\StringConversion.cpp">
-      <Filter>Source Files\DataObj</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\DIR_Func.cpp">
       <Filter>Source Files\Func</Filter>
     </ClCompile>
@@ -56,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="..\source\mains\Trung.cpp">
       <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\utils.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +77,6 @@
     <ClInclude Include="..\source\dataobj\RPC_Obj.h">
       <Filter>Source Files\DataObj</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\dataobj\StringConversion.h">
-      <Filter>Source Files\DataObj</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\DIR_Func.h">
       <Filter>Source Files\Func</Filter>
     </ClInclude>
@@ -88,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="..\source\RPC_Func.h">
       <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\utils.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

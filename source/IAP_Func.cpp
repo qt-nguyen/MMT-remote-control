@@ -6,8 +6,9 @@
 #include <tchar.h>
 #include <iostream>
 #include <string>
-#include "DataObj/StringConversion.h"
+#include "utils.h"
 #include <Shlwapi.h>
+#include "utils.h"
 #pragma comment(lib, "Shlwapi.lib")
 
 
@@ -43,7 +44,7 @@ DataObj* IAP_Func::listApps() {
             //Get the display name value from the application's sub key.
             dwBufferSize = sizeof(sDisplayName);
             if (RegQueryValueEx(hAppKey, L"DisplayName", NULL, &dwType, (unsigned char*)sDisplayName, &dwBufferSize) == ERROR_SUCCESS) {
-                result += StringConversion::ws2s(sDisplayName); // Append the display name to the result string
+                result += utils::ws2s(sDisplayName); // Append the display name to the result string
                 result += "\n"; // Add a newline character to separate each display name
             }
             else {
@@ -55,14 +56,14 @@ DataObj* IAP_Func::listApps() {
     RegCloseKey(hUninstKey);
 
     // Return the list of installed applications
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::SHOW, result);
+    DataObj* MES = new DataObj(utils::CurrentTime(), RESPONSE, IAP, CmdType::SHOW, result);
     return MES;
 }
 
 DataObj* IAP_Func::startApp(std::string Name)
 {
     std::string res = "";
-    std::wstring appName = StringConversion::s2ws(Name);
+    std::wstring appName = utils::s2ws(Name);
     DWORD bufferSize = MAX_PATH;
     WCHAR appPath[MAX_PATH];
     HRESULT result = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN, ASSOCSTR_EXECUTABLE, appName.c_str(), NULL, appPath, &bufferSize);
@@ -76,7 +77,7 @@ DataObj* IAP_Func::startApp(std::string Name)
         res = "Error getting application path. Error code: " + result;
         res += "\n";
     }
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::DATA, res);
+    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::IAP, CmdType::DATA, res);
     return MES;
 }
 
@@ -84,7 +85,7 @@ DataObj* IAP_Func::startApp(std::string Name)
 DataObj* IAP_Func::stopApp(std::string Name)
 {
     std::string result = "";
-    std::wstring appName = StringConversion::s2ws(Name);
+    std::wstring appName = utils::s2ws(Name);
     // Get the list of process identifiers
     DWORD aProcesses[1024], cbNeeded, cProcesses;
     if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
@@ -130,6 +131,6 @@ DataObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataObj* MES = new IAP_Obj(DataType::RESPONSE, CmdType::DATA, result);
+    DataObj* MES = new IAP_Obj(utils::CurrentTime(), DataType::RESPONSE, IAP, CmdType::DATA, result);
     return MES;
 }

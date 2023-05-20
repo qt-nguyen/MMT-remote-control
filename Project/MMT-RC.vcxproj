@@ -124,12 +124,12 @@
     <ClCompile Include="..\source\dataobj\IAP_Obj.cpp" />
     <ClCompile Include="..\source\dataobj\KLG_Obj.cpp" />
     <ClCompile Include="..\source\dataobj\RPC_Obj.cpp" />
-    <ClCompile Include="..\source\dataobj\StringConversion.cpp" />
     <ClCompile Include="..\source\DIR_Func.cpp" />
     <ClCompile Include="..\source\IAP_Func.cpp" />
     <ClCompile Include="..\source\KLG_Func.cpp" />
     <ClCompile Include="..\source\mains\Trung.cpp" />
     <ClCompile Include="..\source\RPC_Func.cpp" />
+    <ClCompile Include="..\source\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h" />
@@ -137,11 +137,11 @@
     <ClInclude Include="..\source\dataobj\IAP_Obj.h" />
     <ClInclude Include="..\source\dataobj\KLG_Obj.h" />
     <ClInclude Include="..\source\dataobj\RPC_Obj.h" />
-    <ClInclude Include="..\source\dataobj\StringConversion.h" />
     <ClInclude Include="..\source\DIR_Func.h" />
     <ClInclude Include="..\source\IAP_Func.h" />
     <ClInclude Include="..\source\KLG_Func.h" />
     <ClInclude Include="..\source\RPC_Func.h" />
+    <ClInclude Include="..\source\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="output.txt" />

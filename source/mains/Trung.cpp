@@ -13,37 +13,18 @@ using json = nlohmann::json;
 
 using  namespace std;
 
-class Base {
-public:
-	void speak(std::string name) {
-		std::cout << "hello my name is " << name;
-	}
-};
 
-class Derived : public Base{
-public:
-	void speak(std::string name) {
-		std::cout << "hello my name is " << name << " and I am a cat";
-	}
-};
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 
-
-int  main() {
-	DataObj object("ID01", RESPONSE, DIR, SHOW, "nguyen  quoc trung");
-
-	std::cout << object.setID("ID02");
-	std::cout << object.setDataType(REQUEST);
-	std::cout << object.setFuncType(KLG);
-	std::cout << object.setCmdType(STOP);
-	std::cout << object.setData("gia tue");
-
-
-
-
-
+int main() {
+	auto now = std::chrono::system_clock::now();
+	std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+	std::tm* now_tm = std::localtime(&now_time);
+	std::cout << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S") << '\n';
 
 
 	system("pause");
-
 	return 0;
 }
