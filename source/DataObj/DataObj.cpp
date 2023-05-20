@@ -4,14 +4,20 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
 
 // Defintion of the EnupMaps
 const std::map<DataType, std::string> EnumMaps::DataTypeMap = {
+	{ DATA_TYPE, "DEFAULT"},
 	{ RESPONSE, "RESPONSE" },
 	{ REQUEST, "REQUEST" }
 };
 
 const std::map<FuncType, std::string> EnumMaps::FunctionTypeMap = {
+	{ FUNC_TYPE, "DEFAULT"},
 	{ IAP, "IAP" },
 	{ RPC, "RPC" },
 	{ SCR, "SCR" },
@@ -20,6 +26,7 @@ const std::map<FuncType, std::string> EnumMaps::FunctionTypeMap = {
 };
 
 const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
+	{ CMD_TYPE, "DEFAULT"},
 	{ RUN, "RUN" },
 	{ KILL, "KILL" },
 	{ START, "START" },
@@ -34,9 +41,9 @@ const std::map<CmdType, std::string> EnumMaps::CmdTypeMap = {
 DataObj::DataObj()
 {
 	this->_ID = "";
-	this->_data_type;
-	this->_func_type;
-	this->_cmd_type;
+	this->_data_type = DATA_TYPE;
+	this->_func_type = FUNC_TYPE;
+	this->_cmd_type = CMD_TYPE;
 	this->setData("");
 }
 
@@ -61,15 +68,13 @@ DataObj::DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType
 
 std::string DataObj::toString()
 {
-	std::stringstream ss;
-	ss << "{" << "\n";
-	ss << "\t\"ID\":" << _ID << "\n";
-	ss << "\t\"data_type\":" << EnumMaps::DataTypeMap.at(_data_type) << "\n";
-	ss << "\t\"func_type\":" << EnumMaps::FunctionTypeMap.at(_func_type) << "\n";
-	ss << "\t\"cmd_type\":" << EnumMaps::CmdTypeMap.at(_cmd_type) << "\n";
-	ss << "\tdata of " << _data.size() << "bytes" << "\n";
-	ss << "}";
-	std::string res = ss.str();
+	json res_json;
+	res_json["ID"] = _ID;
+	res_json["data_type"] = EnumMaps::DataTypeMap.at(_data_type);
+	res_json["func_type"] = EnumMaps::FunctionTypeMap.at(_func_type);
+	res_json["cmd_type"] = EnumMaps::CmdTypeMap.at(_cmd_type);
+	res_json["data_size"] = _data.size();
+	std::string res = res_json.dump(4) + "\n";
 	return res;
 }
 
@@ -80,13 +85,7 @@ std::string DataObj::toFile(std::string filename)
 
 	if (out_file.is_open())
 	{
-		out_file << "{" << "\n";
-		out_file << "\t\"ID\":" << _ID << "\n";
-		out_file << "\t\"data_type\":" << EnumMaps::DataTypeMap.at(_data_type) << "\n";
-		out_file << "\t\"func_type\":" << EnumMaps::FunctionTypeMap.at(_func_type) << "\n";
-		out_file << "\t\"cmd_type\":" << EnumMaps::CmdTypeMap.at(_cmd_type) << "\n";
-		out_file << "}" << "\n";
-
+		out_file << toString();
 		out_file.close();
 		return "Data written to file successfully.";
 	}
