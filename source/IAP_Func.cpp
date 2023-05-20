@@ -131,6 +131,6 @@ DataObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataObj* MES = new IAP_Obj(utils::CurrentTime(), DataType::RESPONSE, IAP, CmdType::DATA, result);
+    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, IAP, CmdType::DATA, result);
     return MES;
 }
