@@ -1,6 +1,14 @@
-﻿  DIR_Obj.cpp
+﻿  DataObj.cpp
+  DIR_Obj.cpp
+  IAP_Obj.cpp
+  KLG_Obj.cpp
+  RPC_Obj.cpp
+  DIR_Func.cpp
   IAP_Func.cpp
+  KLG_Func.cpp
+  Trung.cpp
   RPC_Func.cpp
   utils.cpp
   Generating Code...
+D:\GitHub\MMT-remote-contro\source\dataobj\DataObj.cpp(123): warning C4715: 'DataObj::toFile': not all control paths return a value
   MMT-RC.vcxproj -> D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe

@@ -8,6 +8,7 @@ Don't change this file  without informing the author
 #include <string>
 #include <vector>
 #include "../DataObj/DataObj.h"
+#include "../utils.h"
 
 using json = nlohmann::json;
 
@@ -19,10 +20,13 @@ using  namespace std;
 #include <iomanip>
 
 int main() {
-	auto now = std::chrono::system_clock::now();
-	std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-	std::tm* now_tm = std::localtime(&now_time);
-	std::cout << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S") << '\n';
+	
+
+std:shared_ptr<DataObj> obj(new DataObj(utils::CurrentTime(), REQUEST, KLG, STOP, "Never gonna give you up"));
+	std::cout << obj->toString();
+
+
+
 
 
 	system("pause");

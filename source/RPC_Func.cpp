@@ -4,13 +4,13 @@
 #include <Psapi.h>
 #include <tchar.h>
 #include "RPC_Func.h"
-#include "DataObj/RPC_Obj.h"
+#include "DataObj/DataObj.h"
 #include "utils.h"
 
 
-DataObj* RPC_Func::listPrcs() {
+std::shared_ptr<DataObj> RPC_Func::listPrcs() {
     std::string result = "";
-    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::SHOW, result);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::SHOW, result));
     DWORD aProcesses[1024], cbNeeded, cProcesses;
     if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)) return MES;
 
@@ -97,10 +97,10 @@ HANDLE OpenProcessByName(const std::wstring& name)
     return NULL;
 }
 
-DataObj* RPC_Func::runPrc(std::string Name)
+std::shared_ptr<DataObj> RPC_Func::runPrc(std::string Name)
 {
     std::string res = "";
-    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::DATA, res);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::DATA, res));
     WCHAR szPath[MAX_PATH];
     std::wstring name = utils::s2ws(Name);
     if (SearchPath(NULL, name.c_str(), L".exe", MAX_PATH, szPath, NULL) == 0)
@@ -129,10 +129,10 @@ DataObj* RPC_Func::runPrc(std::string Name)
 }
 
 
-DataObj* RPC_Func::killPrc(std::string Name)
+std::shared_ptr<DataObj> RPC_Func::killPrc(std::string Name)
 {
     std::string result = "";
-    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::DATA, result);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::RPC, CmdType::DATA, result));
     std::wstring name = utils::s2ws(Name);
     HANDLE hProcess = OpenProcessByName(name);
     if (hProcess == NULL)

