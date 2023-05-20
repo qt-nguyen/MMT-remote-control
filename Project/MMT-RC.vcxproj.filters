@@ -13,72 +13,81 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\DataObj">
+      <UniqueIdentifier>{c4c28dcd-1bbc-4cdf-af45-77d7fa4f91ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Func">
+      <UniqueIdentifier>{a3f7626b-307f-4036-bce1-64790ce81d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{e1d63f0a-09d3-4701-b6db-0a7be1258a76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\DIR_Func.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\IAP_Func.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\KLG_Func.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\RPC_Func.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\dataobj\DataObj.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClCompile>
     <ClCompile Include="..\source\dataobj\DIR_Obj.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClCompile>
     <ClCompile Include="..\source\dataobj\IAP_Obj.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClCompile>
     <ClCompile Include="..\source\dataobj\KLG_Obj.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClCompile>
     <ClCompile Include="..\source\dataobj\RPC_Obj.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClCompile>
     <ClCompile Include="..\source\dataobj\StringConversion.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\DIR_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\IAP_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\KLG_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\RPC_Func.cpp">
+      <Filter>Source Files\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\source\mains\Trung.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\DIR_Func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\IAP_Func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\KLG_Func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\RPC_Func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\dataobj\DataObj.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClInclude>
     <ClInclude Include="..\source\dataobj\DIR_Obj.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClInclude>
     <ClInclude Include="..\source\dataobj\IAP_Obj.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClInclude>
     <ClInclude Include="..\source\dataobj\KLG_Obj.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClInclude>
     <ClInclude Include="..\source\dataobj\RPC_Obj.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
     </ClInclude>
     <ClInclude Include="..\source\dataobj\StringConversion.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\DataObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\DIR_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\IAP_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\KLG_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\RPC_Func.h">
+      <Filter>Source Files\Func</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
