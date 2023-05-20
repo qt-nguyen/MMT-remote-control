@@ -9,8 +9,8 @@ Don't change this file  without informing the author
 using  namespace std;
 
 int  main() {
-	cout << "hello world!";
+	cout << "hello world!\n";
 
-
-
+	system("pause");
+	return 0;
 }

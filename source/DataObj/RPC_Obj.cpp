@@ -1,12 +1,19 @@
-#include "RPC_TransferObj.h"
+#include "RPC_Obj.h"
 
 #include <iostream>
 #include <string>
 
 
+RPC_Obj::RPC_Obj(DataType dataType, CmdType CMD, std::string data)
+{
+    setID("");
+    _func_type = FuncType::RPC;
+    setDataType(dataType);
+    setCmdType(CMD);
+    setData(data);
+}
 
-
-std::string RPC_TransferObj::toString()
+std::string RPC_Obj::toString()
 {
     std::stringstream ss;
 
@@ -19,7 +26,7 @@ std::string RPC_TransferObj::toString()
     return ss.str();
 }
 
-std::string RPC_TransferObj::toFile(std::string filename)
+std::string RPC_Obj::toFile(std::string filename)
 {
     std::string result = "";
 

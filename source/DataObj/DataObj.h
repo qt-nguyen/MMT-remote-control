@@ -52,9 +52,6 @@ std::cout << EnumMaps::CmdTypeMap.at(ct) << std::endl; // Output: RUN
 */
 
 
-
-
-
 class DataObj
 {
 protected:
@@ -67,6 +64,7 @@ public:
 	// Initializer
 	DataObj();
 	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::vector<char> data);
+	DataObj(std::string ID, DataType data_type, FuncType func_type, CmdType cmd_type, std::string data);
 
 
 	// Convert data object to string type

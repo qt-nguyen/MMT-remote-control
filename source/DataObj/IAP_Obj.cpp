@@ -1,5 +1,14 @@
 #include "IAP_Obj.h"
 
+IAP_Obj::IAP_Obj(DataType dataType, CmdType CMD, std::string data)
+{
+    setID("");
+    _func_type = FuncType::IAP;
+    setDataType(dataType);
+    setCmdType(CMD);
+    setData(data);
+}
+
 std::string IAP_Obj::toString()
 {
     std::stringstream ss;
