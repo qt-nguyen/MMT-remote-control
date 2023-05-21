@@ -152,18 +152,16 @@ DWORD WINAPI function_cal(LPVOID arg)
     ServerBackend backend;
 
     do {
-        DataObj data;
+        std::shared_ptr<DataObj> data;
 
         mysock.Receive(&data, sizeof(data), 0);
         
-        backend.handleClientRequest(data, number_continue);
+        backend.handleClientRequest(data);
 
         //Gui ket qua tinh toan cho client
         mysock.Send(&data, sizeof(data), 0);
 
-        
-
-        if (number_continue == 0)
+        if (data->getDataType() == DATA_TYPE)
         {
             wprintf(L"Client %d from %s disconnected from server\n", clientID, (LPCTSTR)ipAddress);
             mysock.Close();

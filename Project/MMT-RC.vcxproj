@@ -106,7 +106,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>C:\Program Files\msys64\mingw64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VC_IncludePath);C:\Program Files\msys64\mingw64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
@@ -125,6 +125,9 @@
     <ClCompile Include="..\source\KLG_Func.cpp" />
     <ClCompile Include="..\source\mains\Trung.cpp" />
     <ClCompile Include="..\source\RPC_Func.cpp" />
+    <ClCompile Include="..\source\Server\Server.cpp" />
+    <ClCompile Include="..\source\Server\ServerBackend.cpp" />
+    <ClCompile Include="..\source\Server\stdafx.cpp" />
     <ClCompile Include="..\source\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +136,12 @@
     <ClInclude Include="..\source\IAP_Func.h" />
     <ClInclude Include="..\source\KLG_Func.h" />
     <ClInclude Include="..\source\RPC_Func.h" />
+    <ClInclude Include="..\source\SCR_Func.h" />
+    <ClInclude Include="..\source\Server\Resource.h" />
+    <ClInclude Include="..\source\Server\Server.h" />
+    <ClInclude Include="..\source\Server\ServerBackend.h" />
+    <ClInclude Include="..\source\Server\stdafx.h" />
+    <ClInclude Include="..\source\Server\targetver.h" />
     <ClInclude Include="..\source\utils.h" />
   </ItemGroup>
   <ItemGroup>

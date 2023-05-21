@@ -1,24 +1,68 @@
 ﻿#include "ServerBackend.h"
 
-void ServerBackend::handleClientRequest(DataObj& request, int& number_continue)
+void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
 {
     // Chuyển đổi dữ liệu thành DataObj
     //DataObj request = deserialize(buffer);
     // Xử lý yêu cầu từ client dựa trên thông tin trong DataObj
     // Gọi các phương thức tương ứng trong lớp con để thực hiện chức năng
-
-    if (request.getFuncType() == KLG)
+    switch (data->getFuncType())
     {
+    case IAP:
+        if (data->getCmdType() == SHOW)
+        {
+            data = _IAPfunc.listApps();
+        }
+        else if (data->getCmdType() == START)
+        {
+            std::string appName = data->getData_String();
+            data = _IAPfunc.startApp(appName);
+        }
+        else
+        {
+            std::string appName = data->getData_String();
+            data = _IAPfunc.stopApp(appName);
+        }
 
+    case RPC: 
+        if (data->getCmdType() == SHOW)
+        {
+            data = _RPCfunc.listPrcs();
+        }
+        else if (data->getCmdType() == START)
+        {
+            std::string prcName = data->getData_String();
+            data = _RPCfunc.runPrc(prcName);
+        }
+        else
+        {
+            std::string prcName = data->getData_String();
+            data = _RPCfunc.killPrc(prcName);
+        }
+    case SCR: 
+        if (data->getCmdType() == START)
+        {
+            data = _SCRfunc.startCapture();
+        }
+        else
+        {
+            data = _SCRfunc.stopCapture();
+        }
+    case KLG: 
+        if (data->getCmdType() == START)
+        {
+            data = _KLGfunc.startKeylog();
+        }
+        else
+        {
+            data = _KLGfunc.stopKeylog();
+        }
+    case DIR:
+        data = _DIRfunc.HandleRequest();
     }
-    else if (request.getFuncType() == SCR)
-    {
-
-    }
-    // Xử lý các chức năng và lệnh khác...
 
 }
-
+/*
 DataObj ServerBackend::deserialize(std::string& data)
 {
     std::size_t pos = 0;
@@ -57,3 +101,4 @@ std::string ServerBackend::createResponseData(DataObj data)
 
     return response;
 }
+*/
