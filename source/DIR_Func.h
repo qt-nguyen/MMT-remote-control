@@ -20,7 +20,7 @@ public:
 
 
 
-	DataObj HandleRequest(DataObj request);
+	std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
 };
 

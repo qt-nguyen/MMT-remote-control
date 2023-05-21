@@ -63,11 +63,17 @@ void DIR_Func::PrintDirectoryTree(const fs::path& path, int max_level, bool incl
     }
 }
 
-DataObj DIR_Func::HandleRequest(DataObj request)
+std::shared_ptr<DataObj> DIR_Func::HandleRequest(DataObj request)
 {
-    DataObj result(utils::CurrentTime(), RESPONSE, DIR, CMD_TYPE, "");
+    std::shared_ptr<DataObj> result (new DataObj(utils::CurrentTime(), RESPONSE, DIR, CMD_TYPE, ""));
+    // Help request object is faulty, exit with null
     if (request.getDataType() != REQUEST || request.getFuncType() != DIR || request.getCmdType() != SHOW)
+    {
+        result->setData("MESSAGE PARAMETER ERRORS");
         return result;
+    }
+
+
 
 
 }

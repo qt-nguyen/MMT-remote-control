@@ -14,7 +14,8 @@ Don't change this file  without informing the author
 #include <iomanip>
 #include <filesystem>
 #include "../DIR_Func.h"
-
+#include "../IAP_Func.h"
+#include "../RPC_Func.h"
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
@@ -24,9 +25,10 @@ using  namespace std;
 
 
 int main() {
-    DIR_Func dir;
-    dir.PrintDirectoryTree("C:\\Program Files\\", 2);
-
+    RPC_Func rpc;
+    std::shared_ptr<DataObj> res = rpc.listPrcs();
+    std::string res_str = res->getData_String();
+    std::cout << res->toJsonString();
 
     system("pause");
     return 0;
