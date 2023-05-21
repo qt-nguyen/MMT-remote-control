@@ -3,12 +3,6 @@
 ################################################################################
 
 /.vs
+/Projects/.vs
 
-/Project
-/Project/x64/Debug/MMT-RC.tlog/CL.command.1.tlog
-/Project/x64/Debug/MMT-RC.tlog/Cl.items.tlog
-/Project/x64/Debug/MMT-RC.tlog/CL.read.1.tlog
-/Project/x64/Debug/MMT-RC.tlog/CL.write.1.tlog
-/Project/x64/Debug/MMT-RC.tlog/link.command.1.tlog
-/Project/x64/Debug/MMT-RC.tlog/link.read.1.tlog
-/Project/x64/Debug/MMT-RC.tlog/link.write.1.tlog
+/Project/.vs/MMT-RC
