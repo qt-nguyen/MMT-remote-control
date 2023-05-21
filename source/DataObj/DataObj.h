@@ -10,6 +10,7 @@
 
 enum DataType
 {
+	DATA_TYPE,
 	RESPONSE,
 	REQUEST
 };

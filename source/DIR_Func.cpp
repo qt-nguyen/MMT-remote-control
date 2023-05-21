@@ -69,10 +69,5 @@ DataObj DIR_Func::HandleRequest(DataObj request)
     if (request.getDataType() != REQUEST || request.getFuncType() != DIR || request.getCmdType() != SHOW)
         return result;
 
-    
-
-    
-
-
 
 }

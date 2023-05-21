@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -120,10 +120,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\dataobj\DataObj.cpp" />
-    <ClCompile Include="..\source\dataobj\DIR_Obj.cpp" />
-    <ClCompile Include="..\source\dataobj\IAP_Obj.cpp" />
-    <ClCompile Include="..\source\dataobj\KLG_Obj.cpp" />
-    <ClCompile Include="..\source\dataobj\RPC_Obj.cpp" />
     <ClCompile Include="..\source\DIR_Func.cpp" />
     <ClCompile Include="..\source\IAP_Func.cpp" />
     <ClCompile Include="..\source\KLG_Func.cpp" />
@@ -133,10 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h" />
-    <ClInclude Include="..\source\dataobj\DIR_Obj.h" />
-    <ClInclude Include="..\source\dataobj\IAP_Obj.h" />
-    <ClInclude Include="..\source\dataobj\KLG_Obj.h" />
-    <ClInclude Include="..\source\dataobj\RPC_Obj.h" />
     <ClInclude Include="..\source\DIR_Func.h" />
     <ClInclude Include="..\source\IAP_Func.h" />
     <ClInclude Include="..\source\KLG_Func.h" />
