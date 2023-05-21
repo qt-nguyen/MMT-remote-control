@@ -60,6 +60,9 @@
     <ClCompile Include="..\source\Server\stdafx.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Server\mainServer.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h">

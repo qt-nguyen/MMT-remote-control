@@ -1,10 +1,6 @@
 ﻿#include "Server.h"
-#include "stdafx.h"
-#include "afxsock.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
+
 
 Server::Server()
 {

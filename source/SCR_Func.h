@@ -1,10 +1,11 @@
 #pragma once
+#include "utils.h"
 
-#include "SCR_Obj.h"
 #include <vector>
 #include <string>
 #include <windows.h>
 #include <thread>
+
 
 class SCR_Func {
 private:
@@ -50,7 +51,8 @@ private:
             screenData.resize(dwBmpSize);
             GetDIBits(hMemoryDC, hBitmap, 0, height, &screenData[0], (BITMAPINFO*)&bi, DIB_RGB_COLORS);
 
-            DataObj* mes = new SCR_Obj(DataType::RESPONSE, CmdType::Data, screenData);
+            std::shared_ptr<DataObj> mes(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::SCR, CmdType::DATA, screenData));
+
 
             // Clean up
             DeleteObject(hBitmap);
@@ -63,19 +65,21 @@ private:
     }
 
 public:
-    DataObj* startCapture() {
+    std::shared_ptr<DataObj> startCapture() {
         capturing = true;
         std::string res = "Start capturing... \n";
         std::thread captureThread(captureLoop);
         captureThread.detach();
-        DataObj* MES = new SCR_Obj(DataType::RESPONSE, CmdType::START, res);
+        std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::SCR, CmdType::START, res));
+
         return MES;
     }
 
-    DataObj* stopCapture() {
+    std::shared_ptr<DataObj> stopCapture() {
         capturing = false;
         std::string res = "Capture stop \n";
-        DataObj* MES = new SCR_Obj(DataType::RESPONSE, CmdType::STOP, res);
+        std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::STOP, res));
+
         return MES;
     }
 };

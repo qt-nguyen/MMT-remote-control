@@ -1,3 +1,4 @@
+#pragma once
 #include "../DataObj/DataObj.h"
 #include "../DIR_Func.h"
 #include "../KLG_Func.h"
