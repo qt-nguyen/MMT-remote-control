@@ -10,7 +10,6 @@
 
 enum DataType
 {
-	DATA_TYPE, // default value, for testing
 	RESPONSE,
 	REQUEST
 };

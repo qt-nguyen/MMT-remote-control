@@ -4,8 +4,7 @@
 class ServerBackend
 {
 public:
-    DataObj handleClientRequest(std::string buffer);
-
+    void handleClientRequest(DataObj& request);
     DataObj deserialize(std::string& data);
     std::string createResponseData(DataObj data);
 };
