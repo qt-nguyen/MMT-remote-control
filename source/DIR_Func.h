@@ -22,6 +22,10 @@ public:
 
 	std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
+
+	void PrintDirectoryTree(const json& tree, int indent = 0);
+
+
 };
 
 

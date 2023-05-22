@@ -20,6 +20,7 @@ json DIR_Func::DirectoryTreeToJson(const fs::path& path, int max_level, bool inc
         result["name"] = path.filename().string();
         result["level"] = level;
         result["type"] = "directory";
+        result["path"] = fs::absolute(path).string();
         for (const auto& entry : fs::directory_iterator(path)) {
             if (entry.is_directory()) {
                 if (max_level <= 0 || level + 1 < max_level) {
@@ -31,6 +32,7 @@ json DIR_Func::DirectoryTreeToJson(const fs::path& path, int max_level, bool inc
                 file["name"] = entry.path().filename().string();
                 file["level"] = level + 1;
                 file["type"] = "file";
+                file["path"] = fs::absolute(entry.path()).string();
                 result["children"].push_back(file);
             }
         }
@@ -40,6 +42,7 @@ json DIR_Func::DirectoryTreeToJson(const fs::path& path, int max_level, bool inc
     }
     return result;
 }
+
 
 
 void DIR_Func::PrintDirectoryTree(const fs::path& path, int max_level, bool include_files, int level) {
@@ -74,6 +77,25 @@ std::shared_ptr<DataObj> DIR_Func::HandleRequest(DataObj request)
     }
 
 
+    std::string path = request.getData_String();
+    if (!fs::exists(path) || !fs::is_directory(path))
+    {
+        result->setData("DIRECTORY DOES NOT EXIST");
+        return result;
+    }
 
 
+    result->setData(DirectoryTreeToJson(path).dump(4));
+    return result;
+}
+
+
+void DIR_Func::PrintDirectoryTree(const json& tree, int indent) {
+    std::string indent_str(indent, ' ');
+    std::cout << indent_str << tree["name"] << '\n';
+    if (tree.contains("children")) {
+        for (const auto& child : tree["children"]) {
+            PrintDirectoryTree(child, indent + 4);
+        }
+    }
 }

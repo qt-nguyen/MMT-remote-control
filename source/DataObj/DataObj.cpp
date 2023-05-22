@@ -223,3 +223,39 @@ std::string DataObj::setData(std::string new_data)
 	this->_data = pre_data;
 	return res_msg.str();
 }
+
+char* DataObj::serialize(size_t& size) const
+{
+	std::stringstream ss;
+	ss << _ID.size() << " " << _ID << " ";
+	ss << static_cast<int>(_data_type) << " ";
+	ss << static_cast<int>(_func_type) << " ";
+	ss << static_cast<int>(_cmd_type) << " ";
+	ss << _data.size() << " ";
+	for (char c : _data)
+		ss << c;
+	std::string str = ss.str();
+	size = str.size();
+	char* buffer = new char[size];
+	std::memcpy(buffer, str.data(), size);
+	return buffer;
+}
+
+DataObj DataObj::deserialize(const char* buffer, size_t size)
+{
+	std::string str(buffer, size);
+	std::stringstream ss(str);
+	size_t idSize;
+	ss >> idSize;
+	ss.ignore();
+	std::string ID(idSize, '\0');
+	ss.read(&ID[0], idSize);
+	int data_type, func_type, cmd_type;
+	ss >> data_type >> func_type >> cmd_type;
+	size_t dataSize;
+	ss >> dataSize;
+	std::vector<char> data(dataSize);
+	ss.ignore(); // ignore the space character after the data size
+	ss.read(data.data(), dataSize);
+	return DataObj(ID, static_cast<DataType>(data_type), static_cast<FuncType>(func_type), static_cast<CmdType>(cmd_type), data);
+}

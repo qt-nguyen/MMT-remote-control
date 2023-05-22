@@ -6,6 +6,8 @@
 #include <sstream>
 #include <locale>
 #include <codecvt>
+#include <tchar.h>
+
 
 namespace utils
 {
@@ -14,6 +16,7 @@ namespace utils
     std::wstring s2ws(const std::string& str);
 
     std::string ws2s(const std::wstring& wstr);
-
+    
+    std::string tcharToString(TCHAR* tcharArray);
 
 }
