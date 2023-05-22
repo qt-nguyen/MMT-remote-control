@@ -24,50 +24,7 @@ Server::Server()
         // TODO: change error code to suit your needs
         _tprintf(_T("Fatal Error: GetModuleHandle failed\n"));
     }
-    /*
-    // Khởi tạo Winsock
-    WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
-    {
-        std::cerr << "Khong the khoi tao Winsock." << std::endl;
-        exit(1);
-    }
 
-    // Tạo socket
-    _serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (_serverSocket == INVALID_SOCKET)
-    {
-        std::cerr << "Khong the tao socket." << std::endl;
-        WSACleanup();
-        exit(1);
-    }
-
-    // Cấu hình thông tin địa chỉ server
-    sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(12345); // Port để lắng nghe kết nối
-    serverAddress.sin_addr.s_addr = INADDR_ANY;
-
-    // Ràng buộc socket với địa chỉ server
-    if (bind(_serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR)
-    {
-        std::cerr << "Loi khi rong buoc socket." << std::endl;
-        closesocket(_serverSocket);
-        WSACleanup();
-        exit(1);
-    }
-
-    // Lắng nghe kết nối từ client
-    if (listen(_serverSocket, 1) == SOCKET_ERROR)
-    {
-        std::cerr << "Loi khi lang nghe ket noi." << std::endl;
-        closesocket(_serverSocket);
-        WSACleanup();
-        exit(1);
-    }
-
-    std::cout << "Dang cho ket noi tu client..." << std::endl;
-    */
 }
 
 Server::~Server()
@@ -98,36 +55,6 @@ void Server::start()
 
     } while (1);
 
-    /*
-    while (true)
-    {
-        // Chấp nhận kết nối từ client
-        sockaddr_in clientAddress;
-        int clientAddressSize = sizeof(clientAddress);
-        SOCKET clientSocket = accept(_serverSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
-        if (clientSocket == INVALID_SOCKET)
-        {
-            std::cerr << "Loi khi chap nhan ket noi." << std::endl;
-            closesocket(_serverSocket);
-            WSACleanup();
-            exit(1);
-        }
-
-        std::cout << "Da ket noi voi client!" << std::endl;
-
-        // Nhận dữ liệu từ client
-        std::string request = receiveData(clientSocket);
-
-        // Xử lý yêu cầu từ client bằng cách gọi phương thức handleClientRequest() trong ServerBackend
-        std::string response = _backend.createResponseData(_backend.handleClientRequest(request));
-
-        // Gửi phản hồi từ server tới client
-        sendData(clientSocket, response);
-
-        // Đóng kết nối với client
-        closesocket(clientSocket);
-    }
-    */
 }
 
 DWORD WINAPI function_cal(LPVOID arg)
