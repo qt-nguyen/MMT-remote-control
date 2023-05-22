@@ -126,6 +126,7 @@
     <ClCompile Include="..\source\DIR_Func.cpp" />
     <ClCompile Include="..\source\IAP_Func.cpp" />
     <ClCompile Include="..\source\KLG_Func.cpp" />
+    <ClCompile Include="..\source\mains\Trung.cpp" />
     <ClCompile Include="..\source\RPC_Func.cpp" />
     <ClCompile Include="..\source\SCR_Func.cpp" />
     <ClCompile Include="..\source\Server\mainServer.cpp" />

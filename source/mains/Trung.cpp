@@ -53,48 +53,65 @@
 #include <string>
 
 
-void startProcess(std::string processName) {
-    STARTUPINFO si;
-    PROCESS_INFORMATION pi;
+//void startProcess(std::string processName) {
+//    STARTUPINFO si;
+//    PROCESS_INFORMATION pi;
+//
+//    ZeroMemory(&si, sizeof(si));
+//    si.cb = sizeof(si);
+//    ZeroMemory(&pi, sizeof(pi));
+//
+//    // Convert processName to TCHAR array
+//    TCHAR processNameTCHAR[MAX_PATH];
+//#ifdef UNICODE
+//    MultiByteToWideChar(CP_ACP, 0, processName.c_str(), -1, processNameTCHAR, MAX_PATH);
+//#else
+//    strcpy_s(processNameTCHAR, MAX_PATH, processName.c_str());
+//#endif
+//
+//    // Start the child process.
+//    if (!CreateProcess(NULL,   // No module name (use command line)
+//        processNameTCHAR,      // Command line
+//        NULL,           // Process handle not inheritable
+//        NULL,           // Thread handle not inheritable
+//        FALSE,          // Set handle inheritance to FALSE
+//        0,              // No creation flags
+//        NULL,           // Use parent's environment block
+//        NULL,           // Use parent's starting directory 
+//        &si,            // Pointer to STARTUPINFO structure
+//        &pi)           // Pointer to PROCESS_INFORMATION structure
+//        )
+//    {
+//        printf("CreateProcess failed (%d).\n", GetLastError());
+//        return;
+//    }
+//
+//    // Close process and thread handles.
+//    CloseHandle(pi.hProcess);
+//    CloseHandle(pi.hThread);
+//}
+//
+//int main()
+//{
+//    startProcess(R"(msinfo32)");
+//
+//
+//    system("pause");
+//}
 
-    ZeroMemory(&si, sizeof(si));
-    si.cb = sizeof(si);
-    ZeroMemory(&pi, sizeof(pi));
+#include <windows.h>
+#include <tlhelp32.h>
+#include <vector>
+#include <string>
+#include <sstream>
+#include "../utils.h"
 
-    // Convert processName to TCHAR array
-    TCHAR processNameTCHAR[MAX_PATH];
-#ifdef UNICODE
-    MultiByteToWideChar(CP_ACP, 0, processName.c_str(), -1, processNameTCHAR, MAX_PATH);
-#else
-    strcpy_s(processNameTCHAR, MAX_PATH, processName.c_str());
-#endif
 
-    // Start the child process.
-    if (!CreateProcess(NULL,   // No module name (use command line)
-        processNameTCHAR,      // Command line
-        NULL,           // Process handle not inheritable
-        NULL,           // Thread handle not inheritable
-        FALSE,          // Set handle inheritance to FALSE
-        0,              // No creation flags
-        NULL,           // Use parent's environment block
-        NULL,           // Use parent's starting directory 
-        &si,            // Pointer to STARTUPINFO structure
-        &pi)           // Pointer to PROCESS_INFORMATION structure
-        )
-    {
-        printf("CreateProcess failed (%d).\n", GetLastError());
-        return;
-    }
-
-    // Close process and thread handles.
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
-}
 
 int main()
 {
-    startProcess("control");
 
 
-    system("pause");
+
+	system("pause");
 }
