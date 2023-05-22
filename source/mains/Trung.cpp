@@ -46,60 +46,55 @@
 #include <string>
 #include "../utils.h"
 
-std::vector<std::string> getRunningProcesses() {
-    DWORD aProcesses[1024], cbNeeded, cProcesses;
-    unsigned int i;
-    std::vector<std::string> processList;
+#include <windows.h>
+#include <psapi.h>
+#include <tchar.h>
+#include <vector>
+#include <string>
 
-    // Get the list of process identifiers.
-    if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
-        return processList;
 
-    // Calculate how many process identifiers were returned.
-    cProcesses = cbNeeded / sizeof(DWORD);
+void startProcess(std::string processName) {
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
 
-    // Display the name and process identifier for each process.
-    for (i = 0; i < cProcesses; i++) {
-        if (aProcesses[i] != 0) {
-            TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
-            // Get a handle to the process.
-            HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
-                PROCESS_VM_READ,
-                FALSE, aProcesses[i]);
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(&pi, sizeof(pi));
 
-            // Get the process name.
-            if (hProcess != NULL) {
-                HMODULE hMod;
-                DWORD cbNeeded;
+    // Convert processName to TCHAR array
+    TCHAR processNameTCHAR[MAX_PATH];
+#ifdef UNICODE
+    MultiByteToWideChar(CP_ACP, 0, processName.c_str(), -1, processNameTCHAR, MAX_PATH);
+#else
+    strcpy_s(processNameTCHAR, MAX_PATH, processName.c_str());
+#endif
 
-                if (EnumProcessModules(hProcess, &hMod, sizeof(hMod),
-                    &cbNeeded)) {
-                    GetModuleBaseName(hProcess, hMod, szProcessName,
-                        sizeof(szProcessName) / sizeof(TCHAR));
-                }
-            }
-
-            // Add the process name to the list
-            processList.push_back(utils::tcharToString(szProcessName));
-
-            // Release the handle to the process.
-            CloseHandle(hProcess);
-        }
+    // Start the child process.
+    if (!CreateProcess(NULL,   // No module name (use command line)
+        processNameTCHAR,      // Command line
+        NULL,           // Process handle not inheritable
+        NULL,           // Thread handle not inheritable
+        FALSE,          // Set handle inheritance to FALSE
+        0,              // No creation flags
+        NULL,           // Use parent's environment block
+        NULL,           // Use parent's starting directory 
+        &si,            // Pointer to STARTUPINFO structure
+        &pi)           // Pointer to PROCESS_INFORMATION structure
+        )
+    {
+        printf("CreateProcess failed (%d).\n", GetLastError());
+        return;
     }
 
-    return processList;
+    // Close process and thread handles.
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
 }
-
-#include <iostream>
 
 int main()
 {
-    auto res = getRunningProcesses();
-    for (std::string proc_name : res)
-        std::cout << proc_name << "\n";
-
+    startProcess("control");
 
 
     system("pause");
-
 }

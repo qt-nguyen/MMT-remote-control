@@ -158,3 +158,49 @@ std::shared_ptr<DataObj> RPC_Func::killPrc(std::string Name)
     
     return MES;
 }
+
+std::vector<std::string> RPC_Func::getRunningProcesses() {
+    DWORD aProcesses[1024], cbNeeded, cProcesses;
+    unsigned int i;
+    std::vector<std::string> processList;
+
+    // Get the list of process identifiers.
+    if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
+        return processList;
+
+    // Calculate how many process identifiers were returned.
+    cProcesses = cbNeeded / sizeof(DWORD);
+
+    // Display the name and process identifier for each process.
+    for (i = 0; i < cProcesses; i++) {
+        if (aProcesses[i] != 0) {
+            TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
+            // Get a handle to the process.
+            HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
+                PROCESS_VM_READ,
+                FALSE, aProcesses[i]);
+
+            // Get the process name.
+            if (hProcess != NULL) {
+                HMODULE hMod;
+                DWORD cbNeeded;
+
+                if (EnumProcessModules(hProcess, &hMod, sizeof(hMod),
+                    &cbNeeded)) {
+                    GetModuleBaseName(hProcess, hMod, szProcessName,
+                        sizeof(szProcessName) / sizeof(TCHAR));
+                }
+            }
+
+            // Add the process name to the list
+            if (_tcscmp(szProcessName, TEXT("<unknown>")) != 0) {
+                processList.push_back(utils::tcharToString(szProcessName));
+            }
+
+            // Release the handle to the process.
+            CloseHandle(hProcess);
+        }
+    }
+
+    return processList;
+}
