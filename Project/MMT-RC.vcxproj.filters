@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Server">
       <UniqueIdentifier>{605b9276-b8e1-4a2f-bef2-e60ce84a3001}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Client">
+      <UniqueIdentifier>{44b68369-defa-47fe-9df7-8883f2c762d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\dataobj\DataObj.cpp">
@@ -45,9 +48,6 @@
     <ClCompile Include="..\source\RPC_Func.cpp">
       <Filter>Source Files\Func</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\mains\Trung.cpp">
-      <Filter>Source Files\main</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\utils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
@@ -62,6 +62,18 @@
     </ClCompile>
     <ClCompile Include="..\source\Server\mainServer.cpp">
       <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\SCR_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Client\stdafx.cpp">
+      <Filter>Source Files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Client\Client.cpp">
+      <Filter>Source Files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Client\mainClient.cpp">
+      <Filter>Source Files\Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +112,18 @@
     </ClInclude>
     <ClInclude Include="..\source\SCR_Func.h">
       <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Client\Resource.h">
+      <Filter>Source Files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Client\stdafx.h">
+      <Filter>Source Files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Client\targetver.h">
+      <Filter>Source Files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Client\Client.h">
+      <Filter>Source Files\Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -95,4 +95,10 @@ public:
 
 	std::string setData(std::vector<char> new_data);
 	std::string setData(std::string new_data);
+
+	// Serialization method
+	char* serialize(size_t& size) const;
+
+	// Deserialization method
+	static DataObj deserialize(const char* buffer, size_t size);
 };

@@ -119,12 +119,15 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Client\Client.cpp" />
+    <ClCompile Include="..\source\Client\mainClient.cpp" />
+    <ClCompile Include="..\source\Client\stdafx.cpp" />
     <ClCompile Include="..\source\dataobj\DataObj.cpp" />
     <ClCompile Include="..\source\DIR_Func.cpp" />
     <ClCompile Include="..\source\IAP_Func.cpp" />
     <ClCompile Include="..\source\KLG_Func.cpp" />
-    <ClCompile Include="..\source\mains\Trung.cpp" />
     <ClCompile Include="..\source\RPC_Func.cpp" />
+    <ClCompile Include="..\source\SCR_Func.cpp" />
     <ClCompile Include="..\source\Server\mainServer.cpp" />
     <ClCompile Include="..\source\Server\Server.cpp" />
     <ClCompile Include="..\source\Server\ServerBackend.cpp" />
@@ -132,6 +135,10 @@
     <ClCompile Include="..\source\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\Client\Client.h" />
+    <ClInclude Include="..\source\Client\Resource.h" />
+    <ClInclude Include="..\source\Client\stdafx.h" />
+    <ClInclude Include="..\source\Client\targetver.h" />
     <ClInclude Include="..\source\dataobj\DataObj.h" />
     <ClInclude Include="..\source\DIR_Func.h" />
     <ClInclude Include="..\source\IAP_Func.h" />
