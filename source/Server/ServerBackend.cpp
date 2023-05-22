@@ -53,11 +53,11 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
     case KLG:
         if (data->getCmdType() == START)
         {
-            data = _KLGfunc.startKeylog();
+            //data = _KLGfunc.startKeylog();
         }
         else
         {
-            data = _KLGfunc.stopKeylog();
+            //data = _KLGfunc.stopKeylog();
         }
         break;
     case DIR:

@@ -12,7 +12,7 @@ class ServerBackend
 private:
     IAP_Func _IAPfunc;
     RPC_Func _RPCfunc;
-    KLG_Func _KLGfunc;
+    //KLG_Func _KLGfunc;
     //SCR_Func _SCRfunc;
     DIR_Func _DIRfunc;
 public:

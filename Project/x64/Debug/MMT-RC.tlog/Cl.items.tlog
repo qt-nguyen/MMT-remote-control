@@ -4,4 +4,8 @@ D:\GitHub\MMT-remote-contro\source\IAP_Func.cpp;D:\GitHub\MMT-remote-contro\Proj
 D:\GitHub\MMT-remote-contro\source\KLG_Func.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\KLG_Func.obj
 D:\GitHub\MMT-remote-contro\source\mains\Trung.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\Trung.obj
 D:\GitHub\MMT-remote-contro\source\RPC_Func.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\RPC_Func.obj
+D:\GitHub\MMT-remote-contro\source\Server\mainServer.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\mainServer.obj
+D:\GitHub\MMT-remote-contro\source\Server\Server.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\Server.obj
+D:\GitHub\MMT-remote-contro\source\Server\ServerBackend.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\ServerBackend.obj
+D:\GitHub\MMT-remote-contro\source\Server\stdafx.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\stdafx.obj
 D:\GitHub\MMT-remote-contro\source\utils.cpp;D:\GitHub\MMT-remote-contro\Project\x64\Debug\utils.obj
