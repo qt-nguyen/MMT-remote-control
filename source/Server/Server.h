@@ -1,4 +1,6 @@
 #pragma once
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
+
 #include "ServerBackend.h"
 #include "Resource.h"
 #include "stdafx.h"

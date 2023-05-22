@@ -1,5 +1,7 @@
 ﻿  mainServer.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\atlmfc\include\afxwin.h(90,1): fatal  error C1189: #error:  MFC requires use of Winsock2.h
   Server.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\atlmfc\include\afxwin.h(90,1): fatal  error C1189: #error:  MFC requires use of Winsock2.h
+D:\GitHub\MMT-remote-contro\source\Server\Server.cpp(75,13): error C2039: 'close': is not a member of 'CSocket'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\atlmfc\include\afxsock.h(217,7): message : see declaration of 'CSocket'
+  stdafx.cpp
+  utils.cpp
   Generating Code...
