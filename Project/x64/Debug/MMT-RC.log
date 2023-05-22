@@ -1,5 +1,29 @@
 ﻿  DIR_Func.cpp
+  IAP_Func.cpp
+  KLG_Func.cpp
+  RPC_Func.cpp
   Trung.cpp
+  utils.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xstring(2765,53): warning C4244: 'argument': conversion from 'wchar_t' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xstring(2621,17): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<wchar_t*,wchar_t*,_Size_type>(_Iter,const _Sent,_Size)' being compiled
+          with
+          [
+              _Size_type=unsigned __int64,
+              _Iter=wchar_t *,
+              _Sent=wchar_t *,
+              _Size=unsigned __int64
+          ]
+D:\GitHub\MMT-remote-contro\source\utils.cpp(36,35): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+D:\GitHub\MMT-remote-contro\source\utils.cpp(36,17): message : see the first reference to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' in 'utils::tcharToString'
   Generating Code...
-LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
-  MMT-RC.vcxproj -> D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe
+LINK : fatal error LNK1168: cannot open D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe for writing

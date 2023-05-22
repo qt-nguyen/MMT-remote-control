@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <locale>
 #include <codecvt>
+#include <tchar.h>
 
 namespace utils
 {
@@ -28,4 +29,13 @@ namespace utils
     }
 
 
+
+    std::string tcharToString(TCHAR* tcharArray) {
+        #ifdef UNICODE
+                std::wstring wStr(tcharArray);
+                return std::string(wStr.begin(), wStr.end());
+        #else
+                return std::string(tcharArray);
+        #endif
+    }
 }
