@@ -25,10 +25,13 @@ using  namespace std;
 
 
 int main() {
-    RPC_Func rpc;
-    std::shared_ptr<DataObj> res = rpc.listPrcs();
-    std::string res_str = res->getData_String();
-    std::cout << res->toJsonString();
+    DIR_Func dir;
+    auto req = DataObj("", REQUEST, DIR, SHOW, "D:\\Desktop");
+    auto res = dir.HandleRequest(req);
+
+    auto  data = json::parse(res->getData_String());
+    dir.PrintDirectoryTree(data, 4);
+    
 
     system("pause");
     return 0;

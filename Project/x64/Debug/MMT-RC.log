@@ -1,7 +1,5 @@
-﻿  KLG_Func.cpp
-  Server.cpp
-  ServerBackend.cpp
-  mainServer.cpp
+﻿  DIR_Func.cpp
+  Trung.cpp
   Generating Code...
 LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
   MMT-RC.vcxproj -> D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe
