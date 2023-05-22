@@ -13,7 +13,7 @@ private:
     IAP_Func _IAPfunc;
     RPC_Func _RPCfunc;
     KLG_Func _KLGfunc;
-    SCR_Func _SCRfunc;
+    //SCR_Func _SCRfunc;
     DIR_Func _DIRfunc;
 public:
     void handleClientRequest(std::shared_ptr<DataObj> request);

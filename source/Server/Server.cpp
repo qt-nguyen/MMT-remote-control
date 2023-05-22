@@ -72,7 +72,7 @@ Server::Server()
 
 Server::~Server()
 {
-    _server.close();
+    _server.Close();
 }
 
 void Server::start()
