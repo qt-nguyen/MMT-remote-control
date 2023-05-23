@@ -40,11 +40,11 @@ void ServerBackend::handleClientRequest(std::shared_ptr<DataObj> data)
     case SCR:
         if (data->getCmdType() == START)
         {
-            data = _SCRfunc.startCapture();
+            //data = _SCRfunc.startCapture();
         }
         else
         {
-            data = _SCRfunc.stopCapture();
+            //data = _SCRfunc.stopCapture();
         }
         break;
     case KLG:

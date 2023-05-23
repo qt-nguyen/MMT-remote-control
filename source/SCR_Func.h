@@ -19,11 +19,9 @@
 class SCR_Func
 {
 public:
-
-	std::string start();
-	std::string stop();
-
 	std::vector<char> takeScreenshot();
+	
+	std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
 
 };

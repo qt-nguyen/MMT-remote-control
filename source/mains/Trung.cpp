@@ -112,9 +112,18 @@
 #include <gdiplus.h>
 #pragma comment(lib, "Gdi32.lib")
 #pragma comment(lib, "Gdiplus.lib")
+#include "../SCR_Func.h"
 
 int main()
 {
-	reinterpret_cast<char*>
+	SCR_Func scr;
+	auto img_data = scr.takeScreenshot();
+	DataObj data(utils::CurrentTime(), RESPONSE, SCR, SHOW, img_data);
 
+	data.dataToFile("image.png");
+
+
+
+	
+	system("pause'");
 }
