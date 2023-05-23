@@ -76,8 +76,11 @@ public:
 	std::string toJsonString();
 	std::string toString();
 
-	// Convert data object to a file
+	// Write JsonFormat of its attributes to a file
 	std::string toFile(std::string filename);
+
+	// Write only the _data attribute to a file
+	std::string dataToFile(std::string filename);
 
 	// Getters
 	std::string getID();
@@ -86,6 +89,7 @@ public:
 	CmdType getCmdType();
 	std::vector<char> getData();
 	std::string getData_String();
+	char* getDAta_CString();
 
 	// return: announcement about the result of the procedure
 	std::string setID(std::string new_ID);
@@ -101,4 +105,6 @@ public:
 
 	// Deserialization method
 	static DataObj deserialize(const char* buffer, size_t size);
+
+
 };

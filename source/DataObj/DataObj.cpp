@@ -122,6 +122,20 @@ std::string DataObj::toFile(std::string filename)
 	}
 }
 
+std::string DataObj::dataToFile(std::string filename)
+{
+	std::ofstream out_file; 
+	out_file.open(filename, std::ios::binary | std::ios::out);
+	if (out_file.is_open())
+	{
+		out_file.write(this->getDAta_CString(), _data.size());
+		out_file.close();
+		return "Raw written to file " + filename + "successfully";
+	}
+	else
+		return "Unable to write data to file " + filename;
+}
+
 // Getters
 std::string DataObj::getID()
 {
@@ -151,6 +165,12 @@ std::vector<char> DataObj::getData()
 std::string DataObj::getData_String()
 {
 	auto res = std::string(_data.begin(), _data.end());
+	return res;
+}
+
+char* DataObj::getDAta_CString()
+{
+	char* res = reinterpret_cast<char*> (&_data[0]);
 	return res;
 }
 
@@ -259,3 +279,4 @@ DataObj DataObj::deserialize(const char* buffer, size_t size)
 	ss.read(data.data(), dataSize);
 	return DataObj(ID, static_cast<DataType>(data_type), static_cast<FuncType>(func_type), static_cast<CmdType>(cmd_type), data);
 }
+
