@@ -19,4 +19,7 @@ namespace utils
     
     std::string tcharToString(TCHAR* tcharArray);
 
+    
+
+    
 }

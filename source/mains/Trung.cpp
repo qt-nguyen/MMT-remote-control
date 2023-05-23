@@ -105,13 +105,65 @@
 #include <string>
 #include <sstream>
 #include "../utils.h"
-
-
+#include <d3d9.h>
+#include <wincodec.h>
+#include <wingdi.h>
+#include <Windows.h>
+#include <gdiplus.h>
+#pragma comment(lib, "Gdi32.lib")
+#pragma comment(lib, "Gdiplus.lib")
 
 int main()
 {
+	HDC hScreenDC = GetDC(nullptr); // CreateDC("DISPLAY",nullptr,nullptr,nullptr);
+	HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
+
+	// Get width and height of the current screen
+	int width = GetDeviceCaps(hScreenDC, HORZRES);
+	int height = GetDeviceCaps(hScreenDC, VERTRES);
+
+	
+	HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
+	HBITMAP hOldBitmap = static_cast<HBITMAP>(SelectObject(hMemoryDC, hBitmap));
+	BitBlt(hMemoryDC, 0, 0, width, height, hScreenDC, 0, 0, SRCCOPY);
+	hBitmap = static_cast<HBITMAP>(SelectObject(hMemoryDC, hOldBitmap));
+	DeleteDC(hMemoryDC);
+	DeleteDC(hScreenDC);
+
+	// Initialize GDI+
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken;
+	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
+
+	// Save the bitmap to a file
+	Gdiplus::Bitmap bitmap(hBitmap, nullptr);
+	CLSID clsid;
+	CLSIDFromString(L"{557CF406-1A04-11D3-9A73-0000F81EF32E}", &clsid); // PNG encoder
+	bitmap.Save(L"screenshot.png", &clsid);
+
+	// Convert the bitmap to a std::vector<char>
+	BITMAPINFOHEADER bi;
+	bi.biSize = sizeof(BITMAPINFOHEADER);
+	bi.biWidth = width;
+	bi.biHeight = -height; // top-down
+	bi.biPlanes = 1;
+	bi.biBitCount = 32;
+	bi.biCompression = BI_RGB;
+	bi.biSizeImage = 0;
+	bi.biXPelsPerMeter = 0;
+	bi.biYPelsPerMeter = 0;
+	bi.biClrUsed = 0;
+	bi.biClrImportant = 0;
+
+	std::vector<char> data(width * height * 4);
+	GetDIBits(hMemoryDC, hBitmap, 0, height, data.data(), (BITMAPINFO*)&bi, DIB_RGB_COLORS);
+
+	// Use the data
+	// ...
+
+	// Shutdown GDI+
+	Gdiplus::GdiplusShutdown(gdiplusToken);
 
 
 
-	system("pause");
 }

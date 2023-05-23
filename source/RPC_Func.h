@@ -40,5 +40,5 @@ public:
     // HUYNH LONG VERSION
     std::vector<ProcessInfo> get_current_processes();
 
-
+    HWND RPC_Func::find_main_window(unsigned long process_id);
 };

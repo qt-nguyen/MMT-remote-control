@@ -6,6 +6,10 @@
 #include <locale>
 #include <codecvt>
 #include <tchar.h>
+#include <locale>
+#include <wincodec.h>
+#include <vector>
+
 
 namespace utils
 {
@@ -38,4 +42,9 @@ namespace utils
                 return std::string(tcharArray);
         #endif
     }
+
+    
+    
+
+
 }
