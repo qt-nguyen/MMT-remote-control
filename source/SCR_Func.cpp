@@ -88,9 +88,4 @@ std::shared_ptr<DataObj> SCR_Func::HandleRequest(DataObj request)
 		response->setCmdType(DATA);
 		return response;
 	}
-
-
-
-
-		
 }
