@@ -5,14 +5,11 @@
 
 Server::Server()
 {
-    
-    
-
 }
 
 Server::~Server()
 {
-    //_server.Close();
+ 
 }
 
 void Server::start()
@@ -78,163 +75,94 @@ DWORD WINAPI function_cal(LPVOID arg)
     const std::chrono::seconds timeout(5);
     server.SetSockOpt(SO_RCVTIMEO, &timeout, sizeof(timeout), SOL_SOCKET);
 
- //do {
-        fflush(stdin);
-        size_t clientSize;
-        server.Receive(&clientSize, sizeof(clientSize), 0);
+    fflush(stdin);
+    size_t clientSize;
+    server.Receive(&clientSize, sizeof(clientSize), 0);
 
-        char* bufferClient = new char[clientSize];
-        server.Receive(bufferClient, clientSize, 0);
+    char* bufferClient = new char[clientSize];
+    server.Receive(bufferClient, clientSize, 0);
 
-        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-        delete[] bufferClient;
-        //server.Receive(&clientData, sizeof(clientData), 0);
-        if (check == SOCKET_ERROR)
+    DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
+    delete[] bufferClient;
+
+    if (check == SOCKET_ERROR)
+    {
+        int errCode = GetLastError();
+        if (errCode == WSAETIMEDOUT)
         {
-            int errCode = GetLastError();
-            if (errCode == WSAETIMEDOUT)
-            {
-                wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
-                //break;
-            }
+            wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
         }
-        std::cout << clientData.toJsonString() << "\n";
-        if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
-        {
-            do
-            {
-                std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
+    }
+    std::cout << clientData.toJsonString() << "\n";
 
 
-                DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
-                size_t serverSize;
-                char* bufferServer = serverData.serialize(serverSize);
-                server.Send(&serverSize, sizeof(serverSize), 0);
-                server.Send(bufferServer, serverSize, 0);
-                delete[] bufferServer;
-
-   
-                server.Receive(&clientSize, sizeof(clientSize), 0);
-
-                char* bufferClient = new char[clientSize];
-                server.Receive(bufferClient, clientSize, 0);
-
-                DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-                delete[] bufferClient;
-
-                if (clientData.getCmdType() == STOP)
-                {
-                    std::shared_ptr<DataObj> tmp1 = backend.handleClientRequest(clientData);
-                    DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
-                    size_t serverSize;
-                    char* bufferServer = serverData.serialize(serverSize);
-
-                    std::cout << serverData.toJsonString() << "\n";
-                    std::cout << serverData.getData_String() << "\n";
-                    
-                    server.Send(&serverSize, sizeof(serverSize), 0);
-                    server.Send(bufferServer, serverSize, 0);
-                    delete[] bufferServer;
-                    break;
-                }
-                    
-        
-            } while (true);
-        } 
-        else
+    if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
+    {
+        do
         {
             std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
 
-
             DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
+
             size_t serverSize;
             char* bufferServer = serverData.serialize(serverSize);
-
-            std::cout << serverData.toJsonString() << "\n";
-            std::cout << serverData.getData_String() << "\n";
-
+            std::cout << serverData.getData().size() << "\n";
             server.Send(&serverSize, sizeof(serverSize), 0);
             server.Send(bufferServer, serverSize, 0);
+
             delete[] bufferServer;
 
-            //check = server.Receive(&number_continue, sizeof(number_continue), 0);
+   
+            server.Receive(&clientSize, sizeof(clientSize), 0);
+            char* bufferClient = new char[clientSize];
+            server.Receive(bufferClient, clientSize, 0);
 
-            //if (check == SOCKET_ERROR || number_continue == 0)
-            //{
-            //    wprintf(L"Client %d from %s disconnected from server\n", clientID, (LPCTSTR)ipAddress);
-            //    server.Close();
-            //   // break;
-            //}
-        }
+            DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
 
+            delete[] bufferClient;
+
+            if (clientData.getCmdType() == STOP)
+            {
+                std::shared_ptr<DataObj> tmp1 = backend.handleClientRequest(clientData);
+
+                DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
+
+                size_t serverSize;
+                char* bufferServer = serverData.serialize(serverSize);
+
+                std::cout << serverData.toJsonString() << "\n";
+                std::cout << serverData.getData_String() << "\n";
+                    
+                server.Send(&serverSize, sizeof(serverSize), 0);
+                server.Send(bufferServer, serverSize, 0);
+
+                delete[] bufferServer;
+                break;
+            }
+            if (clientData.getFuncType() == SCR) Sleep(5000);
         
+        } while (true);
+    } 
+        
+    else
+    {
+        std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
 
-//} while (number_continue);
+        DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
+
+        size_t serverSize;
+        char* bufferServer = serverData.serialize(serverSize);
+
+        std::cout << serverData.toJsonString() << "\n";
+        std::cout << serverData.getData_String() << "\n";
+
+        server.Send(&serverSize, sizeof(serverSize), 0);
+        server.Send(bufferServer, serverSize, 0);
+
+        delete[] bufferServer;
+    }
 
     delete args;
     return 0;
 }
-
-//DWORD WINAPI function_cal(LPVOID arg)
-//{
-//    auto args = (std::pair<int, SOCKET>*)arg;
-//    int clientID = args->first;
-//    SOCKET* hConnected = &args->second;
-//    CSocket server;
-//    server.Attach(*hConnected);
-//
-//    // Get the IP address and port number of the connected client
-//    CString ipAddress;
-//    UINT port;
-//    server.GetPeerName(ipAddress, port);
-//
-//    int number_continue = 0, check = 0;
-//    ServerBackend backend;
-//    DataObj data;
-//    int timeout = 5000;
-//    server.SetSockOpt(SO_RCVTIMEO, &timeout, sizeof(timeout), SOL_SOCKET);
-//    std::cout << "1";
-//    do {
-//        fflush(stdin);
-//
-//        server.Receive(&data, sizeof(data), 0);
-//        if (check == SOCKET_ERROR)
-//        {
-//            int errCode = GetLastError();
-//            if (errCode == WSAETIMEDOUT)
-//            {
-//                wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
-//                break;
-//            }
-//        }
-//        
-//        std::cout << data.toJsonString() << "\n";
-//        std::cout << "AAA";
-//        backend.handleClientRequest(data);
-//
-//        size_t serverSize;
-//        char* bufferServer = data.serialize(serverSize);
-//
-//        std::cout << data.toJsonString() << "\n";
-//        std::cout << data.getData_String() << "\n";
-//
-//        server.Send(&serverSize, sizeof(serverSize), 0);
-//        server.Send(bufferServer, serverSize, 0);
-//
-//        check = server.Receive(&number_continue, sizeof(number_continue), 0);
-//
-//        delete[] bufferServer;
-//
-//        if (check == SOCKET_ERROR || number_continue == 0)
-//        {
-//            wprintf(L"Client %d from %s disconnected from server\n", clientID, (LPCTSTR)ipAddress);
-//            server.Close();
-//            break;
-//        }
-//
-//    } while (number_continue);
-//    delete args;
-//    return 0;
-//}
-
 

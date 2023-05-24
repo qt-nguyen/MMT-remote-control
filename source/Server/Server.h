@@ -17,12 +17,6 @@
 class Server
 {
 private:
-    ServerBackend _backend;
-    /*CSocket _server;
-    CSocket _s;
-    DWORD _threadID;
-    HANDLE _threadStatus;
-    int _clientID;*/
 
 public:
     Server();
