@@ -1,6 +1,25 @@
-#include "Client.h"
+﻿#include "Client.h"
 
+bool receiveData(CSocket& mysock, size_t& size, char* buffer)
+{
+    int bytesReceived = 0;
+    while (bytesReceived < size)
+    {
+        int remainingSize = size - bytesReceived;
+        int receiveSize = remainingSize > 1024 ? 1024 : remainingSize; // Nhận tối đa 1024 byte mỗi lần
 
+        int result = mysock.Receive(buffer + bytesReceived, receiveSize, 0);
+        if (result == SOCKET_ERROR || result == 0)
+        {
+            std::cerr << "Error receiving data\n";
+            return false;
+        }
+
+        bytesReceived += result;
+    }
+
+    return true;
+}
 void Client::getClientData(TCHAR* argv[5])
 {
     std::string ID = utils::CurrentTime();
@@ -336,7 +355,8 @@ void Client::process()
         _client.Receive(&serverSize, sizeof(serverSize), 0);
 
         char* bufferServer = new char[serverSize];
-        _client.Receive(bufferServer, serverSize, 0);
+        receiveData(_client, serverSize, bufferServer);
+        //_client.Receive(bufferServer, serverSize, 0);
 
         DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
 

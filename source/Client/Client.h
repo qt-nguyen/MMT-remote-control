@@ -25,3 +25,4 @@ public:
 	void start();
 	void process();
 };
+bool receiveData(CSocket& mysock, size_t& size, char* buffer);

@@ -27,3 +27,4 @@ public:
 
 
 };
+bool sendData(CSocket& mysock, size_t size, char* buffer);
