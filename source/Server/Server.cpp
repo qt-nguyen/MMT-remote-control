@@ -129,7 +129,7 @@ DWORD WINAPI function_cal(LPVOID arg)
                 char* bufferServer = serverData.serialize(serverSize);
                 std::cout << serverData.getData().size() << "\n";
                 server.Send(&serverSize, sizeof(serverSize), 0);
-                server.Send(bufferServer, serverSize, 0);
+                sendData(server, serverSize, bufferServer);
 
                 delete[] bufferServer;
 
@@ -155,7 +155,7 @@ DWORD WINAPI function_cal(LPVOID arg)
                     std::cout << serverData.getData_String() << "\n";
 
                     server.Send(&serverSize, sizeof(serverSize), 0);
-                    server.Send(bufferServer, serverSize, 0);
+                    sendData(server, serverSize, bufferServer);
 
                     delete[] bufferServer;
                     break;
@@ -179,7 +179,6 @@ DWORD WINAPI function_cal(LPVOID arg)
 
             server.Send(&serverSize, sizeof(serverSize), 0);
             sendData(server, serverSize, bufferServer);
-            //server.Send(bufferServer, serverSize, 0);
 
             delete[] bufferServer;
 

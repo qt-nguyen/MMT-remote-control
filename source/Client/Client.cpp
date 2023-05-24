@@ -253,7 +253,7 @@ void Client::start()
 
             for (int attempt = 1; attempt <= MAX_ATTEMPTS; ++attempt)
             {
-                if (_client.Connect(_T("127.0.0.1"), 4567))
+                if (_client.Connect(_T("192.168.2.109"), 4567))
                 {
                     connected = true;
                     break;
@@ -300,7 +300,7 @@ void Client::process()
                 _client.Receive(&serverSize, sizeof(serverSize), 0);
 
                 char* bufferServer = new char[serverSize];
-                _client.Receive(bufferServer, serverSize, 0);
+                receiveData(_client, serverSize, bufferServer);
 
                 DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
                 delete[]bufferServer;
@@ -329,7 +329,7 @@ void Client::process()
                 _client.Receive(&serverSize, sizeof(serverSize), 0);
 
                 char* bufferServer = new char[serverSize];
-                _client.Receive(bufferServer, serverSize, 0);
+                receiveData(_client, serverSize, bufferServer);
 
                 DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
                 delete[]bufferServer;
@@ -356,7 +356,6 @@ void Client::process()
 
         char* bufferServer = new char[serverSize];
         receiveData(_client, serverSize, bufferServer);
-        //_client.Receive(bufferServer, serverSize, 0);
 
         DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
 
