@@ -44,7 +44,7 @@ public:
     std::string runPrc(std::string prcName);
 
 
-    std::string killPrc(std::string prcName);
+    std::string killPrc(const std::string& processName);
     // HUYNH LONG VERSION
    // std::vector<ProcessInfo> get_current_processes();
 

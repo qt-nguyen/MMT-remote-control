@@ -78,9 +78,7 @@ std::string RPC_Func::listPrcs() {
     // Now walk the snapshot of processes
     do
     {
-        int size_needed = WideCharToMultiByte(CP_UTF8, 0, pe32.szExeFile, -1, NULL, 0, NULL, NULL);
-        std::string str(size_needed, 0);
-        WideCharToMultiByte(CP_UTF8, 0, pe32.szExeFile, -1, &str[0], size_needed, NULL, NULL);
+        std::string str = utils::ws2s(pe32.szExeFile);
         result += str;
         result += "\n";
     } while (Process32Next(hProcessSnap, &pe32));
@@ -146,8 +144,6 @@ std::string RPC_Func::runPrc(std::string Name)
 
     res += Name + " ran successfully.\n";
 
-    // Wait until the child process exits.
-    WaitForSingleObject(pi.hProcess, INFINITE);
 
     // Close process and thread handles.
     CloseHandle(pi.hProcess);
@@ -156,54 +152,48 @@ std::string RPC_Func::runPrc(std::string Name)
     return res;
 }
 
-std::string RPC_Func::killPrc(std::string name)
-{
-    std::string resultMsg;
+std::string RPC_Func::killPrc(const std::string& processName) {
+    HANDLE hProcessSnap;
+    PROCESSENTRY32 pe32;
 
-    DWORD processes[1024];
-    DWORD cbNeeded;
-    if (!EnumProcesses(processes, sizeof(processes), &cbNeeded)) {
-        resultMsg = "Failed to enumerate processes.";
-        return resultMsg;
+    // Take a snapshot of all processes in the system.
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == INVALID_HANDLE_VALUE)
+    {
+        return "Failed to create process snapshot";
     }
 
-    DWORD numProcesses = cbNeeded / sizeof(DWORD);
-    bool found = false;
+    // Set the size of the structure before using it.
+    pe32.dwSize = sizeof(PROCESSENTRY32);
 
-    for (DWORD i = 0; i < numProcesses; i++) {
-        DWORD processId = processes[i];
-        HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_TERMINATE, FALSE, processId);
-        if (hProcess) {
-            char processName[MAX_PATH];
-            if (GetModuleBaseNameA(hProcess, NULL, processName, sizeof(processName))) {
-                std::string processNameStr(processName);
-                std::transform(processNameStr.begin(), processNameStr.end(), processNameStr.begin(), ::tolower);
-                std::string searchName = name;
-                std::transform(searchName.begin(), searchName.end(), searchName.begin(), ::tolower);
+    // Retrieve information about the first process,
+    // and exit if unsuccessful
+    if (!Process32First(hProcessSnap, &pe32))
+    {
+        CloseHandle(hProcessSnap);          // clean the snapshot object
+        return "Failed to retrieve information about first process";
+    }
 
-                if (processNameStr.find(searchName) != std::string::npos) {
-                    if (TerminateProcess(hProcess, 0)) {
-                        resultMsg = "Process '" + processNameStr + "' terminated successfully.";
-                        found = true;
-                    }
-                    else {
-                        resultMsg = "Failed to terminate process '" + processNameStr + "'.";
-                    }
-                    break;
-                }
+    // Now walk the snapshot of processes
+    do
+    {
+        std::string str = utils::ws2s(pe32.szExeFile);
+        if (str == processName) {
+            HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
+            if (hProcess == NULL) {
+                CloseHandle(hProcessSnap);
+                return "Failed to open process";
             }
+            TerminateProcess(hProcess, 0);
+            CloseHandle(hProcess);
+            CloseHandle(hProcessSnap);
+            return "Process terminated successfully";
         }
+    } while (Process32Next(hProcessSnap, &pe32));
 
-        CloseHandle(hProcess);
-    }
-
-    if (!found) {
-        resultMsg = "Process '" + name + "' not found.";
-    }
-
-    return resultMsg;
+    CloseHandle(hProcessSnap);
+    return "Process not found";
 }
-
 
 /*
 
