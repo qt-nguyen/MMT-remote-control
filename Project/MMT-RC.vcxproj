@@ -151,9 +151,6 @@
     <ClInclude Include="..\source\Server\targetver.h" />
     <ClInclude Include="..\source\utils.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="output.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
