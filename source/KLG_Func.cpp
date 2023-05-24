@@ -16,6 +16,8 @@
 
 
 #if FORMAT == 0
+
+// Keyboard input map
 const std::map<int, std::string> keyname{
 	{VK_BACK, "[BACKSPACE]" },
 	{VK_RETURN,	"\n" },

