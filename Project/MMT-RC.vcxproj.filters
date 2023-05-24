@@ -75,6 +75,9 @@
     <ClCompile Include="..\source\Client\mainClient.cpp">
       <Filter>Source Files\Client</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\mains\Trung.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h">
@@ -125,8 +128,5 @@
     <ClInclude Include="..\source\Client\Client.h">
       <Filter>Source Files\Client</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="output.txt" />
   </ItemGroup>
 </Project>
