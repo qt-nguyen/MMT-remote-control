@@ -84,7 +84,7 @@ std::shared_ptr<DataObj> SCR_Func::HandleRequest(DataObj request)
 		return response;
 	}
 
-	if (request.getCmdType() == SHOW)
+	if (request.getCmdType() == START)
 	{
 		response->setData(this->takeScreenshot());
 		response->setCmdType(DATA);

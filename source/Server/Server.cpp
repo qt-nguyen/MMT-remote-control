@@ -74,31 +74,79 @@ DWORD WINAPI function_cal(LPVOID arg)
     int number_continue = 0, check = 0;
     const std::chrono::seconds timeout(5);
     server.SetSockOpt(SO_RCVTIMEO, &timeout, sizeof(timeout), SOL_SOCKET);
-
-    fflush(stdin);
-    size_t clientSize;
-    server.Receive(&clientSize, sizeof(clientSize), 0);
-
-    char* bufferClient = new char[clientSize];
-    server.Receive(bufferClient, clientSize, 0);
-
-    DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-    delete[] bufferClient;
-
-    if (check == SOCKET_ERROR)
+    do
     {
-        int errCode = GetLastError();
-        if (errCode == WSAETIMEDOUT)
+        fflush(stdin);
+        size_t clientSize;
+        server.Receive(&clientSize, sizeof(clientSize), 0);
+
+        char* bufferClient = new char[clientSize];
+        server.Receive(bufferClient, clientSize, 0);
+
+        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
+        delete[] bufferClient;
+
+        if (check == SOCKET_ERROR)
         {
-            wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+            int errCode = GetLastError();
+            if (errCode == WSAETIMEDOUT)
+            {
+                wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                break;
+            }
         }
-    }
-    std::cout << clientData.toJsonString() << "\n";
+        std::cout << clientData.toJsonString() << "\n";
 
 
-    if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
-    {
-        do
+        if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
+        {
+            do
+            {
+                std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
+
+                DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
+
+                size_t serverSize;
+                char* bufferServer = serverData.serialize(serverSize);
+                std::cout << serverData.getData().size() << "\n";
+                server.Send(&serverSize, sizeof(serverSize), 0);
+                server.Send(bufferServer, serverSize, 0);
+
+                delete[] bufferServer;
+
+
+                server.Receive(&clientSize, sizeof(clientSize), 0);
+                char* bufferClient = new char[clientSize];
+                server.Receive(bufferClient, clientSize, 0);
+
+                DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
+
+                delete[] bufferClient;
+
+                if (clientData.getCmdType() == STOP)
+                {
+                    std::shared_ptr<DataObj> tmp1 = backend.handleClientRequest(clientData);
+
+                    DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
+
+                    size_t serverSize;
+                    char* bufferServer = serverData.serialize(serverSize);
+
+                    std::cout << serverData.toJsonString() << "\n";
+                    std::cout << serverData.getData_String() << "\n";
+
+                    server.Send(&serverSize, sizeof(serverSize), 0);
+                    server.Send(bufferServer, serverSize, 0);
+
+                    delete[] bufferServer;
+                    break;
+                }
+                if (clientData.getFuncType() == SCR) Sleep(5000);
+
+            } while (true);
+        }
+
+        else
         {
             std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
 
@@ -106,62 +154,29 @@ DWORD WINAPI function_cal(LPVOID arg)
 
             size_t serverSize;
             char* bufferServer = serverData.serialize(serverSize);
-            std::cout << serverData.getData().size() << "\n";
+
+            std::cout << serverData.toJsonString() << "\n";
+            std::cout << serverData.getData_String() << "\n";
+
             server.Send(&serverSize, sizeof(serverSize), 0);
             server.Send(bufferServer, serverSize, 0);
 
             delete[] bufferServer;
 
-   
-            server.Receive(&clientSize, sizeof(clientSize), 0);
-            char* bufferClient = new char[clientSize];
-            server.Receive(bufferClient, clientSize, 0);
+            check = server.Receive(&number_continue, sizeof(number_continue), 0);
 
-            DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-
-            delete[] bufferClient;
-
-            if (clientData.getCmdType() == STOP)
+            if (check == SOCKET_ERROR || number_continue == 0)
             {
-                std::shared_ptr<DataObj> tmp1 = backend.handleClientRequest(clientData);
-
-                DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
-
-                size_t serverSize;
-                char* bufferServer = serverData.serialize(serverSize);
-
-                std::cout << serverData.toJsonString() << "\n";
-                std::cout << serverData.getData_String() << "\n";
-                    
-                server.Send(&serverSize, sizeof(serverSize), 0);
-                server.Send(bufferServer, serverSize, 0);
-
-                delete[] bufferServer;
-                break;
+                int errCode = GetLastError();
+                if (errCode == WSAETIMEDOUT)
+                {
+                    wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                    server.Close();
+                    break;
+                }
             }
-            if (clientData.getFuncType() == SCR) Sleep(5000);
-        
-        } while (true);
-    } 
-        
-    else
-    {
-        std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
-
-        DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
-
-        size_t serverSize;
-        char* bufferServer = serverData.serialize(serverSize);
-
-        std::cout << serverData.toJsonString() << "\n";
-        std::cout << serverData.getData_String() << "\n";
-
-        server.Send(&serverSize, sizeof(serverSize), 0);
-        server.Send(bufferServer, serverSize, 0);
-
-        delete[] bufferServer;
-    }
-
+        }
+    } while (number_continue == 1);
     delete args;
     return 0;
 }
