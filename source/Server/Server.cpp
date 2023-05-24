@@ -163,17 +163,18 @@ DWORD WINAPI function_cal(LPVOID arg)
 
             delete[] bufferServer;
 
-            check = server.Receive(&number_continue, sizeof(number_continue), 0);
+            
+        }
+        check = server.Receive(&number_continue, sizeof(number_continue), 0);
 
-            if (check == SOCKET_ERROR || number_continue == 0)
+        if (check == SOCKET_ERROR || number_continue == 0)
+        {
+            int errCode = GetLastError();
+            if (errCode == WSAETIMEDOUT)
             {
-                int errCode = GetLastError();
-                if (errCode == WSAETIMEDOUT)
-                {
-                    wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
-                    server.Close();
-                    break;
-                }
+                wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                server.Close();
+                break;
             }
         }
     } while (number_continue == 1);

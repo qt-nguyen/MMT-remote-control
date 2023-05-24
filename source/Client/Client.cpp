@@ -291,7 +291,7 @@ void Client::process()
 
                 _client.Send(&clientSize, sizeof(clientSize), 0);
                 _client.Send(bufferClient, clientSize, 0);
-
+                
 
             } while (true);
             _clientData.setCmdType(STOP);
@@ -316,7 +316,7 @@ void Client::process()
                 delete[]bufferServer;
 
                 std::cout << serverData.getData().size() << "\n";
-                std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
+                //std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
                 if (_kbhit()) break;
 
                 _client.Send(&clientSize, sizeof(clientSize), 0);

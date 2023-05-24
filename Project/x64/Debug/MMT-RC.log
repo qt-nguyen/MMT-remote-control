@@ -1,5 +1,2 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of stdafx.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\source\Client\stdafx.cpp, ..\source\Server\stdafx.cpp.
-  Client.cpp
-  Server.cpp
-  Generating Code...
   MMT-RC.vcxproj -> C:\Users\Nghia\source\repos\quoc-trung-nguyen-hcmus\MMT-remote-control\Project\x64\Debug\MMT-RC.exe

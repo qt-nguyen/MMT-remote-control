@@ -130,7 +130,7 @@ std::string DataObj::dataToFile(std::string filename)
 	{
 		out_file.write(this->getDAta_CString(), _data.size());
 		out_file.close();
-		return "Raw written to file " + filename + "successfully";
+		return "Raw written to file " + filename + " successfully.";
 	}
 	else
 		return "Unable to write data to file " + filename;
