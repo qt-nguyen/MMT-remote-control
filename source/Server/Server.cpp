@@ -99,22 +99,21 @@ DWORD WINAPI function_cal(LPVOID arg)
             }
         }
         std::cout << clientData.toJsonString() << "\n";
-        if(0)
-        //if (clientData.getFuncType() == KLG)
+        if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
         {
-            //do
+            do
             {
                 std::shared_ptr<DataObj> tmp = backend.handleClientRequest(clientData);
 
 
-                /*DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
+                DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
                 size_t serverSize;
                 char* bufferServer = serverData.serialize(serverSize);
                 server.Send(&serverSize, sizeof(serverSize), 0);
                 server.Send(bufferServer, serverSize, 0);
-                delete[] bufferServer;*/
+                delete[] bufferServer;
 
-               
+   
                 server.Receive(&clientSize, sizeof(clientSize), 0);
 
                 char* bufferClient = new char[clientSize];
@@ -123,28 +122,24 @@ DWORD WINAPI function_cal(LPVOID arg)
                 DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
                 delete[] bufferClient;
 
-                if (clientData.getFuncType() == KLG && clientData.getCmdType() == STOP)
+                if (clientData.getCmdType() == STOP)
                 {
                     std::shared_ptr<DataObj> tmp1 = backend.handleClientRequest(clientData);
-                    /*DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
+                    DataObj serverData(tmp1->getID(), tmp1->getDataType(), tmp1->getFuncType(), tmp1->getCmdType(), tmp1->getData());
                     size_t serverSize;
                     char* bufferServer = serverData.serialize(serverSize);
 
                     std::cout << serverData.toJsonString() << "\n";
                     std::cout << serverData.getData_String() << "\n";
-                    delete[] bufferServer;*/
-                    //server.Send(&serverSize, sizeof(serverSize), 0);
-                    //server.Send(bufferServer, serverSize, 0);
-                    //break;
+                    
+                    server.Send(&serverSize, sizeof(serverSize), 0);
+                    server.Send(bufferServer, serverSize, 0);
+                    delete[] bufferServer;
+                    break;
                 }
                     
-                DataObj serverData(tmp->getID(), tmp->getDataType(), tmp->getFuncType(), tmp->getCmdType(), tmp->getData());
-                size_t serverSize;
-                char* bufferServer = serverData.serialize(serverSize);
-                server.Send(&serverSize, sizeof(serverSize), 0);
-                server.Send(bufferServer, serverSize, 0);
-                delete[] bufferServer;
-            } //while (true);
+        
+            } while (true);
         } 
         else
         {

@@ -75,7 +75,7 @@ std::vector<char> SCR_Func::takeScreenshot()
 
 std::shared_ptr<DataObj> SCR_Func::HandleRequest(DataObj request)
 {
-	std::shared_ptr<DataObj> response(new DataObj(utils::CurrentTime(), RESPONSE, SCR, CMD_TYPE, "");
+	std::shared_ptr<DataObj> response(new DataObj(utils::CurrentTime(), RESPONSE, SCR, CMD_TYPE, ""));
 	if (request.getDataType() != REQUEST || request.getFuncType() != SCR)
 	{
 		response->setData("Wrong request format");
@@ -85,6 +85,12 @@ std::shared_ptr<DataObj> SCR_Func::HandleRequest(DataObj request)
 	if (request.getCmdType() == SHOW)
 	{
 		response->setData(this->takeScreenshot());
+		response->setCmdType(DATA);
+		return response;
+	}
+	else
+	{
+		response->setData("Screen capture stopped.");
 		response->setCmdType(DATA);
 		return response;
 	}

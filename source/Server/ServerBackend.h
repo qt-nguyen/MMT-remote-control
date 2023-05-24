@@ -16,7 +16,7 @@ private:
     SCR_Func _SCRfunc;
     DIR_Func _DIRfunc;
 public:
-    void handleClientRequest(std::shared_ptr<DataObj> request);
+    std::shared_ptr<DataObj> ServerBackend::handleClientRequest(DataObj data);
     //DataObj deserialize(std::string& data);
     //std::string createResponseData(DataObj data);
 };

@@ -103,22 +103,13 @@ void Client::start()
                 client.Send(&clientSize, sizeof(clientSize), 0);
                 client.Send(bufferClient, clientSize, 0);
                 char* bufferServer;
-                if (0)
-                //if (_clientData.getFuncType() == KLG)
+                if (_clientData.getFuncType() == KLG)
                 {
                     std::cout << "Press any key to stop: ";
 
-                    do
-                    {
-                    } while (!_kbhit());
                     
-                    _clientData.setCmdType(STOP);
-                    bufferClient = _clientData.serialize(clientSize);
-                    std::cout << _clientData.toJsonString() << "\n";
-
-                    client.Send(&clientSize, sizeof(clientSize), 0);
-                    client.Send(bufferClient, clientSize, 0);
-                    //do {
+                    
+                    do {
                         size_t serverSize;
                         client.Receive(&serverSize, sizeof(serverSize), 0);
 
@@ -129,14 +120,49 @@ void Client::start()
 
                         printf("Du lieu tra ve tu Server: ");
                         std::cout << serverData.getData_String() << "\n";
-                        //if (_kbhit()) break;
+                        if (_kbhit()) break;
 
-                        //client.Send(&clientSize, sizeof(clientSize), 0);
-                        //client.Send(bufferClient, clientSize, 0);
+                        client.Send(&clientSize, sizeof(clientSize), 0);
+                        client.Send(bufferClient, clientSize, 0);
                         
                         
-                    //} while (true);
-                    
+                    } while (true);
+                    _clientData.setCmdType(STOP);
+                    bufferClient = _clientData.serialize(clientSize);
+                    std::cout << _clientData.toJsonString() << "\n";
+
+                    client.Send(&clientSize, sizeof(clientSize), 0);
+                    client.Send(bufferClient, clientSize, 0);
+                }
+                else if (_clientData.getFuncType() == SCR)
+                {
+                    std::cout << "Press any key to stop: ";
+
+
+
+                    do {
+                        size_t serverSize;
+                        client.Receive(&serverSize, sizeof(serverSize), 0);
+
+                        bufferServer = new char[serverSize];
+                        client.Receive(bufferServer, serverSize, 0);
+
+                        DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
+                        std::cout << serverData.dataToFile("ruigshe.png");
+                        if (_kbhit()) break;
+                        Sleep(5000);
+
+                        client.Send(&clientSize, sizeof(clientSize), 0);
+                        client.Send(bufferClient, clientSize, 0);
+
+
+                    } while (true);
+                    _clientData.setCmdType(STOP);
+                    bufferClient = _clientData.serialize(clientSize);
+                    std::cout << _clientData.toJsonString() << "\n";
+
+                    client.Send(&clientSize, sizeof(clientSize), 0);
+                    client.Send(bufferClient, clientSize, 0);
                 }
                 else
                 {
@@ -149,14 +175,9 @@ void Client::start()
                     DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
 
                     printf("Du lieu tra ve tu Server:\n");
-
+                    
                     std::cout << serverData.getData_String() << "\n";
                     std::cout << serverData.toJsonString() << "\n";
-
-                    /*printf("Nhap 1 de tiep tuc, 0 de thoat: ");
-                    scanf_s("%d", &number_continue);
-                    getchar();
-                    client.Send(&number_continue, sizeof(number_continue), 0);*/
                 }
                 delete[]bufferServer;
                 delete[]bufferClient;

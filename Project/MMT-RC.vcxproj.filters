@@ -72,9 +72,6 @@
     <ClCompile Include="..\source\Client\Client.cpp">
       <Filter>Source Files\Client</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Client\mainClient.cpp">
-      <Filter>Source Files\Client</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h">

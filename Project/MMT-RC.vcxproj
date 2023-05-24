@@ -120,13 +120,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Client\Client.cpp" />
-    <ClCompile Include="..\source\Client\mainClient.cpp" />
     <ClCompile Include="..\source\Client\stdafx.cpp" />
     <ClCompile Include="..\source\dataobj\DataObj.cpp" />
     <ClCompile Include="..\source\DIR_Func.cpp" />
     <ClCompile Include="..\source\IAP_Func.cpp" />
     <ClCompile Include="..\source\KLG_Func.cpp" />
-    <ClCompile Include="..\source\mains\Trung.cpp" />
     <ClCompile Include="..\source\RPC_Func.cpp" />
     <ClCompile Include="..\source\SCR_Func.cpp" />
     <ClCompile Include="..\source\Server\mainServer.cpp" />
