@@ -1,6 +1,24 @@
 #pragma once
 
 #include "DataObj/DataObj.h"
+#include "utils.h"
+
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
+
+#include <windows.h>
+#include <Psapi.h>
+#include <tchar.h>
+#include <iostream>
+#include <string>
+
+#include <vector>
+#include <algorithm>
+#include <set>
+
+
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
 
 // containing functions for Installed AaP
 
@@ -9,13 +27,15 @@ class IAP_Func
 private:
 
 public:
+    std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
-	std::shared_ptr<DataObj> listApps();
+    //list all installed apps
+    std::string listApps();
 
     // Start an app
-	std::shared_ptr<DataObj> startApp(std::string appName);
+    std::string startApp(std::string appName);
 
     // Stop an app
-	std::shared_ptr<DataObj> stopApp(std::string appName);
+    std::string stopApp(std::string appName);
 
 };
