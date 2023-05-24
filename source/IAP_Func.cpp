@@ -6,6 +6,17 @@ std::shared_ptr<DataObj> IAP_Func::HandleRequest(DataObj request) {
     std::string data = request.getData_String();
     std::shared_ptr<DataObj> result(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::IAP, CmdType::CMD_TYPE, ""));
 
+    // Create an unordered_map to store the application paths
+    std::unordered_map<std::wstring, std::wstring> appPaths;
+
+    // Define common installation directories to search for executable files
+    std::vector<std::wstring> searchPaths = { L"C:\\Program Files", L"C:\\Program Files (x86)" };
+
+    // Search for executable files in all subdirectories of the common installation directories
+    for (const auto& searchPath : searchPaths) {
+        searchForExeFiles(searchPath, appPaths);
+    }
+
     if (request.getDataType() != DataType::REQUEST || request.getFuncType() != FuncType::IAP)
     {
         result->setData("MESSAGE PARAMETER ERRORS");
@@ -15,7 +26,7 @@ std::shared_ptr<DataObj> IAP_Func::HandleRequest(DataObj request) {
     {
         if (cmdType == CmdType::SHOW)
         {
-            result->setData(listApps());
+            result->setData(listApps(appPaths));
 
             if (!result->getData_String().empty()) {
                 result->setCmdType(CmdType::DATA);
@@ -25,7 +36,7 @@ std::shared_ptr<DataObj> IAP_Func::HandleRequest(DataObj request) {
         }
         if (cmdType == CmdType::START)
         {
-            result->setData(startApp(data));
+            result->setData(startApp(data, appPaths));
 
 
             if (!result->getData_String().empty()) {
@@ -51,181 +62,130 @@ std::shared_ptr<DataObj> IAP_Func::HandleRequest(DataObj request) {
     }
 }
 
-
-std::string IAP_Func::listApps() {
-    std::vector<std::wstring> appNames; // Vector to store the display names of installed applications
-    std::set<std::wstring> uniqueAppNames; // Set to keep track of unique display names
-    HKEY hUninstKey = NULL;
-    HKEY hAppKey = NULL;
-    WCHAR sAppKeyName[1024];
-    WCHAR sSubKey[1024];
-    WCHAR sDisplayName[1024];
-    const WCHAR* sUninstallRoot = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
-    //const WCHAR* sAppPathsRoot = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
-    long lResult = ERROR_SUCCESS;
-    DWORD dwType = KEY_ALL_ACCESS;
-    DWORD dwBufferSize = 0;
-
-    // Check both the HKEY_LOCAL_MACHINE and HKEY_CURRENT_USER hives for uninstall information
-    HKEY hives[] = { HKEY_LOCAL_MACHINE, HKEY_CURRENT_USER };
-    for (int i = 0; i < 2; i++) {
-        // Open the "Uninstall" key.
-        if (RegOpenKeyEx(hives[i], sUninstallRoot, 0, KEY_READ, &hUninstKey) != ERROR_SUCCESS) {
-            continue;
-        }
-
-        for (DWORD dwIndex = 0; lResult == ERROR_SUCCESS; dwIndex++) {
-            // Enumerate all sub keys...
-            dwBufferSize = sizeof(sAppKeyName);
-            if ((lResult = RegEnumKeyEx(hUninstKey, dwIndex, sAppKeyName, &dwBufferSize, NULL, NULL, NULL, NULL)) == ERROR_SUCCESS) {
-                // Open the sub key.
-                wsprintf(sSubKey, L"%s\\%s", sUninstallRoot, sAppKeyName);
-                if (RegOpenKeyEx(hives[i], sSubKey, 0, KEY_READ, &hAppKey) != ERROR_SUCCESS) {
-                    RegCloseKey(hAppKey);
-                    RegCloseKey(hUninstKey);
-                    continue;
+void searchForExeFiles(const std::wstring& searchPath, std::unordered_map<std::wstring, std::wstring>& appPaths) {
+    // Search for executable files in the specified directory
+    WIN32_FIND_DATA findData;
+    std::wstring searchPattern = searchPath + L"\\*.exe";
+    HANDLE hFind = FindFirstFile(searchPattern.c_str(), &findData);
+    if (hFind != INVALID_HANDLE_VALUE) {
+        do {
+            if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+                // Found an executable file, add its name to the map of application paths
+                std::wstring appName = findData.cFileName;
+                // Remove the .exe extension from the application name
+                if (appName.size() > 4 && (appName.substr(appName.size() - 4) == L".exe" || appName.substr(appName.size() - 4) == L".EXE")) {
+                    appName = appName.substr(0, appName.size() - 4);
                 }
-                // Get the display name value from the application's sub key.
-                dwBufferSize = sizeof(sDisplayName);
-                if (RegQueryValueEx(hAppKey, L"DisplayName", NULL, &dwType, (unsigned char*)sDisplayName, &dwBufferSize) == ERROR_SUCCESS) {
-                    // Check if the display name is already in the set of unique display names
-                    if (uniqueAppNames.find(sDisplayName) == uniqueAppNames.end()) {
-                        // Display name is not in the set, add it to the vector and set
-                        appNames.push_back(sDisplayName);
-                        uniqueAppNames.insert(sDisplayName);
-                    }
-                }
-                else {
-                    // Display name value does not exist, this application was probably uninstalled.
-                }
-                RegCloseKey(hAppKey);
+                // Save the executable path of the application
+                std::wstring appPath = searchPath + L"\\" + findData.cFileName;
+                appPaths[appName] = appPath;
             }
-        }
-        RegCloseKey(hUninstKey);
-        lResult = ERROR_SUCCESS; // Reset lResult for the next hive
+        } while (FindNextFile(hFind, &findData));
+        FindClose(hFind);
     }
-    /*
-    // Check the HKEY_LOCAL_MACHINE hive for application paths
-    if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, sAppPathsRoot, 0, KEY_READ, &hUninstKey) == ERROR_SUCCESS) {
-        for (DWORD dwIndex = 0; lResult == ERROR_SUCCESS; dwIndex++) {
-            // Enumerate all sub keys...
-            dwBufferSize = sizeof(sAppKeyName);
-            if ((lResult = RegEnumKeyEx(hUninstKey, dwIndex, sAppKeyName, &dwBufferSize, NULL, NULL, NULL, NULL)) == ERROR_SUCCESS) {
-                // Check if the application name is already in the set of unique display names
-                std::wstring appName(sAppKeyName);
-                if (uniqueAppNames.find(appName) == uniqueAppNames.end()) {
-                    // Application name is not in the set, add it to the vector and set
-                    appNames.push_back(appName);
-                    uniqueAppNames.insert(appName);
-                }
+
+    // Search for subdirectories in the specified directory
+    searchPattern = searchPath + L"\\*";
+    hFind = FindFirstFile(searchPattern.c_str(), &findData);
+    if (hFind != INVALID_HANDLE_VALUE) {
+        do {
+            if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+                // Found a directory, search for executable files in this directory
+                std::wstring subDirName = findData.cFileName;
+                // Skip the "." and ".." directories
+                if (subDirName == L"." || subDirName == L"..") continue;
+                std::wstring subDirPath = searchPath + L"\\" + subDirName;
+                searchForExeFiles(subDirPath, appPaths);
             }
-        }
-        RegCloseKey(hUninstKey);
+        } while (FindNextFile(hFind, &findData));
+        FindClose(hFind);
     }
-    */
-    // Sort the vector of display names in alphabetical order
-    std::sort(appNames.begin(), appNames.end());
-
-    // Construct the result string from the sorted vector of display names
-    std::wstring resultW;
-    for (const auto& appName : appNames) {
-        resultW += appName + L"\n";
-    }
-
-    // Convert the result string from wide string to narrow string
-    std::string result = utils::ws2s(resultW);
-
-    // Return the list of installed applications
-    return result;
 }
 
 
-/*
+std::string IAP_Func::listApps(const std::unordered_map<std::wstring, std::wstring>& appPaths) {
+    static bool cacheValid = false;
+    static std::string cachedResult;
 
-std::string IAP_Func::startApp(std::string Name)
-{
-    std::string res = "";
-    std::wstring appName = utils::s2ws(Name);
-    DWORD bufferSize = MAX_PATH;
-    WCHAR appPath[MAX_PATH];
-    HRESULT result = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN, ASSOCSTR_EXECUTABLE, appName.c_str(), NULL, appPath, &bufferSize);
-    if (SUCCEEDED(result))
-    {
-        HINSTANCE hInstance = ShellExecute(NULL, L"open", appPath, NULL, NULL, SW_SHOWNORMAL);
-        if ((int)hInstance > 32)
-        {
-            res = Name + " started successfully.";
+    if (cacheValid) {
+        // Cache is valid, return the cached result
+        return cachedResult;
+    }
+    else {
+        // Cache is not valid, regenerate the list of installed applications
+        std::vector<std::wstring> appNames; // Vector to store the display names of installed applications
+
+        // Get the display names of installed applications from the map of application paths
+        for (const auto& app : appPaths) {
+            appNames.push_back(app.first);
         }
-        else
-        {
+
+        // Sort the vector of application names in alphabetical order
+        std::sort(appNames.begin(), appNames.end());
+
+        // Construct the result string from the sorted vector of application names
+        std::wstring resultW;
+        for (const auto& appName : appNames) {
+            resultW += appName + L"\n";
+        }
+
+        // Convert the result string from wide string to narrow string
+        cachedResult = utils::ws2s(resultW);
+
+        // Update cache state and return result
+        cacheValid = true;
+        return cachedResult;
+    }
+}
+
+
+
+std::string IAP_Func::startApp(const std::string& name, const std::unordered_map<std::wstring, std::wstring>& appPaths) {
+    static bool cacheValid = false;
+
+    std::string res = "";
+
+    // Convert the application name from narrow string to wide string
+    std::wstring appNameW = utils::s2ws(name);
+
+    auto it = appPaths.find(appNameW);
+    if (it != appPaths.end()) {
+        const std::wstring& appPath = it->second;
+
+        HINSTANCE hInstance = ShellExecute(NULL, L"open", appPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+        if ((int)hInstance > 32) {
+            res = name + " started successfully.";
+        }
+        else {
             res = "Error starting application. Error code: " + std::to_string((int)hInstance);
             res += "\n";
         }
     }
-    else
-    {
-        res = "Error getting application path. Error code: " + std::to_string(result);
-        res += "\n";
-    }
-    return res;
-}
-*/
+    else {
+        // Application not found, try appending .exe extension to application name
+        appNameW += L".exe";
+        it = appPaths.find(appNameW);
+        if (it != appPaths.end()) {
+            const std::wstring& appPath = it->second;
 
-std::string IAP_Func::startApp(std::string Name)
-{
-    std::string res = "";
-    std::wstring appName = utils::s2ws(Name);
-    DWORD bufferSize = MAX_PATH;
-    WCHAR appPath[MAX_PATH];
-    HRESULT result = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN, ASSOCSTR_EXECUTABLE, appName.c_str(), NULL, appPath, &bufferSize);
-    if (SUCCEEDED(result))
-    {
-        HINSTANCE hInstance = ShellExecute(NULL, L"open", appPath, NULL, NULL, SW_SHOWNORMAL);
-        if ((int)hInstance > 32)
-        {
-            res = Name + " started successfully.";
-        }
-        else
-        {
-            res = "Error starting application. Error code: " + std::to_string((int)hInstance);
-            res += "\n";
-        }
-    }
-    else
-    {
-        // If AssocQueryString fails to find the application path, try using the listApps function to find the application
-        std::string appList = listApps();
-        std::istringstream iss(appList);
-        std::string line;
-        bool foundApp = false;
-        while (std::getline(iss, line)) {
-            if (line == Name) {
-                foundApp = true;
-                break;
+            HINSTANCE hInstance = ShellExecute(NULL, L"open", appPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+            if ((int)hInstance > 32) {
+                res = name + " started successfully.";
             }
-        }
-        if (foundApp) {
-            // Application was found in the list of installed applications
-            HINSTANCE hInstance = ShellExecute(NULL, L"open", appName.c_str(), NULL, NULL, SW_SHOWNORMAL);
-            if ((int)hInstance > 32)
-            {
-                res = Name + " started successfully.";
-            }
-            else
-            {
+            else {
                 res = "Error starting application. Error code: " + std::to_string((int)hInstance);
                 res += "\n";
             }
         }
         else {
-            // Application was not found in the list of installed applications
-            res = "Error getting application path. Error code: " + std::to_string(result);
+            res = "Application not found.";
             res += "\n";
         }
     }
+
+    cacheValid = false;
     return res;
 }
-
 
 
 std::string IAP_Func::stopApp(std::string Name)

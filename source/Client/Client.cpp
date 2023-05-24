@@ -92,96 +92,90 @@ void Client::start()
 
 
             int number_continue = 0;
-            //DataObj clientData;
-        //  do {
-                fflush(stdin);
 
-                size_t clientSize;
-                char* bufferClient = _clientData.serialize(clientSize);
+            fflush(stdin);
+
+            size_t clientSize;
+            char* bufferClient = _clientData.serialize(clientSize);
+            std::cout << _clientData.toJsonString() << "\n";
+
+            client.Send(&clientSize, sizeof(clientSize), 0);
+            client.Send(bufferClient, clientSize, 0);
+            if (_clientData.getFuncType() == KLG)
+            {
+                std::cout << "Press any key to stop: ";
+
+                    
+                do {
+                    size_t serverSize;
+                    client.Receive(&serverSize, sizeof(serverSize), 0);
+
+                    char* bufferServer = new char[serverSize];
+                    client.Receive(bufferServer, serverSize, 0);
+
+                    DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
+                    delete[]bufferServer;
+                    printf("Du lieu tra ve tu Server: ");
+                    std::cout << serverData.getData_String() << "\n";
+                    if (_kbhit()) break;
+
+                    client.Send(&clientSize, sizeof(clientSize), 0);
+                    client.Send(bufferClient, clientSize, 0);
+                        
+                        
+                } while (true);
+                _clientData.setCmdType(STOP);
+                bufferClient = _clientData.serialize(clientSize);
                 std::cout << _clientData.toJsonString() << "\n";
 
                 client.Send(&clientSize, sizeof(clientSize), 0);
                 client.Send(bufferClient, clientSize, 0);
-                char* bufferServer;
-                if (_clientData.getFuncType() == KLG)
-                {
-                    std::cout << "Press any key to stop: ";
+            }
+            else if (_clientData.getFuncType() == SCR)
+            {
+                std::cout << "Press any key to stop...\n";
 
-                    
-                    
-                    do {
-                        size_t serverSize;
-                        client.Receive(&serverSize, sizeof(serverSize), 0);
-
-                        bufferServer = new char[serverSize];
-                        client.Receive(bufferServer, serverSize, 0);
-
-                        DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
-
-                        printf("Du lieu tra ve tu Server: ");
-                        std::cout << serverData.getData_String() << "\n";
-                        if (_kbhit()) break;
-
-                        client.Send(&clientSize, sizeof(clientSize), 0);
-                        client.Send(bufferClient, clientSize, 0);
-                        
-                        
-                    } while (true);
-                    _clientData.setCmdType(STOP);
-                    bufferClient = _clientData.serialize(clientSize);
-                    std::cout << _clientData.toJsonString() << "\n";
-
-                    client.Send(&clientSize, sizeof(clientSize), 0);
-                    client.Send(bufferClient, clientSize, 0);
-                }
-                else if (_clientData.getFuncType() == SCR)
-                {
-                    std::cout << "Press any key to stop: ";
-
-
-
-                    do {
-                        size_t serverSize;
-                        client.Receive(&serverSize, sizeof(serverSize), 0);
-
-                        bufferServer = new char[serverSize];
-                        client.Receive(bufferServer, serverSize, 0);
-
-                        DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
-                        std::cout << serverData.dataToFile("ruigshe.png");
-                        if (_kbhit()) break;
-                        Sleep(5000);
-
-                        client.Send(&clientSize, sizeof(clientSize), 0);
-                        client.Send(bufferClient, clientSize, 0);
-
-
-                    } while (true);
-                    _clientData.setCmdType(STOP);
-                    bufferClient = _clientData.serialize(clientSize);
-                    std::cout << _clientData.toJsonString() << "\n";
-
-                    client.Send(&clientSize, sizeof(clientSize), 0);
-                    client.Send(bufferClient, clientSize, 0);
-                }
-                else
-                {
+                do {
                     size_t serverSize;
                     client.Receive(&serverSize, sizeof(serverSize), 0);
 
-                    bufferServer = new char[serverSize];
+                    char* bufferServer = new char[serverSize];
                     client.Receive(bufferServer, serverSize, 0);
 
                     DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
+                    delete[]bufferServer;
 
-                    printf("Du lieu tra ve tu Server:\n");
-                    
-                    std::cout << serverData.getData_String() << "\n";
-                    std::cout << serverData.toJsonString() << "\n";
-                }
-                delete[]bufferServer;
-                delete[]bufferClient;
-       //    } while (number_continue);
+                    std::cout << serverData.getData().size() << "\n";
+                    std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
+                    if (_kbhit()) break;
+
+                    client.Send(&clientSize, sizeof(clientSize), 0);
+                    client.Send(bufferClient, clientSize, 0);
+
+
+                } while (true);
+                _clientData.setCmdType(STOP);
+                bufferClient = _clientData.serialize(clientSize);
+                std::cout << _clientData.toJsonString() << "\n";
+
+                client.Send(&clientSize, sizeof(clientSize), 0);
+                client.Send(bufferClient, clientSize, 0);
+            }
+
+            size_t serverSize;
+            client.Receive(&serverSize, sizeof(serverSize), 0);
+
+            char* bufferServer = new char[serverSize];
+            client.Receive(bufferServer, serverSize, 0);
+
+            DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
+
+            printf("Du lieu tra ve tu Server:\n");
+
+            std::cout << serverData.toJsonString() << "\n";  
+            std::cout << serverData.getData_String() << "\n";
+            delete[]bufferServer;
+            delete[]bufferClient;
         }
     }
     else

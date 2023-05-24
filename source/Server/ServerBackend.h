@@ -17,6 +17,4 @@ private:
     DIR_Func _DIRfunc;
 public:
     std::shared_ptr<DataObj> ServerBackend::handleClientRequest(DataObj data);
-    //DataObj deserialize(std::string& data);
-    //std::string createResponseData(DataObj data);
 };
