@@ -191,12 +191,16 @@ std::string IAP_Func::startApp(const std::string& name, const std::unordered_map
 std::string IAP_Func::stopApp(std::string Name)
 {
     std::wstring appName = utils::s2ws(Name);
-    HWND hwnd = FindWindow(NULL, appName.c_str());
-    if (hwnd != NULL) {
-        SendMessage(hwnd, WM_CLOSE, 0, 0);
-        return Name + " app closed successfully.";
+    HWND hwnd = FindWindow(NULL, NULL);
+    while (hwnd != NULL) {
+        int length = GetWindowTextLength(hwnd);
+        std::wstring title(length, L'\0');
+        GetWindowText(hwnd, &title[0], length + 1);
+        if (title.find(appName) != std::wstring::npos) {
+            SendMessage(hwnd, WM_CLOSE, 0, 0);
+            return Name + " app closed successfully.";
+        }
+        hwnd = GetNextWindow(hwnd, GW_HWNDNEXT);
     }
-    else {
-        return "Error: Could not find opening app with name " + Name;
-    }
+    return "Error: Could not find opening app with name " + Name;
 }
