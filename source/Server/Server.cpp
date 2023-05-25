@@ -53,7 +53,7 @@ void Server::start()
             server.Create(4567);
 
             do {
-                printf("Server lang nghe ket noi tu client\n");
+                printf("Waiting for client's connection...\n");
                 server.Listen();
                 server.Accept(s);
 
