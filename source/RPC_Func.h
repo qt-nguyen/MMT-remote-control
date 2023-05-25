@@ -13,28 +13,13 @@
 #include <Psapi.h>
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
-/*
-
-// Huynh Long's code
-struct ProcessInfo {
-    int pid;
-    std::string name;
-    char type;
-};
-
-struct handle_data {
-    unsigned long process_id;
-    HWND window_handle;           // ?
-};
-//------------------------------
-
-*/
 
 class RPC_Func
 {
 private:
 
 public:
+    //Handle a DataObj as request and execute the corresponding function
     std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
     //list processes
@@ -43,10 +28,8 @@ public:
     //start a process
     std::string runPrc(std::string prcName);
 
-
+    //kill a process
     std::string killPrc(const std::string& processName);
-    // HUYNH LONG VERSION
-   // std::vector<ProcessInfo> get_current_processes();
 
 
 };
