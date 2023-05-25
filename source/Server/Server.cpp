@@ -18,7 +18,7 @@ bool sendData(CSocket& mysock, size_t size, char* buffer)
 
         bytesSent += result;
     }
-
+    std::cout << "\nData sent sucessfully.\n";
     return true;
 }
 
@@ -120,8 +120,6 @@ DWORD WINAPI function_cal(LPVOID arg)
         DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
         delete[] bufferClient;
 
-        std::cout << clientData.toJsonString() << "\n";
-
         if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
         {
             do
@@ -132,7 +130,6 @@ DWORD WINAPI function_cal(LPVOID arg)
 
                 size_t serverSize;
                 char* bufferServer = serverData.serialize(serverSize);
-                std::cout << serverData.getData().size() << "\n";
                 server.Send(&serverSize, sizeof(serverSize), 0);
                 sendData(server, serverSize, bufferServer);
 
@@ -171,9 +168,6 @@ DWORD WINAPI function_cal(LPVOID arg)
                     size_t serverSize;
                     char* bufferServer = serverData.serialize(serverSize);
 
-                    std::cout << serverData.toJsonString() << "\n";
-                    std::cout << serverData.getData_String() << "\n";
-
                     server.Send(&serverSize, sizeof(serverSize), 0);
                     sendData(server, serverSize, bufferServer);
 
@@ -193,9 +187,6 @@ DWORD WINAPI function_cal(LPVOID arg)
 
             size_t serverSize;
             char* bufferServer = serverData.serialize(serverSize);
-
-            std::cout << serverData.toJsonString() << "\n";
-            std::cout << serverData.getData_String() << "\n";
 
             server.Send(&serverSize, sizeof(serverSize), 0);
             sendData(server, serverSize, bufferServer);

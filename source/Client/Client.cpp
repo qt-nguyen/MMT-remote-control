@@ -318,7 +318,6 @@ void Client::process()
 
         size_t clientSize;
         char* bufferClient = _clientData.serialize(clientSize);
-        std::cout << _clientData.toJsonString() << "\n";
 
         _client.Send(&clientSize, sizeof(clientSize), 0);
         _client.Send(bufferClient, clientSize, 0);
@@ -347,7 +346,6 @@ void Client::process()
             } while (true);
             _clientData.setCmdType(STOP);
             bufferClient = _clientData.serialize(clientSize);
-            std::cout << _clientData.toJsonString() << "\n";
 
             _client.Send(&clientSize, sizeof(clientSize), 0);
             _client.Send(bufferClient, clientSize, 0);
@@ -366,7 +364,6 @@ void Client::process()
                 DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
                 delete[]bufferServer;
 
-                std::cout << serverData.getData().size() << "\n";
                 std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
                 if (_kbhit()) break;
 
@@ -377,7 +374,6 @@ void Client::process()
             } while (true);
             _clientData.setCmdType(STOP);
             bufferClient = _clientData.serialize(clientSize);
-            std::cout << _clientData.toJsonString() << "\n";
 
             _client.Send(&clientSize, sizeof(clientSize), 0);
             _client.Send(bufferClient, clientSize, 0);
@@ -393,7 +389,6 @@ void Client::process()
 
         printf("Du lieu tra ve tu Server:\n");
 
-        std::cout << serverData.toJsonString() << "\n";
         std::cout << serverData.getData_String() << "\n";
         delete[]bufferServer;
         delete[]bufferClient;
