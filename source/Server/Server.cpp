@@ -97,13 +97,7 @@ DWORD WINAPI function_cal(LPVOID arg)
     {
         fflush(stdin);
         size_t clientSize;
-        server.Receive(&clientSize, sizeof(clientSize), 0);
-
-        char* bufferClient = new char[clientSize];
-        server.Receive(bufferClient, clientSize, 0);
-
-        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-        delete[] bufferClient;
+        check = server.Receive(&clientSize, sizeof(clientSize), 0);
 
         if (check == SOCKET_ERROR)
         {
@@ -114,8 +108,14 @@ DWORD WINAPI function_cal(LPVOID arg)
                 break;
             }
         }
-        std::cout << clientData.toJsonString() << "\n";
 
+        char* bufferClient = new char[clientSize];
+        server.Receive(bufferClient, clientSize, 0);
+
+        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
+        delete[] bufferClient;
+
+        std::cout << clientData.toJsonString() << "\n";
 
         if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
         {
@@ -132,7 +132,6 @@ DWORD WINAPI function_cal(LPVOID arg)
                 sendData(server, serverSize, bufferServer);
 
                 delete[] bufferServer;
-
 
                 server.Receive(&clientSize, sizeof(clientSize), 0);
                 char* bufferClient = new char[clientSize];
