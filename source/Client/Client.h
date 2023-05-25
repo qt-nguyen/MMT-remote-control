@@ -1,10 +1,11 @@
 #include "../DataObj/DataObj.h"
-#include "../utils.h"
+
 
 #include "stdafx.h"
 #include "afxsock.h"
 #include <conio.h>
 
+#include "../utils.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif

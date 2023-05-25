@@ -237,7 +237,7 @@ void Client::getClientData()
                 data = max_depth + " " + include_file + " " + path;
             }
         }
-        else funcType = FUNC_TYPE;
+        else break;
     }while (choice == 0);
     _clientData.setID(ID);
     _clientData.setDataType(dataType);

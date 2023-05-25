@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #pragma once
 
+#include <wincodec.h>
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -10,7 +11,6 @@
 #include <string>
 #include <codecvt>
 #include <tchar.h>
-#include <wincodec.h>
 #include <vector>
 
 namespace utils
