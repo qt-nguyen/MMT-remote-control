@@ -387,7 +387,7 @@ void Client::process()
 
         DataObj serverData(DataObj::deserialize(bufferServer, serverSize));
 
-        printf("Du lieu tra ve tu Server:\n");
+        printf("Data recieved from server:\n");
 
         std::cout << serverData.getData_String() << "\n";
         delete[]bufferServer;
@@ -395,7 +395,7 @@ void Client::process()
 
         do
         {
-            std::cout << " Input 1 to continue, 0 to exit...\n";
+            std::cout << "Input 1 to continue, 0 to exit...\n----> ";
             std::cin >> number_continue;
             if(number_continue > 1 || number_continue < 0) std::cout << "Wrong Input! Try Again...\n";
         } while (number_continue > 1 || number_continue < 0);
