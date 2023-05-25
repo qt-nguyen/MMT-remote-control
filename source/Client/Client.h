@@ -5,7 +5,7 @@
 #include "afxsock.h"
 #include <conio.h>
 
-#include "../utils.h"
+#include "../Utils/utils.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif

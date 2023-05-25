@@ -1,6 +1,6 @@
 #pragma once
-#include "DataObj/DataObj.h"
-#include "utils.h"
+#include "../DataObj/DataObj.h"
+#include "../Utils/utils.h"
 
 #include <windows.h>
 #include <tlhelp32.h>

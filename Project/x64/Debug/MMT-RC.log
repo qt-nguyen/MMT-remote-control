@@ -1,5 +1,45 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: Two or more files with the name of stdafx.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\source\Client\stdafx.cpp, ..\source\Server\stdafx.cpp.
   Client.cpp
+  stdafx.cpp
+  DataObj.cpp
+  DIR_Func.cpp
+D:\GitHub\MMT-remote-contro\source\Func\DIR_Func.h(2,10): fatal  error C1083: Cannot open include file: 'DataObj/DataObj.h': No such file or directory
+  IAP_Func.cpp
+D:\GitHub\MMT-remote-contro\source\Func\IAP_Func.h(3,10): fatal  error C1083: Cannot open include file: 'DataObj/DataObj.h': No such file or directory
+  KLG_Func.cpp
+D:\GitHub\MMT-remote-contro\source\Func\KLG_Func.h(2,10): fatal  error C1083: Cannot open include file: 'DataObj/DataObj.h': No such file or directory
+  RPC_Func.cpp
+D:\GitHub\MMT-remote-contro\source\Func\RPC_Func.h(3,10): fatal  error C1083: Cannot open include file: 'DataObj/DataObj.h': No such file or directory
+  SCR_Func.cpp
+D:\GitHub\MMT-remote-contro\source\Func\SCR_Func.h(2,10): fatal  error C1083: Cannot open include file: 'DataObj/DataObj.h': No such file or directory
+  mainServer.cpp
+D:\GitHub\MMT-remote-contro\source\Server\ServerBackend.h(3,10): fatal  error C1083: Cannot open include file: '../DIR_Func.h': No such file or directory
+  Server.cpp
+D:\GitHub\MMT-remote-contro\source\Server\ServerBackend.h(3,10): fatal  error C1083: Cannot open include file: '../DIR_Func.h': No such file or directory
   ServerBackend.cpp
+D:\GitHub\MMT-remote-contro\source\Server\ServerBackend.h(3,10): fatal  error C1083: Cannot open include file: '../DIR_Func.h': No such file or directory
+  stdafx.cpp
+  utils.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xstring(2765,53): warning C4244: 'argument': conversion from 'wchar_t' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xstring(2621,17): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<wchar_t*,wchar_t*,_Size_type>(_Iter,const _Sent,_Size)' being compiled
+          with
+          [
+              _Size_type=unsigned __int64,
+              _Iter=wchar_t *,
+              _Sent=wchar_t *,
+              _Size=unsigned __int64
+          ]
+D:\GitHub\MMT-remote-contro\source\Utils\utils.cpp(29,35): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+D:\GitHub\MMT-remote-contro\source\Utils\utils.cpp(29,17): message : see the first reference to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' in 'utils::tcharToString'
   Generating Code...
-  MMT-RC.vcxproj -> C:\Users\admin\source\repos\quoc-trung-nguyen-hcmus\MMT-remote-control\Project\x64\Debug\MMT-RC.exe
+D:\GitHub\MMT-remote-contro\source\dataobj\DataObj.cpp(117): warning C4715: 'DataObj::toFile': not all control paths return a value
