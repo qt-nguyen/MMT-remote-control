@@ -18,7 +18,7 @@
 #if FORMAT == 0
 const std::map<int, std::string> keyname{
 	{VK_BACK, "[BACKSPACE]" },
-	{VK_RETURN,	"\n" },
+	{VK_RETURN,	"[ENTER]" },
 	{VK_SPACE,	"_" },
 	{VK_TAB,	"[TAB]" },
 	{VK_SHIFT,	"[SHIFT]" },

@@ -155,6 +155,7 @@ std::string RPC_Func::runPrc(std::string Name)
 std::string RPC_Func::killPrc(const std::string& processName) {
     HANDLE hProcessSnap;
     PROCESSENTRY32 pe32;
+    bool processFound = false;
 
     // Take a snapshot of all processes in the system.
     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -186,13 +187,17 @@ std::string RPC_Func::killPrc(const std::string& processName) {
             }
             TerminateProcess(hProcess, 0);
             CloseHandle(hProcess);
-            CloseHandle(hProcessSnap);
-            return "Process terminated successfully";
+            processFound = true;
         }
     } while (Process32Next(hProcessSnap, &pe32));
 
     CloseHandle(hProcessSnap);
-    return "Process not found";
+    if (processFound) {
+        return "Processes terminated successfully";
+    }
+    else {
+        return "Processes not found";
+    }
 }
 
 /*

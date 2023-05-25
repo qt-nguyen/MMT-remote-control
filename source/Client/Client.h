@@ -13,12 +13,15 @@ class Client
 {
 private:
 	DataObj _clientData;
+	CSocket _client;
 
 public:
 	void getClientData(TCHAR* argv[5]);
-	void getCilentData(DataType dataType, FuncType funcType, CmdType cmdType, std::string data);
+	void getClientData();
+
 	Client();
 	~Client();
 
 	void start();
+	void process();
 };
