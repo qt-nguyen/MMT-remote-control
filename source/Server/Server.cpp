@@ -160,7 +160,7 @@ DWORD WINAPI function_cal(LPVOID arg)
                     delete[] bufferServer;
                     break;
                 }
-                if (clientData.getFuncType() == SCR) Sleep(5000);
+                if (clientData.getFuncType() == SCR) Sleep(1000);
 
             } while (true);
         }

@@ -217,12 +217,11 @@ void Client::getClientData()
     _clientData.setData(data);
 }
 
-
-
 Client::Client()
 {
-    
-
+    std::cout << "Input IP Address: ";
+    std::cin >> _IP;
+    std::cout << "Connecting to " << _IP << "...\n";
 }
 
 Client::~Client()
@@ -230,12 +229,13 @@ Client::~Client()
     _client.Close();
 }
 
-void Client::start()
+bool Client::start()
 {
 
-    const int MAX_ATTEMPTS = 10;
-    const int DELAY = 1000;
-
+    const int MAX_ATTEMPTS = 5;
+    const int DELAY = 500;
+    std::wstring wideIP = utils::s2ws(_IP);
+    const wchar_t* IP = wideIP.c_str();
     HMODULE hModule = ::GetModuleHandle(NULL);
 
     if (hModule != NULL)
@@ -243,34 +243,34 @@ void Client::start()
         if (!AfxWinInit(hModule, NULL, ::GetCommandLine(), 0))
         {
             _tprintf(_T("Fatal Error: MFC initialization failed\n"));
+            return false;
         }
         else
         {
             AfxSocketInit(NULL);
             
             _client.Create();
-            bool connected = false;
 
             for (int attempt = 1; attempt <= MAX_ATTEMPTS; ++attempt)
             {
-                if (_client.Connect(_T("192.168.2.109"), 4567))
+                if (_client.Connect(IP, 4567))
                 {
-                    connected = true;
+                    return true;
                     break;
                 }
 
                 Sleep(DELAY);
             }
 
-            if (!connected)
-            {
-                std::cerr << "Error: Failed to connect to the server\n";
-            }
+            std::cerr << "Error: Failed to connect to the server\n";
+            return false;
+        
         }
     }
     else
     {
         _tprintf(_T("Fatal Error: GetModuleHandle failed\n"));
+        return false;
     }
     
 }
@@ -335,7 +335,7 @@ void Client::process()
                 delete[]bufferServer;
 
                 std::cout << serverData.getData().size() << "\n";
-                //std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
+                std::cout << serverData.dataToFile("capture/" + utils::CurrentTime() + ".png") << "\n";
                 if (_kbhit()) break;
 
                 _client.Send(&clientSize, sizeof(clientSize), 0);
