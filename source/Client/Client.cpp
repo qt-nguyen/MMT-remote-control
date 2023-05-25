@@ -237,7 +237,10 @@ void Client::getClientData()
                 data = max_depth + " " + include_file + " " + path;
             }
         }
-        else break;
+        else {
+            funcType = FUNC_TYPE;
+            exit(0);
+        }
     }while (choice == 0);
     _clientData.setID(ID);
     _clientData.setDataType(dataType);
@@ -395,8 +398,12 @@ void Client::process()
         delete[]bufferServer;
         delete[]bufferClient;
 
-        std::cout << " INPUT 1 to continue, 0 to exit...\n";
-        std::cin >> number_continue;
+        do
+        {
+            std::cout << " Input 1 to continue, 0 to exit...\n";
+            std::cin >> number_continue;
+            if(number_continue > 1 || number_continue < 0) std::cout << "Wrong Input! Try Again...\n";
+        } while (number_continue > 1 || number_continue < 0);
         _client.Send(&number_continue, sizeof(number_continue), 0);
     } while (number_continue == 1);
 }
