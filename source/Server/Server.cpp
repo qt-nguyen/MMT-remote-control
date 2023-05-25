@@ -18,7 +18,7 @@ bool sendData(CSocket& mysock, size_t size, char* buffer)
 
         bytesSent += result;
     }
-
+    std::cout << "\nData sent sucessfully.\n";
     return true;
 }
 
@@ -53,7 +53,7 @@ void Server::start()
             server.Create(4567);
 
             do {
-                printf("Server lang nghe ket noi tu client\n");
+                printf("Waiting for client's connection...\n");
                 server.Listen();
                 server.Accept(s);
 
@@ -96,14 +96,8 @@ DWORD WINAPI function_cal(LPVOID arg)
     do
     {
         fflush(stdin);
-        size_t clientSize;
-        server.Receive(&clientSize, sizeof(clientSize), 0);
-
-        char* bufferClient = new char[clientSize];
-        server.Receive(bufferClient, clientSize, 0);
-
-        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
-        delete[] bufferClient;
+        size_t clientSize = 1;
+        check = server.Receive(&clientSize, sizeof(clientSize), 0);
 
         if (check == SOCKET_ERROR)
         {
@@ -113,9 +107,18 @@ DWORD WINAPI function_cal(LPVOID arg)
                 wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
                 break;
             }
+            if (errCode == WSAECONNRESET)
+            {
+                wprintf(L"Client %d disconnected from server.\n", clientID);
+                break;
+            }
         }
-        std::cout << clientData.toJsonString() << "\n";
 
+        char* bufferClient = new char[clientSize];
+        server.Receive(bufferClient, clientSize, 0);
+
+        DataObj clientData(DataObj::deserialize(bufferClient, clientSize));
+        delete[] bufferClient;
 
         if (clientData.getFuncType() == KLG || clientData.getFuncType() == SCR)
         {
@@ -127,14 +130,28 @@ DWORD WINAPI function_cal(LPVOID arg)
 
                 size_t serverSize;
                 char* bufferServer = serverData.serialize(serverSize);
-                std::cout << serverData.getData().size() << "\n";
                 server.Send(&serverSize, sizeof(serverSize), 0);
                 sendData(server, serverSize, bufferServer);
 
                 delete[] bufferServer;
 
+                check = server.Receive(&clientSize, sizeof(clientSize), 0);
 
-                server.Receive(&clientSize, sizeof(clientSize), 0);
+                if (check == SOCKET_ERROR)
+                {
+                    int errCode = GetLastError();
+                    if (errCode == WSAETIMEDOUT)
+                    {
+                        wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                        break;
+                    }
+                    if (errCode == WSAECONNRESET)
+                    {
+                        wprintf(L"Client %d disconnected from server.\n", clientID);
+                        break;
+                    }
+                }
+
                 char* bufferClient = new char[clientSize];
                 server.Receive(bufferClient, clientSize, 0);
 
@@ -150,9 +167,6 @@ DWORD WINAPI function_cal(LPVOID arg)
 
                     size_t serverSize;
                     char* bufferServer = serverData.serialize(serverSize);
-
-                    std::cout << serverData.toJsonString() << "\n";
-                    std::cout << serverData.getData_String() << "\n";
 
                     server.Send(&serverSize, sizeof(serverSize), 0);
                     sendData(server, serverSize, bufferServer);
@@ -174,15 +188,12 @@ DWORD WINAPI function_cal(LPVOID arg)
             size_t serverSize;
             char* bufferServer = serverData.serialize(serverSize);
 
-            std::cout << serverData.toJsonString() << "\n";
-            std::cout << serverData.getData_String() << "\n";
-
             server.Send(&serverSize, sizeof(serverSize), 0);
             sendData(server, serverSize, bufferServer);
 
             delete[] bufferServer;
 
-            
+
         }
         check = server.Receive(&number_continue, sizeof(number_continue), 0);
 
@@ -193,6 +204,11 @@ DWORD WINAPI function_cal(LPVOID arg)
             {
                 wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
                 server.Close();
+                break;
+            }
+            if (errCode == WSAECONNRESET)
+            {
+                wprintf(L"Client %d disconnected from server.\n", clientID);
                 break;
             }
         }
