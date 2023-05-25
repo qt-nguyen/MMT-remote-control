@@ -21,6 +21,7 @@ class SCR_Func
 public:
 	std::vector<char> takeScreenshot();
 	
+	//Handle a DataObj as request and execute the corresponding function
 	std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
 

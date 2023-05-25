@@ -5,8 +5,9 @@ CWinApp theApp;
 int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 {
 	Client client;
-	client.start();
-
-	client.process();
-
+	if (!client.start()) {
+		system("pause");
+	}
+	else client.process();
+	
 }

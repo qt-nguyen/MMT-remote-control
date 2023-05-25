@@ -1,8 +1,4 @@
 #include "DIR_Func.h"
-#include <nlohmann/json.hpp>
-#include <string>
-#include <filesystem>
-#include "utils.h"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -43,8 +39,6 @@ json DIR_Func::DirectoryTreeToJson(const fs::path& path, int max_level, bool inc
     return result;
 }
 
-
-
 void DIR_Func::PrintDirectoryTree(const fs::path& path, int max_level, bool include_files, int level) {
     try {
         if (!fs::exists(path) || !fs::is_directory(path)) return;
@@ -65,7 +59,6 @@ void DIR_Func::PrintDirectoryTree(const fs::path& path, int max_level, bool incl
         //std::cerr << e.what() << '\n';
     }
 }
-
 
 void DIR_Func::DirectoryTreeToString_utils(std::stringstream& ss, const fs::path& path, int max_level, bool include_files, int level)
 {
@@ -89,7 +82,6 @@ void DIR_Func::DirectoryTreeToString_utils(std::stringstream& ss, const fs::path
     }
 }
 
-
 std::string DIR_Func::DirectoryTreeToString(const fs::path& path, int max_level, bool include_files)
 {
     std::stringstream ss;
@@ -97,11 +89,6 @@ std::string DIR_Func::DirectoryTreeToString(const fs::path& path, int max_level,
     std::string result = ss.str();
     return result;
 }
-
-
-
-
-
 
 void DIR_Func::PrintDirectoryTree(const json& tree, int indent) {
     std::string indent_str(indent, ' ');
@@ -130,7 +117,6 @@ void DIR_Func::ParseCommand(const std::string& command, int& maxDepth, bool& inc
 
     std::cout << depthStr << " : " << includeFilesStr << std::endl;
 }
-
 
 std::shared_ptr<DataObj> DIR_Func::HandleRequest(DataObj request)
 {

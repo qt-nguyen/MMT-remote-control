@@ -5,11 +5,13 @@
 #include "Resource.h"
 #include "stdafx.h"
 #include "afxsock.h"
+
 #include <iostream>
 #include <chrono>
 #include <queue>
 #include <atomic>
 #include <mutex>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -27,3 +29,4 @@ public:
 
 
 };
+bool sendData(CSocket& mysock, size_t size, char* buffer);

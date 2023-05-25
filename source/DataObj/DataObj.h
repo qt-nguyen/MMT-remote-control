@@ -3,10 +3,12 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <vector> 
 #include <tuple>
 #include <map>
+#include <sstream>
+#include <fstream>
 
+#include <nlohmann/json.hpp>
 
 enum DataType
 {
@@ -41,19 +43,6 @@ struct EnumMaps {
 	static const std::map<FuncType, std::string> FunctionTypeMap;
 	static const std::map<CmdType, std::string> CmdTypeMap;
 };
-
-// Instruction on how to use EnumMaps 
-/*
-DataType dt = RESPONSE;
-std::cout << EnumMaps::DataTypeMap.at(dt) << std::endl; // Output: RESPONSE
-
-FuncType ft = IAP;
-std::cout << EnumMaps::FuncTypeMap.at(ft) << std::endl; // Output: IAP
-
-CmdType ct = RUN;
-std::cout << EnumMaps::CmdTypeMap.at(ct) << std::endl; // Output: RUN
-*/
-
 
 class DataObj
 {

@@ -1,7 +1,26 @@
 ﻿#include "Server.h"
 
 
+bool sendData(CSocket& mysock, size_t size, char* buffer)
+{
+    int bytesSent = 0;
+    while (bytesSent < size)
+    {
+        int remainingSize = size - bytesSent;
+        int sendSize = remainingSize > 1024 ? 1024 : remainingSize; // Gửi tối đa 1024 byte mỗi lần
 
+        int result = mysock.Send(buffer + bytesSent, sendSize, 0);
+        if (result == SOCKET_ERROR)
+        {
+            std::cerr << "Error sending data\n";
+            return false;
+        }
+
+        bytesSent += result;
+    }
+
+    return true;
+}
 
 Server::Server()
 {
@@ -110,7 +129,7 @@ DWORD WINAPI function_cal(LPVOID arg)
                 char* bufferServer = serverData.serialize(serverSize);
                 std::cout << serverData.getData().size() << "\n";
                 server.Send(&serverSize, sizeof(serverSize), 0);
-                server.Send(bufferServer, serverSize, 0);
+                sendData(server, serverSize, bufferServer);
 
                 delete[] bufferServer;
 
@@ -136,12 +155,12 @@ DWORD WINAPI function_cal(LPVOID arg)
                     std::cout << serverData.getData_String() << "\n";
 
                     server.Send(&serverSize, sizeof(serverSize), 0);
-                    server.Send(bufferServer, serverSize, 0);
+                    sendData(server, serverSize, bufferServer);
 
                     delete[] bufferServer;
                     break;
                 }
-                if (clientData.getFuncType() == SCR) Sleep(5000);
+                if (clientData.getFuncType() == SCR) Sleep(1000);
 
             } while (true);
         }
@@ -159,7 +178,7 @@ DWORD WINAPI function_cal(LPVOID arg)
             std::cout << serverData.getData_String() << "\n";
 
             server.Send(&serverSize, sizeof(serverSize), 0);
-            server.Send(bufferServer, serverSize, 0);
+            sendData(server, serverSize, bufferServer);
 
             delete[] bufferServer;
 

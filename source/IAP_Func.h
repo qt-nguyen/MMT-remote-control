@@ -22,7 +22,6 @@
 #pragma comment(lib, "Shlwapi.lib")
 
 // containing functions for Installed AaP
-
 void searchForExeFiles(const std::wstring& searchPath, std::unordered_map<std::wstring, std::wstring>& appPaths);
 
 class IAP_Func
@@ -30,6 +29,7 @@ class IAP_Func
 private:
 
 public:
+    //Handle a DataObj as request and execute the corresponding function
     std::shared_ptr<DataObj> HandleRequest(DataObj request);
 
     //list all installed apps

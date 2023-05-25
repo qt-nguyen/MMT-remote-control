@@ -1,5 +1,6 @@
 #include "../DataObj/DataObj.h"
 #include "../utils.h"
+
 #include "stdafx.h"
 #include "afxsock.h"
 #include <conio.h>
@@ -14,6 +15,7 @@ class Client
 private:
 	DataObj _clientData;
 	CSocket _client;
+	std::string _IP;
 
 public:
 	void getClientData(TCHAR* argv[5]);
@@ -22,6 +24,7 @@ public:
 	Client();
 	~Client();
 
-	void start();
+	bool start();
 	void process();
 };
+bool receiveData(CSocket& mysock, size_t& size, char* buffer);

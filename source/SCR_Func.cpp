@@ -71,8 +71,6 @@ std::vector<char> SCR_Func::takeScreenshot()
 	}
 
 	return imageBuffer;
-
-
 }
 
 std::shared_ptr<DataObj> SCR_Func::HandleRequest(DataObj request)

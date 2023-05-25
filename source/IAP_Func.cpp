@@ -62,8 +62,8 @@ std::shared_ptr<DataObj> IAP_Func::HandleRequest(DataObj request) {
     }
 }
 
+// Search for executable files function in the specified directory
 void searchForExeFiles(const std::wstring& searchPath, std::unordered_map<std::wstring, std::wstring>& appPaths) {
-    // Search for executable files in the specified directory
     WIN32_FIND_DATA findData;
     std::wstring searchPattern = searchPath + L"\\*.exe";
     HANDLE hFind = FindFirstFile(searchPattern.c_str(), &findData);
@@ -102,7 +102,7 @@ void searchForExeFiles(const std::wstring& searchPath, std::unordered_map<std::w
     }
 }
 
-
+//List App function of IAP_Func, list all installed applications
 std::string IAP_Func::listApps(const std::unordered_map<std::wstring, std::wstring>& appPaths) {
     static bool cacheValid = false;
     static std::string cachedResult;
@@ -139,7 +139,7 @@ std::string IAP_Func::listApps(const std::unordered_map<std::wstring, std::wstri
 }
 
 
-
+// Start app function of IAP_Func, start an app with @name from the executable path saved in appPaths
 std::string IAP_Func::startApp(const std::string& name, const std::unordered_map<std::wstring, std::wstring>& appPaths) {
     static bool cacheValid = false;
 
@@ -182,12 +182,12 @@ std::string IAP_Func::startApp(const std::string& name, const std::unordered_map
             res += "\n";
         }
     }
-
     cacheValid = false;
     return res;
 }
 
-
+//Stop App function of IAP_Func, simply close the window of an open app
+//required the Name parsed to be partly (better fully) similar to opening window 
 std::string IAP_Func::stopApp(std::string Name)
 {
     std::wstring appName = utils::s2ws(Name);
