@@ -1,10 +1,10 @@
 #pragma once
 #include "../DataObj/DataObj.h"
-#include "../DIR_Func.h"
-#include "../KLG_Func.h"
-#include "../RPC_Func.h"
-#include "../SCR_Func.h"
-#include "../IAP_Func.h"
+#include "../Func/DIR_Func.h"
+#include "../Func/KLG_Func.h"
+#include "../Func/RPC_Func.h"
+#include "../Func/SCR_Func.h"
+#include "../Func/IAP_Func.h"
 
 
 class ServerBackend
