@@ -1,3 +1,0 @@
-C:\Users\admin\source\repos\quoc-trung-nguyen-hcmus\MMT-remote-control\Project\x64\Debug\MMT-RC.exe
-C:\Users\Nghia\source\repos\quoc-trung-nguyen-hcmus\MMT-remote-control\Project\x64\Debug\MMT-RC.exe
-D:\GitHub\MMT-remote-contro\Project\x64\Debug\MMT-RC.exe
