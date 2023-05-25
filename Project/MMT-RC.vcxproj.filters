@@ -36,21 +36,6 @@
     <ClCompile Include="..\source\dataobj\DataObj.cpp">
       <Filter>Source Files\DataObj</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\DIR_Func.cpp">
-      <Filter>Source Files\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\IAP_Func.cpp">
-      <Filter>Source Files\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\KLG_Func.cpp">
-      <Filter>Source Files\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\RPC_Func.cpp">
-      <Filter>Source Files\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\utils.cpp">
-      <Filter>Source Files\utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\Server\Server.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
@@ -63,34 +48,34 @@
     <ClCompile Include="..\source\Server\mainServer.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\SCR_Func.cpp">
-      <Filter>Source Files\Func</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\Client\stdafx.cpp">
       <Filter>Source Files\Client</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Client\Client.cpp">
       <Filter>Source Files\Client</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Func\DIR_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Func\IAP_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Func\KLG_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Func\RPC_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Func\SCR_Func.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Utils\utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\dataobj\DataObj.h">
       <Filter>Source Files\DataObj</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\DIR_Func.h">
-      <Filter>Source Files\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\IAP_Func.h">
-      <Filter>Source Files\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\KLG_Func.h">
-      <Filter>Source Files\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\RPC_Func.h">
-      <Filter>Source Files\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\utils.h">
-      <Filter>Source Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Server\Resource.h">
       <Filter>Source Files\Server</Filter>
@@ -107,9 +92,6 @@
     <ClInclude Include="..\source\Server\targetver.h">
       <Filter>Source Files\Server</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\SCR_Func.h">
-      <Filter>Source Files\Func</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\Client\Resource.h">
       <Filter>Source Files\Client</Filter>
     </ClInclude>
@@ -121,6 +103,24 @@
     </ClInclude>
     <ClInclude Include="..\source\Client\Client.h">
       <Filter>Source Files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Func\DIR_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Func\IAP_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Func\KLG_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Func\RPC_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Func\SCR_Func.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Utils\utils.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

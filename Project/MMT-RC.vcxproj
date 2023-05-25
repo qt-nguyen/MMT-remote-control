@@ -122,16 +122,16 @@
     <ClCompile Include="..\source\Client\Client.cpp" />
     <ClCompile Include="..\source\Client\stdafx.cpp" />
     <ClCompile Include="..\source\dataobj\DataObj.cpp" />
-    <ClCompile Include="..\source\DIR_Func.cpp" />
-    <ClCompile Include="..\source\IAP_Func.cpp" />
-    <ClCompile Include="..\source\KLG_Func.cpp" />
-    <ClCompile Include="..\source\RPC_Func.cpp" />
-    <ClCompile Include="..\source\SCR_Func.cpp" />
+    <ClCompile Include="..\source\Func\DIR_Func.cpp" />
+    <ClCompile Include="..\source\Func\IAP_Func.cpp" />
+    <ClCompile Include="..\source\Func\KLG_Func.cpp" />
+    <ClCompile Include="..\source\Func\RPC_Func.cpp" />
+    <ClCompile Include="..\source\Func\SCR_Func.cpp" />
     <ClCompile Include="..\source\Server\mainServer.cpp" />
     <ClCompile Include="..\source\Server\Server.cpp" />
     <ClCompile Include="..\source\Server\ServerBackend.cpp" />
     <ClCompile Include="..\source\Server\stdafx.cpp" />
-    <ClCompile Include="..\source\utils.cpp" />
+    <ClCompile Include="..\source\Utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\Client\Client.h" />
@@ -139,17 +139,17 @@
     <ClInclude Include="..\source\Client\stdafx.h" />
     <ClInclude Include="..\source\Client\targetver.h" />
     <ClInclude Include="..\source\dataobj\DataObj.h" />
-    <ClInclude Include="..\source\DIR_Func.h" />
-    <ClInclude Include="..\source\IAP_Func.h" />
-    <ClInclude Include="..\source\KLG_Func.h" />
-    <ClInclude Include="..\source\RPC_Func.h" />
-    <ClInclude Include="..\source\SCR_Func.h" />
+    <ClInclude Include="..\source\Func\DIR_Func.h" />
+    <ClInclude Include="..\source\Func\IAP_Func.h" />
+    <ClInclude Include="..\source\Func\KLG_Func.h" />
+    <ClInclude Include="..\source\Func\RPC_Func.h" />
+    <ClInclude Include="..\source\Func\SCR_Func.h" />
     <ClInclude Include="..\source\Server\Resource.h" />
     <ClInclude Include="..\source\Server\Server.h" />
     <ClInclude Include="..\source\Server\ServerBackend.h" />
     <ClInclude Include="..\source\Server\stdafx.h" />
     <ClInclude Include="..\source\Server\targetver.h" />
-    <ClInclude Include="..\source\utils.h" />
+    <ClInclude Include="..\source\Utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
