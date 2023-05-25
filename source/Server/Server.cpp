@@ -96,7 +96,7 @@ DWORD WINAPI function_cal(LPVOID arg)
     do
     {
         fflush(stdin);
-        size_t clientSize;
+        size_t clientSize = 1;
         check = server.Receive(&clientSize, sizeof(clientSize), 0);
 
         if (check == SOCKET_ERROR)
@@ -105,6 +105,11 @@ DWORD WINAPI function_cal(LPVOID arg)
             if (errCode == WSAETIMEDOUT)
             {
                 wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                break;
+            }
+            if (errCode == WSAECONNRESET)
+            {
+                wprintf(L"Client %d disconnected from server.\n", clientID);
                 break;
             }
         }
@@ -133,7 +138,23 @@ DWORD WINAPI function_cal(LPVOID arg)
 
                 delete[] bufferServer;
 
-                server.Receive(&clientSize, sizeof(clientSize), 0);
+                check = server.Receive(&clientSize, sizeof(clientSize), 0);
+
+                if (check == SOCKET_ERROR)
+                {
+                    int errCode = GetLastError();
+                    if (errCode == WSAETIMEDOUT)
+                    {
+                        wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
+                        break;
+                    }
+                    if (errCode == WSAECONNRESET)
+                    {
+                        wprintf(L"Client %d disconnected from server.\n", clientID);
+                        break;
+                    }
+                }
+
                 char* bufferClient = new char[clientSize];
                 server.Receive(bufferClient, clientSize, 0);
 
@@ -181,7 +202,7 @@ DWORD WINAPI function_cal(LPVOID arg)
 
             delete[] bufferServer;
 
-            
+
         }
         check = server.Receive(&number_continue, sizeof(number_continue), 0);
 
@@ -192,6 +213,11 @@ DWORD WINAPI function_cal(LPVOID arg)
             {
                 wprintf(L"Timeout occurred while waiting for data from client %d\n", clientID);
                 server.Close();
+                break;
+            }
+            if (errCode == WSAECONNRESET)
+            {
+                wprintf(L"Client %d disconnected from server.\n", clientID);
                 break;
             }
         }
